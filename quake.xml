@@ -1,0 +1,18 @@
+<quakeml>
+  <event unique_id="EV_01">
+    <location main="true" unique_id="LOC_01" analysis-type="M">
+      <origin-date timezone="00:00">
+        <year>2004</year>
+        <month>09</month>
+        <day>28</day>
+        <hour>17</hour>
+        <minute>15</minute>
+        <seconds>24.0</seconds>
+      </origin-date>
+      <latitude error="0">35.8</latitude>
+      <longitude error="0">-120.4</longitude>
+      <depth unit="km" error="0">7</depth>
+      <magnitude unit="M" error="0">6.0</magnitude>
+    </location>
+  </event>
+</quakeml>
