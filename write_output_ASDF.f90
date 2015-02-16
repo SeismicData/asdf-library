@@ -7,13 +7,21 @@ program write_ASDF
   implicit none
 
   character(len=12), parameter :: filename = "synthetic.h5"
+  integer(size_t), parameter :: sdim = 4
   character(len=539) :: quakeml_string
   character(len=236) :: stationxml_string = "StationXML string !!"
+  !character(len=4),dimension(1) :: file_format_string = "ASDF"
+  !character(len=sdim), dimension(1:1), TARGET :: wdata = (/"ASDF"/)
+  !character(len=6), dimension(1:1), TARGET :: file_version = (/"0.0.1b"/)
+  type(c_ptr), dimension(1:2), target :: wdata
+  character(len=5, kind=c_char), dimension(1), target :: file_format_string = "ASDF"//C_NULL_CHAR
+  character(len=7, kind=c_char), dimension(1), target :: file_version ="0.0.1b"//C_NULL_CHAR
+  !character(len=len, kind=c_char), POINTER :: data ! poitner to fortran
   
   integer(hid_t) :: file, filetype
   integer(hid_t) :: space_scalar, space_array
-  integer(hid_t) :: attr, attr2, dataset_Source, dataset_Receiver
-  integer(hid_t) :: group, dcpl
+  integer(hid_t) :: attr3, attr, attr2, dataset_Source, dataset_Receiver
+  integer(hid_t) :: group, dcpl, memtype
   integer(hid_t) :: start_time
   integer(hsize_t), dimension(1) :: dims, maxdims
   integer :: hdferr
@@ -21,6 +29,8 @@ program write_ASDF
 
   type(c_ptr) :: f_ptr
   type(c_ptr) :: f_ptr2
+  wdata(1) = c_loc(file_format_string(1))
+  wdata(2) = c_loc(file_version(1))
   start_time = 393838
   sampling_rate = 0.40
   ! Initalize FORTRAN interface
@@ -34,13 +44,25 @@ program write_ASDF
   if (hdferr .eq. -1) print *, "Error creating HDF5 file."
 
   ! Create file and memory datatypes.
+  !call h5tcopy_f(h5t_c_s1, filetype, hdferr)
+  !call h5tset_size_f(filetype, sdim, hdferr)
+  !call h5tcopy_f( H5T_FORTRAN_S1, memtype, hdferr)
+  !call h5tset_size_f(memtype, sdim, hdferr)
   call h5tcopy_f(h5t_string, filetype, hdferr)
+
   if (hdferr .eq. -1) print *, "Error creating file and memory datatypes."
  
   ! Create attribute and write string to it.
-  call h5screate_f(H5S_SCALAR_F, space_scalar, hdferr)
-  call h5acreate_f(file, "file_format", filetype, space_scalar, attr, hdferr)
+  call h5screate_f(h5s_scalar_f, space_scalar, hdferr)
+  call h5acreate_f(file, "file_format", filetype, space_scalar, attr3, hdferr)
+  f_ptr = C_LOC(wdata(1))
+  call h5awrite_f(attr3, filetype, f_ptr, hdferr)
+  call h5aclose_f(attr3, hdferr)
+
   call h5acreate_f(file, "file_format_version", filetype, space_scalar, attr, hdferr)
+  f_ptr = C_LOC(wdata(2))
+  call h5awrite_f(attr, filetype, f_ptr, hdferr)
+  call h5aclose_f(attr, hdferr)
 
   ! Create group "AuxiliaryData" and "Provenance" in the root group
   call h5gcreate_f(file, "AuxiliaryData", group, hdferr)
