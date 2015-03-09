@@ -1,3 +1,5 @@
 synthetic.h5
 .*swp
 .*swo
+*.o
+writer
