@@ -2,7 +2,7 @@
 subroutine generateQuakeML(quakemlstring, quakeml_length)
 
   implicit none
-  character(len=*) :: quakemlstring
+  character(len=*), intent(out) :: quakemlstring
   integer :: quakeml_length
 
   print *, "Generating QuakeML"
