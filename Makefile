@@ -1,27 +1,30 @@
 CC=h5pcc
 LD=h5pcc
 
-CFLAGS=-g -O0
-LDFLAGS=-g -O0
+CFLAGS=-O3
+LDFLAGS= -O3
 
 EXEC=ASDF_writer
 
+SRCDIR=src
+INCDIR=inc
+
+SRC=$(wildcard $(SRCDIR)/*.c)
+OBJ=$(SRC:.c=.o)
+
 all: $(EXEC)
 
-$(EXEC): write_ASDF.o ASDF_init.o ASDF_write.o
+print:
+	echo $(OBJ)
+
+$(EXEC): $(OBJ)
 	$(LD) -o $@ $^ $(LDFLAGS)
 
-write_ASDF.o: write_ASDF.c
-	$(CC) -c -o $@ $< $(CFLAGS)
-
-ASDF_init.o: ASDF_init.c
-	$(CC) -c -o $@ $< $(CFLAGS)
-
-ASDF_write.o: ASDF_write.c
-	$(CC) -c -o $@ $< $(CFLAGS)
+%.o: %.c
+	$(CC) -c -o $@ $< $(CFLAGS) -I$(INCDIR)
 
 clean:
-	rm -f *.o
+	rm -f *.o $(SRCDIR)/*.o
 
 mrproper: clean
 	rm -f $(EXEC)
