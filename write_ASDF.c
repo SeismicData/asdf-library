@@ -2,6 +2,7 @@
 #include <mpi.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "ASDF_init.h"
 #include "ASDF_write.h"
@@ -41,11 +42,21 @@ int main(int argc, char *argv[]) {
   double sampling_rate = 0.4*(rank+1);
   int num_waveforms = size;
   int nsamples = FAKE_NUM_SAMPLES;
-  char **waveform_names = (char **) malloc(num_waveforms*sizeof(*waveform_names));
+  char **waveform_names = (char **) malloc(num_waveforms*sizeof(char *));
   for (i = 0; i < num_waveforms; ++i) {
     waveform_names[i] = (char *) malloc(MAX_STRING_LENGTH*sizeof(char));
     sprintf(waveform_names[i], "Waveforms/AF.CVNA_%d", i);
   }
+  float **waveforms = (float **) malloc(num_waveforms*sizeof(float *));
+  for (i = 0; i < num_waveforms; ++i) {
+    waveforms[i] = (float *) malloc(nsamples*sizeof(float));
+    int j;
+    for (j = 0; j < nsamples; ++j) {
+      waveforms[i][j] = rank + 1.0;
+    }
+  }
+
+
   /******************************************************
    *   End   Fake Data                                  *
    ******************************************************/
@@ -72,6 +83,29 @@ int main(int argc, char *argv[]) {
                         event_name, waveform_names,
                         groups, data_id);
 
+  assert(nsamples);
+  int write_size = nsamples / 4;
+  int num_steps = (nsamples - 1) / write_size + 1;
+
+  int j;
+  for (j = 0; j < num_steps; ++j) {
+    int offset, nsamples_to_write;
+    offset = write_size * j; 
+    if (j < num_steps-1) {
+      nsamples_to_write = write_size;
+    } else {
+      nsamples_to_write = nsamples - offset;
+    }
+    
+    for (i = 0; i < num_waveforms; ++i) {
+      if (i == rank) {
+        /*ASDF_write_full_waveform(data_id[i], waveforms[i]);*/
+        ASDF_write_partial_waveform(data_id[i], waveforms[i], 
+                                    offset, nsamples_to_write);
+      }
+    }
+  }
+
   // TODO: write waveforms. test within a loop, each step writting partial
   //       data. Should probably be done using hyperslabs.
 
@@ -85,8 +119,10 @@ int main(int argc, char *argv[]) {
    * *******************************/
   for (i = 0; i < num_waveforms; ++i) {
     free(waveform_names[i]);
+    free(waveforms[i]);
   }
   free(waveform_names);
+  free(waveforms);
  
   /*------------------------------------*/
   H5Fclose(file_id);

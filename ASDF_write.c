@@ -88,3 +88,20 @@ void ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
     H5Sclose(space_id);
   }
 }
+
+void ASDF_write_full_waveform(hid_t data_id, float *waveform) {
+  H5Dwrite(data_id, H5T_IEEE_F32LE, H5S_ALL, H5S_ALL, H5P_DEFAULT, waveform);
+}
+
+void ASDF_write_partial_waveform(hid_t data_id, float *waveform, 
+                                 int offset, int nsamples) {
+  hid_t space_id = H5Dget_space(data_id);
+  hsize_t start[1] = {offset};
+  hsize_t count[1] = {1};
+  hsize_t block[1] = {nsamples};
+  H5Sselect_hyperslab(space_id, H5S_SELECT_SET, start, NULL, count, block);
+  hid_t slab_id = H5Screate_simple(1, block, NULL);
+  H5Dwrite(data_id, H5T_IEEE_F32LE, slab_id, space_id, H5P_DEFAULT, waveform);
+  H5Sclose(slab_id);
+  H5Sclose(space_id);
+}
