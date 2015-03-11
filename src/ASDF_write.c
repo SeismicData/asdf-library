@@ -2,6 +2,18 @@
 
 #include "ASDF_write.h"
 
+hid_t ASDF_create_new_file(char *filename, MPI_Comm comm) {
+  hid_t plist_id, file_id;
+
+  CHK_H5(plist_id = H5Pcreate(H5P_FILE_ACCESS));
+  CHK_H5(H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL));
+  /* Create the file collectively.*/
+  CHK_H5(file_id = H5Fcreate(filename, H5F_ACC_TRUNC, H5P_DEFAULT, plist_id));
+  CHK_H5(H5Pclose(plist_id));
+
+  return file_id;
+}
+
 void ASDF_write_string_attribute(hid_t dataset_id, char *attr_name, 
                                  char *attr_value) {
     hid_t space_id, type_id, attr_id;
@@ -19,16 +31,6 @@ void ASDF_write_string_attribute(hid_t dataset_id, char *attr_name,
     H5Aclose(attr_id);
     H5Tclose(type_id);
     H5Sclose(space_id);
-}
-
-hid_t ASDF_create_new_file(char *filename) {
-  hid_t plist_id = H5Pcreate(H5P_FILE_ACCESS);
-  H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL);
-  /* Create the file collectively.*/
-  hid_t file_id = H5Fcreate(filename, H5F_ACC_TRUNC, H5P_DEFAULT, plist_id);
-  H5Pclose(plist_id);
-
-  return file_id;
 }
 
 void ASDF_write_auxiliary_data(hid_t loc_id) {

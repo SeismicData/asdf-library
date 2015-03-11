@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
   
   ASDF_initialize_hdf5();
  
-  file_id = ASDF_create_new_file(filename);
+  file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
 
   /*------------------------------------*/
   ASDF_write_string_attribute(file_id, "file_format", "ASDF");

@@ -1,7 +1,11 @@
 #ifndef _ASDF_WRITE_H_
 #define _ASDF_WRITE_H_
 
-hid_t ASDF_create_new_file(char *filename);
+#include <mpi.h>
+
+#define CHK_H5(X) if ((X) < 0) return X;
+
+hid_t ASDF_create_new_file(char *filename, MPI_Comm comm);
 
 void ASDF_write_string_attribute(hid_t dataset_id, 
                                  char *attr_name, char *attr_value);

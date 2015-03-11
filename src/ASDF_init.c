@@ -2,10 +2,10 @@
 
 #include "ASDF_init.h"
 
-void ASDF_initialize_hdf5() {
-  H5open();
+int ASDF_initialize_hdf5() {
+  return H5open();
 }
 
-void ASDF_finalize_hdf5() {
-  H5close();
+int ASDF_finalize_hdf5() {
+  return H5close();
 }
