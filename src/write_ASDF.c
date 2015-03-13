@@ -1,7 +1,7 @@
 #include <hdf5.h>
 #include <mpi.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 
 #include "ASDF_init.h"
@@ -43,6 +43,10 @@ int main(int argc, char *argv[]) {
   int num_waveforms = size;
   int nsamples = FAKE_NUM_SAMPLES;
   char **waveform_names = (char **) malloc(num_waveforms*sizeof(char *));
+  
+  /***********************************************************
+  * Allocate memory and define waveform names                *
+  ***********************************************************/
   for (i = 0; i < num_waveforms; ++i) {
     waveform_names[i] = (char *) malloc(MAX_STRING_LENGTH*sizeof(char));
     sprintf(waveform_names[i], "Waveforms/AF.CVNA_%d", i);
@@ -55,7 +59,6 @@ int main(int argc, char *argv[]) {
       waveforms[i][j] = rank + 1.0;
     }
   }
-
 
   /******************************************************
    *   End   Fake Data                                  *
@@ -79,7 +82,7 @@ int main(int argc, char *argv[]) {
   ASDF_write_quakeml(file_id, quakeml_string);
   /*------------------------------------*/
 
-  ASDF_define_waveforms(file_id, num_waveforms, nsamples, 
+  ASDF_define_waveforms(file_id, num_waveforms, nsamples, start_time, sampling_rate,
                         event_name, waveform_names,
                         groups, data_id);
 
@@ -101,7 +104,7 @@ int main(int argc, char *argv[]) {
       if (i == rank) {
         /*ASDF_write_full_waveform(data_id[i], waveforms[i]);*/
         ASDF_write_partial_waveform(data_id[i], waveforms[i], 
-                                    offset, nsamples_to_write);
+                                    offset, nsamples_to_write, start_time, sampling_rate);
       }
     }
   }

@@ -16,13 +16,13 @@ void ASDF_write_provenance_data(hid_t loc_id);
 
 void ASDF_write_quakeml(hid_t loc_id, char *quakeml_string);
 
-void ASDF_define_waveforms(hid_t file_id, int num_waveforms, int nsamples, 
+void ASDF_define_waveforms(hid_t file_id, int num_waveforms, int nsamples, int start_time, double sampling_rate, 
                            char *event_name, char **waveform_names,
                            int *groups, int *data_id);
 
 void ASDF_write_full_waveform(hid_t data_id, float *waveform);
 
 void ASDF_write_partial_waveform(hid_t data_id, float *waveform,
-                                 int offset, int nsamples);
+                                 int offset, int nsamples, int start_time, double sampling_rate);
 
 #endif

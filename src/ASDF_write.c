@@ -61,6 +61,7 @@ void ASDF_write_quakeml(hid_t loc_id, char *quakeml_string) {
 }
 
 void ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples, 
+                           int start_time, double sampling_rate,
                            char *event_name, char **waveform_names,
                            int *groups, int *data_id) {
   {
@@ -70,8 +71,16 @@ void ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
     H5Gclose(group_id);
   }
   int i;
+  char char_sampling_rate[10];
+  char char_start_time[10];
+
+  snprintf(char_start_time, sizeof(char_start_time), "%d", start_time); // converts to decimal base.
+  snprintf(char_sampling_rate, sizeof(char_sampling_rate), "%1.7f", sampling_rate);
+
   for (i = 0; i < num_waveforms; ++i) {
     char char_buf[256];
+
+    //sprintf(char_sampling_rate,"%d", sampling_rate); // converts to decimal base
 
     groups[i] = H5Gcreate(loc_id, waveform_names[i],
                           H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
@@ -85,6 +94,8 @@ void ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
                            H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
 
     ASDF_write_string_attribute(data_id[i], "event_id", event_name);
+    ASDF_write_string_attribute(data_id[i], "sampling_rate", char_sampling_rate);
+    ASDF_write_string_attribute(data_id[i], "starttime", char_start_time);
 
     H5Pclose(dcpl);
     H5Sclose(space_id);
@@ -96,7 +107,7 @@ void ASDF_write_full_waveform(hid_t data_id, float *waveform) {
 }
 
 void ASDF_write_partial_waveform(hid_t data_id, float *waveform, 
-                                 int offset, int nsamples) {
+                                 int offset, int nsamples, int start_time, double sampling_size) {
   hid_t space_id = H5Dget_space(data_id);
   hsize_t start[1] = {offset};
   hsize_t count[1] = {1};
