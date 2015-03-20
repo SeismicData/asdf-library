@@ -130,8 +130,7 @@ herr_t ASDF_write_full_waveform(hid_t data_id, float *waveform) {
 }
 
 herr_t ASDF_write_partial_waveform(hid_t data_id, float *waveform, 
-                                   int offset, int nsamples, int start_time, 
-                                   double sampling_size) {
+                                   int offset, int nsamples) {
   hid_t space_id, slab_id;
 
   CHK_H5(space_id = H5Dget_space(data_id));
