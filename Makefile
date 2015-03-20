@@ -23,8 +23,12 @@ $(EXEC): $(OBJ)
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS) -I$(INCDIR)
 
+doc:
+	doxygen Doxyfile
+
 clean:
 	rm -f *.o $(SRCDIR)/*.o
 
 mrproper: clean
 	rm -f $(EXEC)
+	rm -rf doc
