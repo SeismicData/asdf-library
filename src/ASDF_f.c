@@ -12,7 +12,7 @@ void asdf_initialize_hdf5_f_(int *err) {
   *err = ASDF_initialize_hdf5();
 }
 
-void ASDF_finalize_hdf5_f_(int *err) {
+void asdf_finalize_hdf5_f_(int *err) {
   *err = ASDF_finalize_hdf5();
 }
 
