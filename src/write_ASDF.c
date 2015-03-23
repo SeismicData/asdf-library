@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
       if (i == rank) {
         /*ASDF_write_full_waveform(data_id[i], waveforms[i]);*/
         ASDF_write_partial_waveform(data_id[i], waveforms[i], 
-                                    offset, nsamples_to_write, start_time, sampling_rate);
+                                    offset, nsamples_to_write);
       }
     }
   }
