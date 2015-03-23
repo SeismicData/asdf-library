@@ -1,6 +1,7 @@
 CC=h5pcc
 LD=h5pcc
 AR=ar
+RANLIB=ranlib
 
 CFLAGS=-O3
 LDFLAGS= -O3
@@ -27,6 +28,7 @@ $(EXEC): ${SRCDIR}/write_ASDF.o ${ASDF_LIB}
 ${ASDF_LIB}: ${LIB_OBJ}
 	mkdir -p ${LIBDIR}
 	${AR} cr ${ASDF_LIB} $^
+	$(RANLIB) ${ASDF_LIB}
 
 %.o: %.c
 	$(CC) -c -o $@ $< ${CFLAGS} -I${INCDIR}
