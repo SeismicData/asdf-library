@@ -2,6 +2,7 @@
 #include <hdf5.h>
 
 #include "ASDF_init.h"
+#include "ASDF_write.h"
 
 /**********************************************************
  *  Wrappers for ASDF_init                                *
