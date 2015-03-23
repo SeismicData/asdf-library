@@ -20,8 +20,8 @@ void asdf_finalize_hdf5_f_(int *err) {
  *  Wrappers for ASDF_write                               *
  **********************************************************/
 
-void asdf_create_new_file_f_(char *filename, MPI_Comm *comm, int *err) {
-  *err = ASDF_create_new_file(filename, *comm);
+void asdf_create_new_file_f_(char *filename, MPI_Comm *comm, int *file_id) {
+  *file_id = ASDF_create_new_file(filename, *comm);
 }
 
 void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name, 
