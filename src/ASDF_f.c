@@ -16,6 +16,10 @@ void asdf_finalize_hdf5_f_(int *err) {
   *err = ASDF_finalize_hdf5();
 }
 
+void asdf_close_file_f_(hid_t *file_id, int* err) {
+  *err = ASDF_close_file(*file_id);
+}
+
 /**********************************************************
  *  Wrappers for ASDF_write                               *
  **********************************************************/
@@ -26,7 +30,7 @@ void asdf_create_new_file_f_(char *filename, MPI_Comm *comm, int *file_id) {
 
 void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name, 
                                     char *attr_value, int *err) {
-  *err = ASDF_write_string_attribute(*dataset_id, attr_name, attr_value);
+  ASDF_write_string_attribute(*dataset_id, attr_name, attr_value);
 }
 
 void asdf_write_auxiliary_data_f_(hid_t *loc_id, int *err) {

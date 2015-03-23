@@ -3,8 +3,8 @@ LD=h5pcc
 AR=ar
 RANLIB=ranlib
 
-CFLAGS=-O3
-LDFLAGS= -O3
+CFLAGS=-O0 -g
+LDFLAGS= -O0 -g
 
 EXEC=ASDF_writer
 

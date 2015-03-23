@@ -15,4 +15,14 @@ int ASDF_initialize_hdf5();
  */
 int ASDF_finalize_hdf5();
 
+/**
+ * \brief Close a given hdf5 file
+ *
+ * \param file_id The file to be closed.
+ *
+ * \return 0 for success.
+ */
+
+int ASDF_close_file(hid_t file_id);
+
 #endif
