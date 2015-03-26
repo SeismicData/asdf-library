@@ -3,8 +3,6 @@
 
 #include <mpi.h>
 
-#define CHK_H5(X) if ((X) < 0) return X;
-
 /**
  * \brief Create a new parallel HDF-5 file.
  *

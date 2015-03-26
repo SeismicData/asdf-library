@@ -1,12 +1,13 @@
 #include <hdf5.h>
 
+#include "ASDF_common.h"
 #include "ASDF_write.h"
 
 hid_t ASDF_create_new_file(char *filename, MPI_Comm comm) {
   hid_t plist_id, file_id;
 
   CHK_H5(plist_id = H5Pcreate(H5P_FILE_ACCESS));
-  CHK_H5(H5Pset_fapl_mpio(plist_id, MPI_COMM_WORLD, MPI_INFO_NULL));
+  CHK_H5(H5Pset_fapl_mpio(plist_id, comm, MPI_INFO_NULL));
   /* Create the file collectively.*/
   CHK_H5(file_id = H5Fcreate(filename, H5F_ACC_TRUNC, H5P_DEFAULT, plist_id));
   CHK_H5(H5Pclose(plist_id));
