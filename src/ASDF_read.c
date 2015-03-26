@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <hdf5.h>
 
 #include "ASDF_read.h"

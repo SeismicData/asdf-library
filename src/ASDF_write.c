@@ -1,4 +1,5 @@
 #include <hdf5.h>
+#include <string.h>
 
 #include "ASDF_common.h"
 #include "ASDF_write.h"
