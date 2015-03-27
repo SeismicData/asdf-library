@@ -6,3 +6,8 @@ writer
 doc
 lib
 ASDF_writer
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
