@@ -1,0 +1,8 @@
+synthetic.h5
+.*swp
+.*swo
+*.o
+writer
+doc
+lib
+ASDF_writer
