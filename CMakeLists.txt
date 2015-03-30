@@ -17,7 +17,7 @@ include_directories (./inc)
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)  # .so
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)  # .a
 
-set (SRC_DIR ${CMAKE_CURRENT_BINARY_DIR}/src)
+set (SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 
 ############################################################
 ### ASDF library                                         ###
