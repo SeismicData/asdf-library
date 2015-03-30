@@ -3,14 +3,16 @@ program test_asdf
   use iso_c_binding
   integer :: ier, myrank, mysize
   integer :: file_id
+  integer :: comm
 
   call MPI_Init(ier)
   call MPI_Comm_rank(MPI_COMM_WORLD, myrank, ier)
   call MPI_Comm_size(MPI_COMM_WORLD, mysize, ier)
+  call MPI_Comm_dup(MPI_COMM_WORLD, comm, ier)
 
   call ASDF_initialize_hdf5_f(ier)
 
-  call ASDF_create_new_file_f("synthetic_f.h5", MPI_COMM_WORLD, file_id)
+  call ASDF_create_new_file_f("synthetic_f.h5", comm, file_id)
 
   call ASDF_write_string_attribute_f(file_id, "file_format", "ASDF", ier)
   call ASDF_write_string_attribute_f(file_id, "file_version", "0.0.1b", ier)

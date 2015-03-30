@@ -24,8 +24,10 @@ void asdf_close_file_f_(hid_t *file_id, int* err) {
  *  Wrappers for ASDF_write                               *
  **********************************************************/
 
-void asdf_create_new_file_f_(char *filename, MPI_Comm *comm, int *file_id) {
-  *file_id = ASDF_create_new_file(filename, *comm);
+void asdf_create_new_file_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
+  /* Convert MPI communicator from Fortran to C. */
+  MPI_Comm comm= MPI_Comm_f2c(*f_comm);
+  *file_id = ASDF_create_new_file(filename, comm);
 }
 
 void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name, 
