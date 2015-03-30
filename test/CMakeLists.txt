@@ -26,8 +26,7 @@ message(Status "HDF5 fort: " "${HDF5_LIBRARIES}")
 add_executable(test_f test.f90)
 target_link_libraries(test_f
                       asdf
-                      #${HDF5_C_LIBRARIES}
-                      #${HDF5_LIBRARIES}
-                      #${MPI_Fortran_LINK_FLAGS}
+                      ${HDF5_C_LIBRARIES}
+                      ${MPI_Fortran_LINK_FLAGS}
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})
