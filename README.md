@@ -1,7 +1,7 @@
 #### Usage
 
 ```bash
-$ cmake .
+$ cmake28 . -DCMAKE_Fortran_COMPILER=h5pfc
 $ make 
 ```
 

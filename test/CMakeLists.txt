@@ -20,11 +20,14 @@ link_directories(${MPI_Fortran_LIBRARIES})
                     
 message(Status "MPI libs: " ${MPI_LIBRARIES})
 message(Status "MPI_Fortran libs: " ${MPI_Fortran_LIBRARIES})
+message(Status "HDF5 fort: " ${HDF5_C_LIBRARIES})
+message(Status "HDF5 fort: " "${HDF5_LIBRARIES}")
 
 add_executable(test_f test.f90)
 target_link_libraries(test_f
                       asdf
-                      ${HDF5_C_LIBRARIES}
-                      ${MPI_Fortran_LINK_FLAGS}
+                      #${HDF5_C_LIBRARIES}
+                      #${HDF5_LIBRARIES}
+                      #${MPI_Fortran_LINK_FLAGS}
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})
