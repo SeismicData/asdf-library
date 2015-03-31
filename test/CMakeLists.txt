@@ -32,41 +32,21 @@ target_link_libraries(test_f
                       ${MPI_Fortran_LIBRARIES})
 
 
-##############
-# Unit Tests
-##############
 ############################################################
 ### Unit testing                                         ### 
 ############################################################
-
-# Gtest's test
-
 add_subdirectory(gtest-1.7.0)
 enable_testing()
 
-# Include the gtest library. gtest_SOURCE_DIR is available due to
-# 'project(gtest)' above.
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_executable(runUnitTests test_read_write.cpp)
 
 set_property(TARGET runUnitTests PROPERTY CXX_STANDARD 11)
 
-# Standard linking to gtest stuff.
-target_link_libraries(runUnitTests gtest gtest_main)
-
-# Extra linking for the project.
 target_link_libraries(runUnitTests 
+                      gtest
+                      gtest_main
                       ${CMAKE_BINARY_DIR}/lib/libasdf.a
                       ${HDF5_LIBRARIES}
                       ${MPI_LIBRARIES})
-
-# target_link_libraries(runUnitTests project1_lib)
-
-# This is so you can do 'make test' to see all your tests run, instead of
-# manually running the executable runUnitTests to see those specific tests.
-#add_test(NAME that-test-I-made COMMAND runUnitTests)
-
-# You can also omit NAME and COMMAND. The second argument could be some other
-# test executable.
-#add_test(that-other-test-I-made runUnitTests)
