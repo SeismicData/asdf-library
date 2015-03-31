@@ -1,5 +1,7 @@
 #### Usage
 
+The following instructions are for in-source builds.
+
 ```bash
 $ cmake .
 $ make 
@@ -30,3 +32,11 @@ If documentation needs to be generated:
 cmake -DBUILD_DOCUMENTATION=ON
 ```
 You should have doxygen installed. Documentation will be generated in ```doc/```.
+
+For out-of source builds, start with:
+```bash
+$ mkdir build/
+$ cd build/
+```
+
+and follow the previous instructions, replacing ```.``` with ```..```
