@@ -7,7 +7,7 @@ find_package(HDF5)
 message (${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
-
+include(CTest)  # enable_testing() is not enough to 'make test'
 
 ############################################################
 ### Setup directory structure                            ###

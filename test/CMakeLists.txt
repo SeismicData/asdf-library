@@ -50,3 +50,5 @@ target_link_libraries(runUnitTests
                       ${CMAKE_BINARY_DIR}/lib/libasdf.a
                       ${HDF5_LIBRARIES}
                       ${MPI_LIBRARIES})
+
+add_test(runUnitTests runUnitTests)
