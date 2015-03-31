@@ -40,3 +40,8 @@ $ cd build/
 ```
 
 and follow the previous instructions, replacing ```.``` with ```..```
+
+Once build, you may run test with:
+```bash
+$ make test
+```
