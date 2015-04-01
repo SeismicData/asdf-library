@@ -17,7 +17,7 @@ hid_t ASDF_open_read_only(char *filename, MPI_Comm comm) {
 
 int ASDF_read_str_attr(hid_t file_id, char *grp_name,
                        char *attr_name, char **attr_value) {
-    hid_t attr_id, type, memtype;
+    hid_t attr_id, type;
     size_t size;
     int success = 0;
 
@@ -75,7 +75,7 @@ int ASDF_read_full_waveform(hid_t file_id, char *path, float *waveform) {
 int ASDF_read_partial_waveform(hid_t file_id, char *path, int offset,
                                int nsamples, float *waveform) {
   hid_t dataset_id;
-  hid_t space_id, slab_id;
+  hid_t space_id;
 
   hsize_t start[1] = {offset};
   hsize_t count[1] = {1};

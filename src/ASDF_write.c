@@ -19,73 +19,106 @@ hid_t ASDF_create_new_file(char *filename, MPI_Comm comm) {
 
 herr_t ASDF_write_string_attribute(hid_t dataset_id, char *attr_name, 
                                   char *attr_value) {
-    hid_t space_id, type_id, attr_id;
+  hid_t space_id, type_id, attr_id;
 
-    CHK_H5(space_id  = H5Screate(H5S_SCALAR));
-    CHK_H5(type_id = H5Tcopy(H5T_C_S1));
-    CHK_H5(H5Tset_size(type_id, strlen(attr_value)+1));
-    CHK_H5(H5Tset_strpad(type_id,H5T_STR_NULLTERM));
+  CHK_H5(space_id  = H5Screate(H5S_SCALAR));
+  CHK_H5(type_id = H5Tcopy(H5T_C_S1));
+  CHK_H5(H5Tset_size(type_id, strlen(attr_value)+1));
+  CHK_H5(H5Tset_strpad(type_id,H5T_STR_NULLTERM));
 
-    CHK_H5(attr_id = H5Acreate(dataset_id, attr_name, type_id, space_id,
-                               H5P_DEFAULT, H5P_DEFAULT));
+  CHK_H5(attr_id = H5Acreate(dataset_id, attr_name, type_id, space_id,
+        H5P_DEFAULT, H5P_DEFAULT));
 
-    CHK_H5(H5Awrite(attr_id, type_id, attr_value));
+  CHK_H5(H5Awrite(attr_id, type_id, attr_value));
 
-    CHK_H5(H5Aclose(attr_id));
-    CHK_H5(H5Tclose(type_id));
-    CHK_H5(H5Sclose(space_id));
+  CHK_H5(H5Aclose(attr_id));
+  CHK_H5(H5Tclose(type_id));
+  CHK_H5(H5Sclose(space_id));
 
-    return 0; // Success
+  return 0; // Success
 }
 
 herr_t ASDF_write_auxiliary_data(hid_t loc_id) {
-    hid_t group_id;
-    CHK_H5(group_id = H5Gcreate(loc_id, "AuxiliaryData", 
-                                H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
-    /* Fill up with whatever AuxiliaryData contains. */
-    CHK_H5(H5Gclose(group_id));
+  hid_t group_id;
+  CHK_H5(group_id = H5Gcreate(loc_id, "AuxiliaryData", 
+        H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+  /* Fill up with whatever AuxiliaryData contains. */
+  CHK_H5(H5Gclose(group_id));
 
-    return 0; // Success
+  return 0; // Success
 }
 
 herr_t ASDF_write_provenance_data(hid_t loc_id) {
-    hid_t group_id;
-    CHK_H5(group_id = H5Gcreate(loc_id, "Provenance", 
-                               H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
-    /* Fill up with whatever Provenance contains. */
-    CHK_H5(H5Gclose(group_id));
+  hid_t group_id;
+  CHK_H5(group_id = H5Gcreate(loc_id, "Provenance", 
+        H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+  /* Fill up with whatever Provenance contains. */
+  CHK_H5(H5Gclose(group_id));
 
-    return 0; // Success
+  return 0; // Success
 }
 
 herr_t ASDF_write_quakeml(hid_t loc_id, char *quakeml_string) {
-    hsize_t dims[1] = {strlen(quakeml_string)+1};
+  hsize_t dims[1] = {strlen(quakeml_string)+1};
 
-    hid_t space_id, array_id;
-    CHK_H5(space_id = H5Screate_simple(1, dims, NULL));
+  hid_t space_id, array_id;
+  CHK_H5(space_id = H5Screate_simple(1, dims, NULL));
 
-    CHK_H5(array_id = H5Dcreate(loc_id, "/QuakeML", H5T_STD_I8LE, space_id, 
+  CHK_H5(array_id = H5Dcreate(loc_id, "/QuakeML", H5T_STD_I8LE, space_id, 
+        H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+  CHK_H5(H5Dwrite(array_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL, 
+        H5P_DEFAULT, quakeml_string));
+
+  CHK_H5(H5Dclose(array_id));
+  CHK_H5(H5Sclose(space_id));
+
+  return 0; // Success
+}
+
+hid_t ASDF_create_waveforms_group(hid_t loc_id) {
+  hid_t group_id;
+  CHK_H5(group_id = H5Gcreate(loc_id, "Waveforms", 
                                H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
-    CHK_H5(H5Dwrite(array_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL, 
-            H5P_DEFAULT, quakeml_string));
 
-    CHK_H5(H5Dclose(array_id));
-    CHK_H5(H5Sclose(space_id));
+  return group_id;
+}
 
-    return 0; // Success
+herr_t ASDF_close_group(hid_t group_id) {
+  CHK_H5(H5Gclose(group_id));
+  
+  return 0;
+}
+
+hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name,
+                                 char *station_xml) {
+  hid_t group_id, space_id, dcpl, data_id;
+  /* Create the group "/Waveform/<station_name>" */
+  CHK_H5(group_id = H5Gcreate(loc_id, station_name, 
+                              H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+  /* Get some space for the StationXML dataset */
+  hsize_t dims[1] = {strlen(station_xml)+1};
+  CHK_H5(space_id= H5Screate_simple(1, dims, NULL));
+
+  CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
+
+  CHK_H5(data_id = H5Dcreate(group_id, "StationXML", H5T_IEEE_F32LE, space_id,
+                             H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+
+  /* We can write it there for now, 
+   * since there is only one stationXML per station */
+  CHK_H5(H5Dwrite(data_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL, 
+                  H5P_DEFAULT, station_xml));
+
+  CHK_H5(H5Dclose(data_id));
+  CHK_H5(H5Pclose(dcpl));
+
+  return group_id;
 }
 
 herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples, 
                             int start_time, double sampling_rate,
                             char *event_name, char **waveform_names,
-                            int *groups, int *data_id) {
-  {
-    // It might be made a separate function.
-    hid_t group_id;
-    CHK_H5(group_id = H5Gcreate(loc_id, "Waveforms", 
-                               H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
-    CHK_H5(H5Gclose(group_id));
-  }
+                            int *data_id) {
   int i;
   char char_sampling_rate[10];
   char char_start_time[10];
@@ -100,22 +133,28 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
 
     //sprintf(char_sampling_rate,"%d", sampling_rate); // converts to decimal base
 
-    CHK_H5(groups[i] = H5Gcreate(loc_id, waveform_names[i],
-                          H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+    //CHK_H5(groups[i] = H5Gcreate(loc_id, waveform_names[i],
+    //                      H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
 
     hid_t space_id, dcpl;
     hsize_t dims[1] = {nsamples}; // Length of waveform
     CHK_H5(space_id= H5Screate_simple(1, dims, NULL));
     CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
 
-    sprintf(char_buf, "Synthetics_number_%d", i);
-    CHK_H5(data_id[i] = H5Dcreate(groups[i], char_buf, H5T_IEEE_F32LE, space_id,
+    CHK_H5(data_id[i] = H5Dcreate(loc_id, waveform_names[i], H5T_IEEE_F32LE, space_id,
                                   H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+    /*
+    CHK_H5(data_id[i] = H5Dcreate(loc_id, waveform_names[i], 
+                                  H5T_IEEE_F32LE, space_id,
+                                  H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+    */
 
+    /*
     CHK_H5(ASDF_write_string_attribute(data_id[i], "event_id",
                                        event_name));
     CHK_H5(ASDF_write_string_attribute(data_id[i], "sampling_rate",
                                        char_sampling_rate));
+                                       */
     CHK_H5(ASDF_write_string_attribute(data_id[i], "starttime",
                                        char_start_time));
 

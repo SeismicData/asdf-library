@@ -54,6 +54,22 @@ herr_t ASDF_write_provenance_data(hid_t loc_id);
 herr_t ASDF_write_quakeml(hid_t loc_id, char *quakeml_string);
 
 /**
+ *
+ */
+hid_t ASDF_create_waveforms_group(hid_t loc_id);
+herr_t ASDF_close_group(hid_t group_id);
+
+/**
+ *
+ */
+hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name, 
+                                 char *station_xml);
+
+/**
+ *
+ */
+
+/**
  * \brief Define waveforms groups and datasets.
  *
  * There should be as many groups as waveforms. They will be later used
@@ -67,7 +83,6 @@ herr_t ASDF_write_quakeml(hid_t loc_id, char *quakeml_string);
  * \param sampling rate
  * \param event_name Name of the earthquake, shot, ...
  * \param waveform_names Names of stations, channel, ... FIXME: explain better
- * \param groups Groups where waveform will be written. FIXME seems useless
  * \param data_id Dataset in which waveform will be written
  *
  * \return 0 for success.
@@ -79,7 +94,7 @@ herr_t ASDF_write_quakeml(hid_t loc_id, char *quakeml_string);
 herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples, 
                              int start_time, double sampling_rate, 
                              char *event_name, char **waveform_names,
-                             int *groups, int *data_id);
+                             int *data_id);
 
 /**
  * \brief Write a full seismogram 'waveform' in a dataset data_id

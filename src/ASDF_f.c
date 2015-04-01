@@ -50,11 +50,11 @@ void asdf_write_quakeml_f_(hid_t *loc_id, char *quakeml_string, int *err) {
 void asdf_define_waveforms_f_(hid_t *loc_id, int *num_waveforms, int *nsamples,
                               int *start_time, double *sampling_rate, 
                               char *event_name, char **waveform_names,
-                              int *groups, int *data_id, int *err) {
+                              int *data_id, int *err) {
   *err = ASDF_define_waveforms(*loc_id, *num_waveforms, *nsamples, 
                                *start_time, *sampling_rate, 
                                event_name, waveform_names,
-                               groups, data_id);
+                               data_id);
 }
 
 void asdf_write_full_waveform_f_(hid_t *data_id, float *waveform, int *err) {

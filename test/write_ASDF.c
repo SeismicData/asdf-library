@@ -25,6 +25,8 @@ int main(int argc, char *argv[]) {
    ******************************************************/
   char *filename = "synthetic.h5";
   char *event_name = "event0123456789";
+  char *station_name = "AF.CVNA";
+  char *station_xml = "station_xml_string";
   char *quakeml_string = "quakemlstringstring";
     /*
       "quakemlstring = '<quakeml>\\n<event unique_id=\"EV_01\">\\n<location"
@@ -49,7 +51,7 @@ int main(int argc, char *argv[]) {
   ***********************************************************/
   for (i = 0; i < num_waveforms; ++i) {
     waveform_names[i] = (char *) malloc(MAX_STRING_LENGTH*sizeof(char));
-    sprintf(waveform_names[i], "Waveforms/AF.CVNA_%d", i);
+    sprintf(waveform_names[i], "AF.CVNA.s3.long.strange.name_%d", i);
   }
   float **waveforms = (float **) malloc(num_waveforms*sizeof(float *));
   for (i = 0; i < num_waveforms; ++i) {
@@ -82,9 +84,13 @@ int main(int argc, char *argv[]) {
   ASDF_write_quakeml(file_id, quakeml_string);
   /*------------------------------------*/
 
-  ASDF_define_waveforms(file_id, num_waveforms, nsamples, start_time, sampling_rate,
+  hid_t waveforms_grp = ASDF_create_waveforms_group(file_id);
+
+  hid_t station_grp = ASDF_create_stations_group(waveforms_grp, station_name, station_xml); 
+
+  ASDF_define_waveforms(station_grp, num_waveforms, nsamples, start_time, sampling_rate,
                         event_name, waveform_names,
-                        groups, data_id);
+                        data_id);
 
   assert(nsamples);
   int write_size = nsamples / 4;
@@ -109,13 +115,12 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  // TODO: write waveforms. test within a loop, each step writting partial
-  //       data. Should probably be done using hyperslabs.
-
   for (i = 0; i < num_waveforms; ++i) {
-    H5Gclose(groups[i]);
     H5Dclose(data_id[i]);
   }
+
+  ASDF_close_group(station_grp);
+  ASDF_close_group(waveforms_grp);
 
   /*********************************
    * Clean fake data               *
