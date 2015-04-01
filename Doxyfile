@@ -27,7 +27,8 @@ DOXYFILE_ENCODING      = UTF-8
 
 PROJECT_NAME           = ASDF
 
-# The PROJECT_NUMBER tag can be used to enter a project or revision number. 
+rc
+The PROJECT_NUMBER tag can be used to enter a project or revision number. 
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
@@ -584,7 +585,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = . 
+INPUT                  = ./inc/ ./src/  
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
