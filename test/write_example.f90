@@ -1,51 +1,69 @@
 program write_example
-  
+  !========================================================
+  ! This example mimics SPECFEM3D_GLOBE data organization
+  !
+  ! Note: There is no error checking. This, of course, should be done
+  !       in code intended to be used in production
+  !========================================================
+
   use mpi
-  use iso_c_binding
+
+  use iso_c_binding, only: C_NULL_CHAR  ! for C functions with (char *) args
 
   implicit none
 
-  integer, parameter :: MAX_STRING_LENGTH = 32
+  integer, parameter :: MAX_STRING_LENGTH = 256
 
   character(len=MAX_STRING_LENGTH) :: filename
 
   !--- Data to be written to the ASDF file
   character(len=MAX_STRING_LENGTH) :: event_name
   character(len=MAX_STRING_LENGTH) :: station_name
-  character(len=MAX_STRING_LENGTH) :: station_xml
   character(len=MAX_STRING_LENGTH) :: quakeml
-
-  integer :: num_waveforms
-
-  integer :: start_time, nsamples
-  double precision :: sampling_rate
+  character(len=MAX_STRING_LENGTH) :: station_xml 
+  ! TODO: check if a single station_xml is enough
 
   integer :: num_stations, num_channels_per_station
+  integer :: num_waveforms  ! == num_stations * num_channels_per_station
+  ! The number of channels per station is constant, as in SPECFEM
+
+  integer :: start_time, nsamples  ! constant, as in SPECFEM
+  double precision :: sampling_rate  ! idem
+
+  ! Network names and station names are two different beast, as in SPECFEM
+  ! network_names(i) is related to station_names(i)
   character(len=MAX_STRING_LENGTH), dimension(:), allocatable :: network_names
   character(len=MAX_STRING_LENGTH), dimension(:), allocatable :: station_names
 
+  ! data. dimension = nsamples * num_channels_per_station * num_stations
   real, dimension(:, :, :), allocatable :: waveforms
 
-  !-- ASDF variables
+  !-- ASDF variables 
+  !   These variables are used to know where further writes should be done.
+  !   They have to be cleaned as soon as they become useless
   integer :: file_id   ! HDF5 file id, also root group "/"
   integer :: waveforms_grp  ! Group "/Waveforms/" 
   integer, dimension(:), allocatable :: station_grps
   integer, dimension(:, :, :), allocatable :: data_ids 
 
-  !---
+  !--- MPI variables
   integer :: myrank, mysize, comm
-  integer :: i, j, ier, k
+  !--- Loop variables
+  integer :: i, j, k
+  !--- Error variable
+  integer :: ier
 
-  !---
-  integer, dimension(:), allocatable :: num_stations_proc, num_waveforms_proc
-  integer :: max_num_stations_proc
+  !--- 'allgather' arrays. Variables that needs to be known by everyone in
+  !    order to define ASDF groups and datasets or write them as attributes.
+  integer, dimension(:), allocatable :: num_stations_gather
+  integer :: max_num_stations_gather
   character(len=MAX_STRING_LENGTH), dimension(:,:), allocatable :: &
-      station_names_proc, network_names_proc
+      station_names_gather, network_names_gather
+  integer, dimension(:,:), allocatable :: station_grps_gather
   integer, dimension(:), allocatable :: displs, rcounts
-  integer, dimension(:,:), allocatable :: station_grps_proc
 
+  ! temporary name built from network, station and channel names.
   character(len=MAX_STRING_LENGTH) :: waveform_name
-
 
   !--------------------------------------------------------
   ! Init MPI 
@@ -56,7 +74,7 @@ program write_example
   call MPI_Comm_dup(MPI_COMM_WORLD, comm, ier)
 
   !--------------------------------------------------------
-  ! Setup data 
+  ! Setup data on each allgatheresses.
   !--------------------------------------------------------
   filename = "synthetic.h5"
   event_name = "event0123456789"
@@ -66,7 +84,7 @@ program write_example
   num_stations = 1 + myrank
   num_channels_per_station = 2
   sampling_rate = 0.1
-  nsamples = 5
+  nsamples = 20
   start_time = 393838
 
   num_waveforms = num_stations * num_channels_per_station
@@ -85,57 +103,31 @@ program write_example
   call random_number(waveforms)
   
   !--------------------------------------------------------
-  ! Check data 
-  !--------------------------------------------------------
-  if (myrank == -1) then
-    print *, "Writing: "
-    print *, "   filename                : ", trim(filename)
-    print *, "   event                   : ", trim(event_name)
-    print *, "   num_stations            : ", num_stations
-    print *, "   num_channels_per_station: ", num_channels_per_station 
-    print *, "   num_waveforms           : ", num_waveforms
-    print *, "   networks                : ", &
-        (trim(network_names(i)), i=1, num_stations)
-    print *, "   stations                : ", &
-        (trim(station_names(i)), i=1, num_stations)
-    print *, "   waveforms               : ", &
-        waveforms
-    call flush()
-  endif
-
-  !--------------------------------------------------------
   ! ASDF variables
   !--------------------------------------------------------
-  ! Find how many stations are managed by each process
-  allocate(num_stations_proc(mysize))
-  call MPI_Allgather(num_stations, 1, MPI_INTEGER, num_stations_proc, 1, &
+  ! Find how many stations are managed by each allgatheress
+  allocate(num_stations_gather(mysize))
+  call MPI_Allgather(num_stations, 1, MPI_INTEGER, num_stations_gather, 1, &
                      MPI_INTEGER, MPI_COMM_WORLD, ier)
-  ! find the largest number of stations per process
-  max_num_stations_proc = maxval(num_stations_proc)
-  !print *, myrank, max_num_stations_proc
-  !print *, myrank, size(station_names)
-  call flush()
-
-  allocate(num_waveforms_proc(mysize))
-  call MPI_Allgather(num_waveforms, 1, MPI_INTEGER, num_waveforms_proc, 1, &
-                     MPI_INTEGER, MPI_COMM_WORLD, ier)
-
+  ! find the largest number of stations per allgatheress
+  max_num_stations_gather = maxval(num_stations_gather)
 
   allocate(displs(mysize))
   allocate(rcounts(mysize))
 
   ! Everyone should know about each and every station name
-  allocate(station_names_proc(max_num_stations_proc, mysize))
-  allocate(network_names_proc(max_num_stations_proc, mysize))
+  allocate(station_names_gather(max_num_stations_gather, mysize))
+  allocate(network_names_gather(max_num_stations_gather, mysize))
 
+  ! The number of stations is not constant across processes
   do i = 1, mysize
-    displs(i) = (i-1) * max_num_stations_proc * max_string_length
-    rcounts(i) = num_stations_proc(i) * max_string_length
+    displs(i) = (i-1) * max_num_stations_gather * max_string_length
+    rcounts(i) = num_stations_gather(i) * max_string_length
   enddo
   call MPI_Allgatherv(station_names, &
                       num_stations *  MAX_STRING_LENGTH, &
                       MPI_CHARACTER, &
-                      station_names_proc, &
+                      station_names_gather, &
                       rcounts, &
                       displs, &
                       MPI_CHARACTER, &
@@ -143,38 +135,18 @@ program write_example
   call MPI_Allgatherv(network_names, &
                       num_stations *  MAX_STRING_LENGTH, &
                       MPI_CHARACTER, &
-                      network_names_proc, &
+                      network_names_gather, &
                       rcounts, &
                       displs, &
                       MPI_CHARACTER, &
                       MPI_COMM_WORLD, ier)
+  deallocate(displs)
+  deallocate(rcounts)
 
-  call MPI_Barrier(comm, ier)
-  if (myrank == -1) then
-    print *, "'''''''''''"
-    print *, "num_stations", num_stations
-    print *, "string lenght", MAX_STRING_LENGTH
-    print *, "rcounts", rcounts
-    print *, "displs", displs
-    print *, "max_num_Stations", max_num_stations_proc
-    print *, "'''''''''''"
-    call flush()
-    do i = 1, mysize
-      do j = 1, num_stations_proc(i)
-        print *, trim(station_names_proc(j, i)) 
-        print *, trim(network_names_proc(j, i)) 
-      enddo
-    enddo
-  endif
-  !print *, myrank, station_names
-  call flush()
-                     
-
-  !allocate(station_grps(num_stations)) ! should be a 2D array
-  allocate(station_grps_proc(max_num_stations_proc, mysize))
+  allocate(station_grps_gather(max_num_stations_gather, mysize))
   
   allocate(data_ids(num_channels_per_station, &
-                    max_num_stations_proc, &
+                    max_num_stations_gather, &
                     mysize))
 
   !--------------------------------------------------------
@@ -195,19 +167,21 @@ program write_example
   call ASDF_create_waveforms_group_f(file_id, waveforms_grp)
   
   do k = 1, mysize  
-    do j = 1, num_stations_proc(k)
+    do j = 1, num_stations_gather(k)
       call ASDF_create_stations_group_f(waveforms_grp,   &
-           trim(network_names_proc(j, k)) // "." //      &
-           trim(station_names_proc(j,k)) // C_NULL_CHAR, &
+           trim(network_names_gather(j, k)) // "." //      &
+           trim(station_names_gather(j,k)) // C_NULL_CHAR, &
            trim(station_xml) // C_NULL_CHAR,             &
-           station_grps_proc(j, k))
+           station_grps_gather(j, k))
 
       do  i = 1, num_channels_per_station
+        ! Generate unique dummy waveform names
         write(waveform_name, '(a,i0.2)') &
-           trim(network_names_proc(j,k)) // "." //      &
-           trim(station_names_proc(j,k)) // ".channel_", i 
+           trim(network_names_gather(j,k)) // "." //      &
+           trim(station_names_gather(j,k)) // ".channel_", i 
 
-        call ASDF_define_waveform_f(station_grps_proc(j,k), &
+        ! Create the dataset where waveform will be written later on.
+        call ASDF_define_waveform_f(station_grps_gather(j,k), &
              nsamples, start_time, sampling_rate, &
              trim(event_name) // C_NULL_CHAR, &
              trim(waveform_name) // C_NULL_CHAR, &
@@ -225,18 +199,26 @@ program write_example
     enddo
   enddo
 
-
-  do j = 1, mysize  
-    do i = 1, num_stations_proc(j)
-      call ASDF_close_group_f(station_grps_proc(i, j), ier)
+  !--------------------------------------------------------
+  ! Clean up
+  !--------------------------------------------------------
+  do k = 1, mysize
+    do j = 1, num_stations_gather(k)
+      call ASDF_close_group_f(station_grps_gather(j, k), ier)
+      do i = 1, num_channels_per_station
+        call ASDF_close_dataset_f(data_ids(i, j, k), ier)
+      enddo
     enddo
   enddo
+
   call ASDF_close_group_f(waveforms_grp, ier)
   call ASDF_finalize_hdf5_f(ier);
 
-
-  deallocate(station_grps_proc)
-  deallocate(num_stations_proc)
+  deallocate(data_ids)
+  deallocate(station_grps_gather)
+  deallocate(station_names_gather)
+  deallocate(network_names_gather)
+  deallocate(num_stations_gather)
 
   deallocate(waveforms)
   deallocate(station_names)

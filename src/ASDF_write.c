@@ -89,6 +89,12 @@ herr_t ASDF_close_group(hid_t group_id) {
   return 0;
 }
 
+herr_t ASDF_close_dataset(hid_t dataset_id) {
+  CHK_H5(H5Dclose(dataset_id));
+  
+  return 0;
+}
+
 hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name,
                                  char *station_xml) {
   hid_t group_id, space_id, dcpl, data_id;

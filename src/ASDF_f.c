@@ -55,6 +55,10 @@ void asdf_close_group_f_(hid_t *group_id, int *err) {
   *err = ASDF_close_group(*group_id);
 }
 
+void asdf_close_dataset_f_(hid_t *dataset_id, int *err) {
+  *err = ASDF_close_dataset(*dataset_id);
+}
+
 void asdf_create_stations_group_f_(hid_t *loc_id, char *station_name,
                                   char *station_xml, hid_t *group_id) {
   *group_id = ASDF_create_stations_group(*loc_id, station_name, station_xml);

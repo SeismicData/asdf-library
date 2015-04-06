@@ -58,6 +58,7 @@ herr_t ASDF_write_quakeml(hid_t loc_id, char *quakeml_string);
  */
 hid_t ASDF_create_waveforms_group(hid_t loc_id);
 herr_t ASDF_close_group(hid_t group_id);
+herr_t ASDF_close_dataset(hid_t dataset_id);
 
 /**
  *
