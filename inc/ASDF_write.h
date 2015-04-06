@@ -54,20 +54,42 @@ herr_t ASDF_write_provenance_data(hid_t loc_id);
 herr_t ASDF_write_quakeml(hid_t loc_id, char *quakeml_string);
 
 /**
+ * \brief Create a group called "Waveforms" that will contain the seismograms:
  *
+ * \param loc_id Where this group will be created, likely at the root of the file
+ *
+ * \return The id of the created group, or a negative number in case of failure
  */
 hid_t ASDF_create_waveforms_group(hid_t loc_id);
-herr_t ASDF_close_group(hid_t group_id);
-herr_t ASDF_close_dataset(hid_t dataset_id);
 
 /**
+ * \brief Create a group "station name" under loc_id, 
+ *        with the associated "station_xml" description
  *
+ * \param loc_id Where to create the group
+ * \param station_name Name of the station, eg AF.CVNA
+ * \param station_xml XML string following the stationXML format
+ *
+ * \return group id if successful, negative number otherwise.
  */
 hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name, 
                                  char *station_xml);
 
 /**
+ * \brief Define a dataset to write a waveform in.
  *
+ * \param loc_id Where to define the dataset
+ * \param nsamples The number of sample in the waveform
+ * \param start_time The start time of the seismogram
+ * \param sampling_rate The sampling rate of the waveform
+ * \param event_name The name of the event, useful in case of several quakeML?
+ * \param waveform_name The name of the waveform, e.g. NET.STA.MXE.20100102.123045
+ *
+ * \return The dataset id if successful, negative number otherwise.
+ *
+ * \note this function should be called collectively as every hdf5 call
+ *       defining data should be done collectively. See:
+ *       http://www.hdfgroup.org/HDF5/doc/RM/CollectiveCalls.html
  */
 hid_t ASDF_define_waveform(hid_t loc_id, int nsamples, 
                            int start_time, double sampling_rate,
@@ -122,5 +144,30 @@ herr_t ASDF_write_full_waveform(hid_t data_id, float *waveform);
  */
 herr_t ASDF_write_partial_waveform(hid_t data_id, float *waveform,
                                    int offset, int nsamples);
+
+/**
+ * \brief Close HDF5 groups opened by ASDF calls.
+ *
+ * \param group_id The group to close
+ *
+ * \return 0 for success
+ *
+ * \note The ASDF calls opening groups are:
+ *       - ASDF_create_waveforms_group
+ *       - ASDF_create_stations_group
+ */
+herr_t ASDF_close_group(hid_t group_id);
+
+/**
+ * \brief Close HDF5 datasets opened by ASDF calls.
+ *
+ * \param group_id The dataset to close
+ *
+ * \return 0 for success
+ *
+ * \note The ASDF calls opening groups are:
+ *       - ASDF_define_waveform
+ */
+herr_t ASDF_close_dataset(hid_t dataset_id);
 
 #endif
