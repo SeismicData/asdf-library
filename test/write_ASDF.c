@@ -45,10 +45,9 @@ int main(int argc, char *argv[]) {
   int num_waveforms = size;
   int nsamples = FAKE_NUM_SAMPLES;
   char **waveform_names = (char **) malloc(num_waveforms*sizeof(char *));
-  
   /***********************************************************
-  * Allocate memory and define waveform names                *
-  ***********************************************************/
+   * Allocate memory and define waveform names               *
+   ***********************************************************/
   for (i = 0; i < num_waveforms; ++i) {
     waveform_names[i] = (char *) malloc(MAX_STRING_LENGTH*sizeof(char));
     sprintf(waveform_names[i], "AF.CVNA.s3.long.strange.name_%d", i);

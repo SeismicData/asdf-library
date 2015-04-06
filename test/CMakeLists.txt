@@ -13,6 +13,12 @@ target_link_libraries(write_ASDF
                       ${HDF5_LIBRARIES}
                       ${MPI_LIBRARIES})
 
+add_executable(generate_ASDF generate_ASDF.c)
+target_link_libraries(generate_ASDF
+                      asdf
+                      ${HDF5_LIBRARIES}
+                      ${MPI_LIBRARIES})
+
 enable_language (Fortran)
 add_definitions(${MP0I_Fortran_COMPILE_FLAGS})
 include_directories(${MPI_Fortran_INCLUDE_PATH})
@@ -31,6 +37,13 @@ target_link_libraries(test_f
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})
 
+add_executable(write_example_f90 write_example.f90)
+target_link_libraries(write_example_f90
+                      asdf
+                      ${HDF5_C_LIBRARIES}
+                      ${MPI_Fortran_LINK_FLAGS}
+                      ${MPI_LIBRARIES}
+                      ${MPI_Fortran_LIBRARIES})
 
 ############################################################
 ### Unit testing                                         ### 

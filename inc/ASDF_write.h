@@ -68,6 +68,9 @@ hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name,
 /**
  *
  */
+hid_t ASDF_define_waveform(hid_t loc_id, int nsamples, 
+                           int start_time, double sampling_rate,
+                           char *event_name, char *waveform_name);
 
 /**
  * \brief Define waveforms groups and datasets.

@@ -47,6 +47,28 @@ void asdf_write_quakeml_f_(hid_t *loc_id, char *quakeml_string, int *err) {
   *err = ASDF_write_quakeml(*loc_id, quakeml_string);
 }
 
+void asdf_create_waveforms_group_f_(hid_t *loc_id, hid_t *group_id) {
+  *group_id = ASDF_create_waveforms_group(*loc_id);
+}
+
+void asdf_close_group_f_(hid_t *group_id, int *err) {
+  *err = ASDF_close_group(*group_id);
+}
+
+void asdf_create_stations_group_f_(hid_t *loc_id, char *station_name,
+                                  char *station_xml, hid_t *group_id) {
+  *group_id = ASDF_create_stations_group(*loc_id, station_name, station_xml);
+}
+
+void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples, 
+                          int *start_time, double *sampling_rate,
+                          char *event_name, char *waveform_name,
+                          int *data_id) {
+  *data_id = ASDF_define_waveform(*loc_id, *nsamples, *start_time,
+                                  *sampling_rate, event_name, waveform_name);
+}
+
+
 void asdf_define_waveforms_f_(hid_t *loc_id, int *num_waveforms, int *nsamples,
                               int *start_time, double *sampling_rate, 
                               char *event_name, char **waveform_names,

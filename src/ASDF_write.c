@@ -115,6 +115,36 @@ hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name,
   return group_id;
 }
 
+hid_t ASDF_define_waveform(hid_t loc_id, int nsamples, 
+                           int start_time, double sampling_rate,
+                           char *event_name, char *waveform_name) {
+  int data_id;
+  char char_sampling_rate[10];
+  char char_start_time[10];
+  
+  // converts to decimal base.
+  snprintf(char_start_time, sizeof(char_start_time), "%d", start_time);
+  snprintf(char_sampling_rate, 
+           sizeof(char_sampling_rate), "%1.7f", sampling_rate);
+
+  char char_buf[256];
+
+  hid_t space_id, dcpl;
+  hsize_t dims[1] = {nsamples}; // Length of waveform
+  CHK_H5(space_id= H5Screate_simple(1, dims, NULL));
+  CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
+
+  CHK_H5(data_id = H5Dcreate(loc_id, waveform_name, H5T_IEEE_F32LE, space_id,
+                                H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+  CHK_H5(ASDF_write_string_attribute(data_id, "starttime",
+                                     char_start_time));
+
+  CHK_H5(H5Pclose(dcpl));
+  CHK_H5(H5Sclose(space_id));
+
+  return data_id; // Success
+}
+
 herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples, 
                             int start_time, double sampling_rate,
                             char *event_name, char **waveform_names,
