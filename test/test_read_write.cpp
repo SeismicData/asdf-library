@@ -147,6 +147,10 @@ TEST_F(ReadWrite, SingleWaveform) {
   std::string path = "/Waveforms/" + std::string(station_name) 
                    + "/" + std::string(waveform_name);
   nsamples_infered = ASDF_get_num_elements_from_path(file_id, path.c_str());
+
+  // TODO: check other values:
+  //        * nsamples, start_time, sampling_rate
+
   ASDF_read_full_waveform(file_id, path.c_str(), waveform_read);
   ASDF_close_file(file_id);
   }

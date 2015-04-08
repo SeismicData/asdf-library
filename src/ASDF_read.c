@@ -5,7 +5,7 @@
 #include "ASDF_read.h"
 #include "ASDF_common.h"
 
-hid_t ASDF_open_read_only(char *filename, MPI_Comm comm) {
+hid_t ASDF_open_read_only(const char *filename, MPI_Comm comm) {
    hid_t plist_id, file_id;
 
    CHK_H5(plist_id = H5Pcreate (H5P_FILE_ACCESS));
@@ -16,8 +16,8 @@ hid_t ASDF_open_read_only(char *filename, MPI_Comm comm) {
    return file_id;
 }
 
-int ASDF_read_str_attr(hid_t file_id, char *grp_name,
-                       char *attr_name, char **attr_value) {
+int ASDF_read_str_attr(hid_t file_id, const char *grp_name,
+                       const char *attr_name, char **attr_value) {
     hid_t attr_id, type;
     size_t size;
     int success = 0;
@@ -63,7 +63,8 @@ int ASDF_get_num_elements_from_path(hid_t file_id, const char *path) {
     return num_elems;
 }
 
-int ASDF_read_full_waveform(hid_t file_id, const char *path, float *waveform) {
+int ASDF_read_full_waveform(hid_t file_id, const char *path, 
+                            float * const waveform) {
     hid_t dataset_id;
     dataset_id = H5Dopen(file_id, path, H5P_DEFAULT);
 
@@ -73,8 +74,8 @@ int ASDF_read_full_waveform(hid_t file_id, const char *path, float *waveform) {
     return 0;
 }
 
-int ASDF_read_partial_waveform(hid_t file_id, char *path, int offset,
-                               int nsamples, float *waveform) {
+int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
+                               int nsamples, float * const waveform) {
   hid_t dataset_id;
   hid_t space_id;
 

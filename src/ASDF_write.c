@@ -5,7 +5,7 @@
 #include "ASDF_common.h"
 #include "ASDF_write.h"
 
-hid_t ASDF_create_new_file(char *filename, MPI_Comm comm) {
+hid_t ASDF_create_new_file(const char *filename, MPI_Comm comm) {
   hid_t plist_id, file_id;
 
   CHK_H5(plist_id = H5Pcreate(H5P_FILE_ACCESS));
@@ -17,8 +17,9 @@ hid_t ASDF_create_new_file(char *filename, MPI_Comm comm) {
   return file_id;
 }
 
-herr_t ASDF_write_string_attribute(hid_t dataset_id, char *attr_name, 
-                                  char *attr_value) {
+herr_t ASDF_write_string_attribute(hid_t dataset_id, 
+                                   const char *attr_name, 
+                                   const char *attr_value) {
   hid_t space_id, type_id, attr_id;
 
   CHK_H5(space_id  = H5Screate(H5S_SCALAR));
@@ -58,7 +59,7 @@ herr_t ASDF_write_provenance_data(hid_t loc_id) {
   return 0; // Success
 }
 
-herr_t ASDF_write_quakeml(hid_t loc_id, char *quakeml_string) {
+herr_t ASDF_write_quakeml(hid_t loc_id, const char *quakeml_string) {
   hsize_t dims[1] = {strlen(quakeml_string)+1};
 
   hid_t space_id, array_id;
@@ -95,8 +96,8 @@ herr_t ASDF_close_dataset(hid_t dataset_id) {
   return 0;
 }
 
-hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name,
-                                 char *station_xml) {
+hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
+                                 const char *station_xml) {
   hid_t group_id, space_id, dcpl, data_id;
   /* Create the group "/Waveform/<station_name>" */
   CHK_H5(group_id = H5Gcreate(loc_id, station_name, 
@@ -123,7 +124,7 @@ hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name,
 
 hid_t ASDF_define_waveform(hid_t loc_id, int nsamples, 
                            int start_time, double sampling_rate,
-                           char *event_name, char *waveform_name) {
+                           const char *event_name, const char *waveform_name) {
   int data_id;
   char char_sampling_rate[10];
   char char_start_time[10];
@@ -200,14 +201,14 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
   return 0; // Success
 }
 
-herr_t ASDF_write_full_waveform(hid_t data_id, float *waveform) {
+herr_t ASDF_write_full_waveform(hid_t data_id, const float *waveform) {
   CHK_H5(H5Dwrite(data_id, H5T_IEEE_F32LE, H5S_ALL, H5S_ALL, 
                   H5P_DEFAULT, waveform));
 
   return 0; // Success
 }
 
-herr_t ASDF_write_partial_waveform(hid_t data_id, float *waveform, 
+herr_t ASDF_write_partial_waveform(hid_t data_id, const float *waveform, 
                                    int offset, int nsamples) {
   hid_t space_id, slab_id;
 

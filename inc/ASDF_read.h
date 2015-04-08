@@ -12,7 +12,7 @@
  *
  * \return The id of the opened file.
  */
-hid_t ASDF_open_read_only(char *filename, MPI_Comm comm);
+hid_t ASDF_open_read_only(const char *filename, MPI_Comm comm);
 
 /**
  * \brief Read the value of "attr_value" of a string attribute "attr_name"
@@ -28,8 +28,8 @@ hid_t ASDF_open_read_only(char *filename, MPI_Comm comm);
  * \note attr_value will be allocated within this routine. Users are
  *       responsible for deallocating it.
  */
-int ASDF_read_str_attr(hid_t file_id, char *grp_name,
-                       char *attr_name, char **attr_value);
+int ASDF_read_str_attr(hid_t file_id, const char *grp_name,
+                       const char *attr_name, char **attr_value);
 
 /**
  * \brief Get the number of elements of a dataset (i.e. array)
@@ -62,7 +62,8 @@ int ASDF_get_num_elements_from_path(hid_t file_id, const char *path);
  * \note waveform should be preallocated and large enough to store
  *       the data in full.
  */
-int ASDF_read_full_waveform(hid_t file_id, const char *path, float *waveform);
+int ASDF_read_full_waveform(hid_t file_id, const char *path,
+							float * const waveform);
 
 /**
  * \brief Read a partial waveform from a dataset
@@ -78,8 +79,8 @@ int ASDF_read_full_waveform(hid_t file_id, const char *path, float *waveform);
  * \note waveform should be preallocated and large enough to store
  *       the nsamples of data.
  */
-int ASDF_read_partial_waveform(hid_t file_id, char *path, int offset,
-                               int nsamples, float *waveform);
+int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
+                               int nsamples, float * const waveform);
 
 char *ASDF_extend_path(const char *path, const char *name);
 int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name);

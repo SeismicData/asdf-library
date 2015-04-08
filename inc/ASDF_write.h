@@ -11,7 +11,7 @@
  *
  * \return The id of the created file.
  */
-hid_t ASDF_create_new_file(char *filename, MPI_Comm comm);
+hid_t ASDF_create_new_file(const char *filename, MPI_Comm comm);
 
 /**
  * \brief Write an attribute attr_name with value attr_value in dataset_id 
@@ -23,7 +23,8 @@ hid_t ASDF_create_new_file(char *filename, MPI_Comm comm);
  * \return 0 for success.
  */
 herr_t ASDF_write_string_attribute(hid_t dataset_id, 
-                                   char *attr_name, char *attr_value);
+                                   const char *attr_name, 
+                                   const char *attr_value);
 
 /**
  * \brief Write an ASDF specfic "Auxiliary" group
@@ -51,7 +52,7 @@ herr_t ASDF_write_provenance_data(hid_t loc_id);
  *
  * \return 0 for success.
  */
-herr_t ASDF_write_quakeml(hid_t loc_id, char *quakeml_string);
+herr_t ASDF_write_quakeml(hid_t loc_id, const char *quakeml_string);
 
 /**
  * \brief Create a group called "Waveforms" that will contain the seismograms:
@@ -72,8 +73,8 @@ hid_t ASDF_create_waveforms_group(hid_t loc_id);
  *
  * \return group id if successful, negative number otherwise.
  */
-hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name, 
-                                 char *station_xml);
+hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name, 
+                                 const char *station_xml);
 
 /**
  * \brief Define a dataset to write a waveform in.
@@ -93,7 +94,7 @@ hid_t ASDF_create_stations_group(hid_t loc_id, char *station_name,
  */
 hid_t ASDF_define_waveform(hid_t loc_id, int nsamples, 
                            int start_time, double sampling_rate,
-                           char *event_name, char *waveform_name);
+                           const char *event_name, const char *waveform_name);
 
 /**
  * \brief Define waveforms groups and datasets.
@@ -130,7 +131,7 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
  *
  * \return 0 for success.
  */
-herr_t ASDF_write_full_waveform(hid_t data_id, float *waveform);
+herr_t ASDF_write_full_waveform(hid_t data_id, const float *waveform);
 
 /**
  * \brief Write a slice of seismogram 'waveform' in a dataset data_id
@@ -142,7 +143,7 @@ herr_t ASDF_write_full_waveform(hid_t data_id, float *waveform);
  *
  * \return 0 for success.
  */
-herr_t ASDF_write_partial_waveform(hid_t data_id, float *waveform,
+herr_t ASDF_write_partial_waveform(hid_t data_id, const float *waveform,
                                    int offset, int nsamples);
 
 /**
