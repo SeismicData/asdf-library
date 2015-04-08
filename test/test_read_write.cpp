@@ -75,6 +75,39 @@ TEST_F(ReadWrite, StringAttribute) {
 }
 
 
+TEST_F(ReadWrite, AuxiliaryData) {
+  int exists;
+  {
+  hid_t file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
+  ASDF_write_auxiliary_data(file_id);
+  ASDF_close_file(file_id);
+  }
+  {
+  hid_t file_id = ASDF_open_read_only(filename, MPI_COMM_WORLD);
+  exists = ASDF_exists_in_path(file_id, "/", "AuxiliaryData");
+  ASDF_close_file(file_id);
+  }
+  ASSERT_GT(exists, 0);
+}
+
+TEST_F(ReadWrite, ProvenanceData) {
+  int exists;
+  {
+  hid_t file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
+  ASDF_write_provenance_data(file_id);
+  ASDF_close_file(file_id);
+  }
+  {
+  hid_t file_id = ASDF_open_read_only(filename, MPI_COMM_WORLD);
+  exists = ASDF_exists_in_path(file_id, "/", "Provenance");
+  std::cerr << exists <<std::endl;
+
+  ASDF_close_file(file_id);
+  }
+  ASSERT_GT(exists, 0);
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Main routine. Should be the one calling MPI.
 int main(int argc, char **argv) {

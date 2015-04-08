@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <hdf5.h>
 
 #include "ASDF_read.h"
@@ -29,9 +30,9 @@ int ASDF_read_str_attr(hid_t file_id, char *grp_name,
     type = H5Tcopy(H5T_C_S1);
     H5Tset_size(type, size);
     if (H5Aread(attr_id, type, *attr_value) >= 0)
-        success = -1;
+      success = -1;
     else
-        free(*attr_value);
+      free(*attr_value);
     H5Tclose(type);
     H5Aclose(attr_id);
     if (!success)
@@ -91,4 +92,19 @@ int ASDF_read_partial_waveform(hid_t file_id, char *path, int offset,
   CHK_H5(H5Dclose(dataset_id));
 
   return 0;
+}
+
+int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name) {
+  htri_t exists;
+
+  char *full_path = malloc((strlen(name) + strlen(path) + 1) * sizeof(char));
+  sprintf(full_path, "%s/%s", path, name);
+  exists = H5Lexists(file_id, full_path, H5P_DEFAULT);
+  free (full_path);
+  return (int) exists;
+}
+
+
+int ASDF_station_exists(hid_t file_id, const char *name) {
+  return ASDF_exists_in_path(file_id, "/Waveforms", name);
 }

@@ -80,4 +80,9 @@ int ASDF_read_full_waveform(hid_t file_id, char *path, float *waveform);
  */
 int ASDF_read_partial_waveform(hid_t file_id, char *path, int offset,
                                int nsamples, float *waveform);
+
+int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name);
+int ASDF_station_exists(hid_t file_id, const char *name);
+
+
 #endif
