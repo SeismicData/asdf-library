@@ -52,7 +52,7 @@ int ASDF_get_num_elements_dataset(hid_t dataset_id) {
     return (int) memsize / type_size;
 }
 
-int ASDF_get_num_elements_from_path(hid_t file_id, char *path) {
+int ASDF_get_num_elements_from_path(hid_t file_id, const char *path) {
     hid_t dataset_id;
     int num_elems;
 
@@ -63,7 +63,7 @@ int ASDF_get_num_elements_from_path(hid_t file_id, char *path) {
     return num_elems;
 }
 
-int ASDF_read_full_waveform(hid_t file_id, char *path, float *waveform) {
+int ASDF_read_full_waveform(hid_t file_id, const char *path, float *waveform) {
     hid_t dataset_id;
     dataset_id = H5Dopen(file_id, path, H5P_DEFAULT);
 
@@ -94,17 +94,38 @@ int ASDF_read_partial_waveform(hid_t file_id, char *path, int offset,
   return 0;
 }
 
+char *ASDF_extend_path(const char *path, const char *name) {
+  char *full_path = malloc((strlen(name) + strlen(path) + 1) * sizeof(char));
+  sprintf(full_path, "%s/%s", path, name);
+
+  return full_path;
+}
+
 int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name) {
   htri_t exists;
 
-  char *full_path = malloc((strlen(name) + strlen(path) + 1) * sizeof(char));
-  sprintf(full_path, "%s/%s", path, name);
+  char *full_path = ASDF_extend_path(path, name);
   exists = H5Lexists(file_id, full_path, H5P_DEFAULT);
-  free (full_path);
+  free(full_path);
   return (int) exists;
 }
 
 
 int ASDF_station_exists(hid_t file_id, const char *name) {
   return ASDF_exists_in_path(file_id, "/Waveforms", name);
+}
+
+
+int ASDF_waveform_exists(hid_t file_id, const char *station_name, 
+                         const char *waveform_name) {
+  int station_exists;
+  station_exists = ASDF_station_exists(file_id, station_name);
+
+  if (station_exists > 0) {
+    char *path = ASDF_extend_path("Waveforms", station_name);
+    return ASDF_exists_in_path(file_id, path, waveform_name);
+    free(path);
+  } else {
+    return station_exists;
+  }
 }

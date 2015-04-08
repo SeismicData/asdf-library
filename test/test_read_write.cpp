@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <iostream>
+#include <string>
 
 #include "mpi.h"
 #include <hdf5.h>
@@ -52,8 +53,8 @@ TEST_F(ReadWrite, FileCreation) {
 
 // Check if string attributes are properly written and read.
 TEST_F(ReadWrite, StringAttribute) {
-  char attr_name[6] = "Harry";
-  char attr_init[23] = "Go ahead, make my day.";
+  char attr_name[] = "Harry";
+  char attr_init[] = "Go ahead, make my day.";
   char *attr_final;
 
   // Write the attribute to file.
@@ -64,7 +65,7 @@ TEST_F(ReadWrite, StringAttribute) {
   }
   // Read it back.
   {
-  char group[2] = "/";  // Group at the file's root.
+  char group[] = "/";  // Group at the file's root.
   hid_t file_id = ASDF_open_read_only(filename, MPI_COMM_WORLD);
   ASDF_read_str_attr(file_id, group, attr_name, &attr_final);
   ASDF_close_file(file_id);
@@ -100,13 +101,66 @@ TEST_F(ReadWrite, ProvenanceData) {
   {
   hid_t file_id = ASDF_open_read_only(filename, MPI_COMM_WORLD);
   exists = ASDF_exists_in_path(file_id, "/", "Provenance");
-  std::cerr << exists <<std::endl;
-
   ASDF_close_file(file_id);
   }
   ASSERT_GT(exists, 0);
 }
 
+TEST_F(ReadWrite, SingleWaveform) {
+  int nsamples = 10;
+  int start_time = 5;
+  double sampling_rate = 0.1;
+  char event_name[] = "my_event";
+  char station_name[] = "my_station";
+  char station_xml[] = "<station_xml>";
+  char waveform_name [] = "my_waveform";
+  float *waveform = new float[nsamples];
+  for (int i = 0; i < nsamples; ++i) {
+    waveform[i] = random();
+  }
+
+  int nsamples_infered;
+  //int nsamples_read, start_time_read;
+  //double sampling_rate_read;
+  float *waveform_read = new float[nsamples];
+
+  int station_exists, waveform_exists;
+
+  {
+  hid_t file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
+  hid_t waveforms_group = ASDF_create_waveforms_group(file_id);
+  hid_t station_group = ASDF_create_stations_group(waveforms_group, 
+                                                   station_name, station_xml);
+  hid_t data_id = ASDF_define_waveform(station_group, nsamples, start_time,
+                                    sampling_rate, event_name, waveform_name);
+  ASDF_write_full_waveform(data_id, waveform);
+  ASDF_close_dataset(data_id);
+  ASDF_close_group(station_group);
+  ASDF_close_group(waveforms_group);
+  ASDF_close_file(file_id);
+  }
+  {
+  hid_t file_id = ASDF_open_read_only(filename, MPI_COMM_WORLD);
+  station_exists = ASDF_station_exists(file_id, station_name);
+  waveform_exists = ASDF_waveform_exists(file_id, station_name, 
+                                         waveform_name);
+  std::string path = "/Waveforms/" + std::string(station_name) 
+                   + "/" + std::string(waveform_name);
+  nsamples_infered = ASDF_get_num_elements_from_path(file_id, path.c_str());
+  ASDF_read_full_waveform(file_id, path.c_str(), waveform_read);
+  ASDF_close_file(file_id);
+  }
+  ASSERT_GT(station_exists, 0);
+  ASSERT_GT(waveform_exists, 0);
+  ASSERT_EQ(nsamples_infered, nsamples);
+  
+  for (int i = 0; i < nsamples; ++i) {
+    ASSERT_EQ(waveform[i], waveform_read[i]);
+  }
+
+  delete waveform;
+  delete waveform_read;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Main routine. Should be the one calling MPI.

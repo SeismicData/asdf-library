@@ -48,7 +48,7 @@ int ASDF_get_num_elements_dataset(hid_t dataset_id);
  *
  * \return 0 for success
  */
-int ASDF_get_num_elements_from_path(hid_t file_id, char *path);
+int ASDF_get_num_elements_from_path(hid_t file_id, const char *path);
 
 /**
  * \brief Read a complete waveform from a dataset
@@ -62,7 +62,7 @@ int ASDF_get_num_elements_from_path(hid_t file_id, char *path);
  * \note waveform should be preallocated and large enough to store
  *       the data in full.
  */
-int ASDF_read_full_waveform(hid_t file_id, char *path, float *waveform);
+int ASDF_read_full_waveform(hid_t file_id, const char *path, float *waveform);
 
 /**
  * \brief Read a partial waveform from a dataset
@@ -81,8 +81,10 @@ int ASDF_read_full_waveform(hid_t file_id, char *path, float *waveform);
 int ASDF_read_partial_waveform(hid_t file_id, char *path, int offset,
                                int nsamples, float *waveform);
 
+char *ASDF_extend_path(const char *path, const char *name);
 int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name);
 int ASDF_station_exists(hid_t file_id, const char *name);
-
+int ASDF_waveform_exists(hid_t file_id, const char *station_name, 
+                         const char *waveform_name);
 
 #endif
