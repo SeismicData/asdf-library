@@ -7,7 +7,7 @@ find_package(HDF5)
 include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
-option (TEST "Run unit tests" ON)
+option (TEST "Run unit tests" OFF)
 
 ############################################################
 ### Setup directory structure                            ###
