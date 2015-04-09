@@ -82,7 +82,7 @@ program read_example
   ! Read the ASDF file.
   !--------------------------------------------------------
   call ASDF_initialize_hdf5_f(ier);
-  call ASDF_open_read_only_f(trim(filename), comm, file_id)
+  call ASDF_open_read_only_f(trim(filename) // C_NULL_CHAR, comm, file_id)
 
   do j = 1, num_stations
     station_name = trim(network_names(j)) // '.' // &
