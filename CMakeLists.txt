@@ -7,7 +7,7 @@ find_package(HDF5)
 include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
-include(CTest)  # enable_testing() is not enough to 'make test'
+option (TEST "Run unit tests" ON)
 
 ############################################################
 ### Setup directory structure                            ###
@@ -58,6 +58,7 @@ endif()
 
 ############################################################
 if (TEST)
+  include(CTest)  # enable_testing() is not enough to 'make test'
   add_subdirectory(test)
 endif()
 add_subdirectory(examples)
