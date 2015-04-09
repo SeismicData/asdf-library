@@ -57,5 +57,7 @@ endif()
 
 
 ############################################################
-add_subdirectory(test)
+if (TEST)
+  add_subdirectory(test)
+endif()
 add_subdirectory(examples)

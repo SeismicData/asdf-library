@@ -116,7 +116,7 @@ program read_example
             print *, "-------------------------------------------------"
             print *, waveforms(:, i, j)
             print *, ""
-            call flush()
+            !call flush()
           endif
         endif
       enddo
