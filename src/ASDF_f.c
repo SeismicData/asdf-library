@@ -118,31 +118,49 @@ void asdf_close_dataset_f_(hid_t *dataset_id, int *err) {
  *  Wrappers for ASDF_read                                *
  **********************************************************/
 
-void ASDF_open_read_only_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
+void asdf_open_read_only_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
   MPI_Comm comm= MPI_Comm_f2c(*f_comm);
   *file_id = ASDF_open_read_only(filename, comm);
 }
 
-void ASDF_read_str_attr_f_(hid_t *file_id, char *grp_name,
+void asdf_read_str_attr_f_(hid_t *file_id, char *grp_name,
                        char *attr_name, char **attr_value, int *err) {
   *err = ASDF_read_str_attr(*file_id, grp_name, attr_name, attr_value);
 }
 
-void ASDF_get_num_elements_dataset_f_(hid_t *dataset_id, int *err) {
+void asdf_get_num_elements_dataset_f_(hid_t *dataset_id, int *err) {
   *err = ASDF_get_num_elements_dataset(*dataset_id);
 }
 
-void ASDF_get_num_elements_from_path_f_(hid_t *file_id, char *path, int *err) {
+void asdf_get_num_elements_from_path_f_(hid_t *file_id, char *path, int *err) {
  *err = ASDF_get_num_elements_from_path(*file_id, path);
 }
 
-void ASDF_read_full_waveform_f_(hid_t *file_id, char *path, float *waveform,
+void asdf_read_full_waveform_f_(hid_t *file_id, char *path, float *waveform,
                              int *err) {
   *err = ASDF_read_full_waveform(*file_id, path, waveform);
 }
 
-void ASDF_read_partial_waveform_f_(hid_t *file_id, char *path, int *offset,
+void asdf_read_partial_waveform_f_(hid_t *file_id, char *path, int *offset,
                                    int *nsamples, float *waveform, int *err) {
   *err = ASDF_read_partial_waveform(*file_id, path, *offset, 
                                     *nsamples, waveform);
+}
+
+// char *ASDF_extend_path(const char *path, const char *name);
+// No fortran wrapper, it is a convenience function for the C API.
+// Fortran users should use the '//' operator.
+
+void asdf_exists_in_path_f_(hid_t *file_id, char *path, char *name,
+                            int *exists) {
+  *exists = ASDF_exists_in_path(*file_id, path, name);
+}
+
+void asdf_station_exists_f_(hid_t *file_id, char *name, int *exists) {
+  *exists = ASDF_station_exists(*file_id, name);
+}
+
+void asdf_waveform_exists_f_(hid_t *file_id, char *station_name, 
+                             char *waveform_name, int *exists) {
+  *exists = ASDF_waveform_exists(*file_id, station_name, waveform_name);
 }

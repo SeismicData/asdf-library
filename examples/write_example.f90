@@ -90,7 +90,7 @@ program write_example
   call MPI_Comm_dup(MPI_COMM_WORLD, comm, ier)
 
   !--------------------------------------------------------
-  ! Setup data on each allgatheresses.
+  ! Setup data on each process.
   !--------------------------------------------------------
   filename = "synthetic.h5"
   event_name = "event0123456789"
