@@ -22,6 +22,8 @@
 #ifndef _ASDF_INIT_H_
 #define _ASDF_INIT_H_
 
+#include <hdf5.h>
+
 /** 
  * @brief Initialize ASDF by initializing HDF5.
  *

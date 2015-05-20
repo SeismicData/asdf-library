@@ -23,6 +23,7 @@
 #define _ASDF_WRITE_H_
 
 #include <mpi.h>
+#include <hdf5.h>
 
 /**
  * @brief Create a new parallel HDF-5 file.
