@@ -23,7 +23,6 @@
 #include <string>
 
 #include "mpi.h"
-#include <hdf5.h>
 
 #include "gtest/gtest.h"
 

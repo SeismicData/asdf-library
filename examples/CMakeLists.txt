@@ -26,7 +26,6 @@ link_directories(${MPI_Fortran_LIBRARIES})
 add_executable(write_example_f90 write_example.f90)
 target_link_libraries(write_example_f90
                       asdf
-                      ${HDF5_C_LIBRARIES}
                       ${MPI_Fortran_LINK_FLAGS}
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})
@@ -34,7 +33,6 @@ target_link_libraries(write_example_f90
 add_executable(read_example_f90 read_example.f90)
 target_link_libraries(read_example_f90
                       asdf
-                      ${HDF5_C_LIBRARIES}
                       ${MPI_Fortran_LINK_FLAGS}
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})

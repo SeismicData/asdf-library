@@ -28,6 +28,7 @@ add_library (asdf
              ${SRC_DIR}/ASDF_write.c
              ${SRC_DIR}/ASDF_f.c)
 
+target_link_libraries(asdf ${HDF5_LIBRARIES} ${MPI_C_LIBRARIES})
 
 ############################################################
 ### Documentation Generation                             ###
