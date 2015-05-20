@@ -14,7 +14,7 @@ target_link_libraries(write_ASDF
                       ${MPI_LIBRARIES})
 
 enable_language (Fortran)
-add_definitions(${MP0I_Fortran_COMPILE_FLAGS})
+add_definitions(${MPI_Fortran_COMPILE_FLAGS})
 include_directories(${MPI_Fortran_INCLUDE_PATH})
 link_directories(${MPI_Fortran_LIBRARIES})
                     
