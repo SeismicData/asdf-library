@@ -18,7 +18,7 @@ endif()
 target_link_libraries(runUnitTests 
                       gtest
                       gtest_main
-                      ${CMAKE_BINARY_DIR}/lib/libasdf.a
+                      asdf
                       ${MPI_LIBRARIES})
 
 add_test(runUnitTests runUnitTests)
