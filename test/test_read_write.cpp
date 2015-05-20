@@ -42,6 +42,7 @@ TEST(InitFinalize, ReturnSuccess) {
 class ReadWrite : public ::testing::Test {
  protected:
   ReadWrite() {
+    strcpy(filename, "/tmp/asdf.XXXXXX");
     file_ptr = mktemp(filename);
   }
   virtual ~ReadWrite() {
@@ -59,7 +60,7 @@ class ReadWrite : public ::testing::Test {
   }
 
   char *file_ptr; 
-  char filename[17] = "/tmp/asdf.XXXXXX";
+  char filename[17];
 };
 
 // Check if file is properly create (write mode).
