@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.8)
 ############################################################
 project (ASDF)
 
-find_package(HDF5)
+find_package(HDF5 1.8.0 REQUIRED)
 include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
