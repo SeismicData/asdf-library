@@ -22,11 +22,11 @@
 
 #include "ASDF_init.h"
 
-int ASDF_initialize_hdf5() {
+int ASDF_initialize_hdf5(void) {
   return H5open();
 }
 
-int ASDF_finalize_hdf5() {
+int ASDF_finalize_hdf5(void) {
   return H5close();
 }
 
