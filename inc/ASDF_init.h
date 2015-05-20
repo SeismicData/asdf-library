@@ -24,6 +24,10 @@
 
 #include <hdf5.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** 
  * @brief Initialize ASDF by initializing HDF5.
  *
@@ -47,5 +51,9 @@ int ASDF_finalize_hdf5();
  */
 
 int ASDF_close_file(hid_t file_id);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

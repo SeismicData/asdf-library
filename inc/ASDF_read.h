@@ -26,6 +26,10 @@
 #include <mpi.h>
 #include <hdf5.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Open an existing ASDF file in read-only mode.
  *
@@ -153,5 +157,9 @@ int ASDF_station_exists(hid_t file_id, const char *name);
 
 int ASDF_waveform_exists(hid_t file_id, const char *station_name, 
                          const char *waveform_name);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
