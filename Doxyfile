@@ -27,8 +27,7 @@ DOXYFILE_ENCODING      = UTF-8
 
 PROJECT_NAME           = ASDF
 
-rc
-The PROJECT_NUMBER tag can be used to enter a project or revision number. 
+# The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
