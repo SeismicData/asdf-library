@@ -1,3 +1,6 @@
+
+[![Build Status](https://travis-ci.org/SeismicData/ASDF_f90.svg)](https://travis-ci.org/SeismicData/ASDF_f90)
+
 #### Usage
 
 The following instructions are for in-source builds.

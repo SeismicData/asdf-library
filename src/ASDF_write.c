@@ -18,9 +18,13 @@
  * @author Matthieu Lefebvre
  */
 
-#include <mpi.h>
-#include <hdf5.h>
 #include <string.h>
+
+#include <mpi.h>
+#define H5Acreate_vers 2
+#define H5Dcreate_vers 2
+#define H5Gcreate_vers 2
+#include <hdf5.h>
 
 #include "ASDF_common.h"
 #include "ASDF_write.h"

@@ -14,7 +14,7 @@ target_link_libraries(write_ASDF
                       ${MPI_LIBRARIES})
 
 enable_language (Fortran)
-add_definitions(${MP0I_Fortran_COMPILE_FLAGS})
+add_definitions(${MPI_Fortran_COMPILE_FLAGS})
 include_directories(${MPI_Fortran_INCLUDE_PATH})
 link_directories(${MPI_Fortran_LIBRARIES})
                     
@@ -26,7 +26,6 @@ link_directories(${MPI_Fortran_LIBRARIES})
 add_executable(write_example_f90 write_example.f90)
 target_link_libraries(write_example_f90
                       asdf
-                      ${HDF5_C_LIBRARIES}
                       ${MPI_Fortran_LINK_FLAGS}
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})
@@ -34,7 +33,6 @@ target_link_libraries(write_example_f90
 add_executable(read_example_f90 read_example.f90)
 target_link_libraries(read_example_f90
                       asdf
-                      ${HDF5_C_LIBRARIES}
                       ${MPI_Fortran_LINK_FLAGS}
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})

@@ -20,6 +20,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+
+#define H5Dopen_vers 2
 #include <hdf5.h>
 
 #include "ASDF_read.h"
