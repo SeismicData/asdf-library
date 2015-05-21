@@ -23,6 +23,11 @@
 #define _ASDF_WRITE_H_
 
 #include <mpi.h>
+#include <hdf5.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /**
  * @brief Create a new parallel HDF-5 file.
@@ -191,5 +196,9 @@ herr_t ASDF_close_group(hid_t group_id);
  *       - ASDF_define_waveform
  */
 herr_t ASDF_close_dataset(hid_t dataset_id);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

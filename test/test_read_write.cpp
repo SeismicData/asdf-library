@@ -27,12 +27,10 @@
 
 #include "gtest/gtest.h"
 
-extern "C" {
 #include "ASDF_common.h"
 #include "ASDF_init.h"
 #include "ASDF_read.h"
 #include "ASDF_write.h"
-}
 
 TEST(InitFinalize, ReturnSuccess) {
   ASSERT_EQ(ASDF_initialize_hdf5(), 0);
