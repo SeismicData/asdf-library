@@ -183,11 +183,11 @@ herr_t ASDF_close_group(hid_t group_id);
 /**
  * @brief Close HDF5 datasets opened by ASDF calls.
  *
- * @param group_id The dataset to close
+ * @param dataset_id The dataset to close
  *
  * @return 0 for success
  *
- * @note The ASDF calls opening groups are:
+ * @note The ASDF calls opening datasets are:
  *       - ASDF_define_waveform
  */
 herr_t ASDF_close_dataset(hid_t dataset_id);
