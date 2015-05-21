@@ -35,7 +35,8 @@
 hid_t ASDF_create_new_file(const char *filename, MPI_Comm comm);
 
 /**
- * @brief Write an attribute attr_name with value attr_value in dataset_id 
+ * @brief Write an attribute \p attr_name with value \p attr_value in
+ *        \p dataset_id
  *
  * @param dataset_id Id of the dataset in which the attribute will be written..
  * @param attr_name Name of the attribute
@@ -85,8 +86,8 @@ herr_t ASDF_write_quakeml(hid_t loc_id, const char *quakeml_string);
 hid_t ASDF_create_waveforms_group(hid_t loc_id);
 
 /**
- * @brief Create a group "station name" under loc_id, 
- *        with the associated "station_xml" description
+ * @brief Create a group \p station_name under \p loc_id,
+ *        with the associated \p station_xml description
  *
  * @param loc_id Where to create the group
  * @param station_name Name of the station, eg AF.CVNA
@@ -145,7 +146,7 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
                              int *data_id);
 
 /**
- * @brief Write a full seismogram 'waveform' in a dataset data_id
+ * @brief Write a full seismogram \p waveform in a dataset \p data_id
  *
  * @param data_id The id of the containing dataset
  * @param waveform The time serie to be written
@@ -155,7 +156,7 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
 herr_t ASDF_write_full_waveform(hid_t data_id, const float *waveform);
 
 /**
- * @brief Write a slice of seismogram 'waveform' in a dataset data_id
+ * @brief Write a slice of seismogram \p waveform in a dataset \p data_id
  *
  * @param data_id The id of the containing dataset
  * @param waveform The time serie to be written

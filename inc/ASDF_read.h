@@ -37,8 +37,8 @@
 hid_t ASDF_open_read_only(const char *filename, MPI_Comm comm);
 
 /**
- * @brief Read the value of "attr_value" of a string attribute "attr_name"
- *        within the HDF5 group "grp_name".
+ * @brief Read the value of \p attr_value of a string attribute \p attr_name
+ *        within the HDF5 group \p grp_name.
  *
  * @param file_id Id of the file to read the attribute from.
  * @param grp_name Path / name of the HDF5 group containing the attribute.
@@ -47,7 +47,7 @@ hid_t ASDF_open_read_only(const char *filename, MPI_Comm comm);
  *
  * @return 0 for success
  *
- * @note attr_value will be allocated within this routine. Users are
+ * @note \p attr_value will be allocated within this routine. Users are
  *       responsible for deallocating it.
  */
 int ASDF_read_str_attr(hid_t file_id, const char *grp_name,
@@ -81,7 +81,7 @@ int ASDF_get_num_elements_from_path(hid_t file_id, const char *path);
  *
  * @return 0 for success
  *
- * @note waveform should be preallocated and large enough to store
+ * @note \p waveform should be preallocated and large enough to store
  *       the data in full.
  */
 int ASDF_read_full_waveform(hid_t file_id, const char *path,
@@ -98,7 +98,7 @@ int ASDF_read_full_waveform(hid_t file_id, const char *path,
  *
  * @return 0 for success
  *
- * @note waveform should be preallocated and large enough to store
+ * @note \p waveform should be preallocated and large enough to store
  *       the nsamples of data.
  */
 int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
@@ -118,7 +118,7 @@ int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
 char *ASDF_extend_path(const char *path, const char *name);
 
 /** 
- * @brief Checks is there is an object 'name' under 'path' in file 'file_id'
+ * @brief Checks if there is an object \p name under \p path in file \p file_id
  * 
  * @param file_id The identifier of the file to look in
  * @param path The path where name is look for.
@@ -129,20 +129,20 @@ char *ASDF_extend_path(const char *path, const char *name);
 int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name);
 
 /** 
- * @brief Checks if a station called 'name' exists in file 'file_id'
+ * @brief Checks if a station called \p name exists in file \p file_id
  * 
  * @param file_id The identifier of the file to look in
  * @param name The station name being checked.
  * 
  * @return  
  *
- * @note It is looking for a variable "/Waveforms/<name>
+ * @note It is looking for a variable `"/Waveforms/<name>"`
  */
 int ASDF_station_exists(hid_t file_id, const char *name);
 
 /** 
- * @brief Checks if a waveform 'waveform_name' is present for station
- *        'station_name' in file 'file_id'
+ * @brief Checks if a waveform \p waveform_name is present for station
+ *        \p station_name in file \p file_id
  * 
  * @param file_id
  * @param station_name
