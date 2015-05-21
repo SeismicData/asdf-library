@@ -105,7 +105,7 @@ int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
                                int nsamples, float * const waveform);
 
 /**
- * @brief Builds a string "path/name"
+ * @brief Build a string "path/name"
  *
  * @param path The base path
  * @param name The name to append to path
@@ -118,7 +118,7 @@ int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
 char *ASDF_extend_path(const char *path, const char *name);
 
 /** 
- * @brief Checks if there is an object \p name under \p path in file \p file_id
+ * @brief Check if there is an object \p name under \p path in file \p file_id
  * 
  * @param file_id The identifier of the file to look in
  * @param path The path where name is look for.
@@ -129,7 +129,7 @@ char *ASDF_extend_path(const char *path, const char *name);
 int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name);
 
 /** 
- * @brief Checks if a station called \p name exists in file \p file_id
+ * @brief Check if a station called \p name exists in file \p file_id
  * 
  * @param file_id The identifier of the file to look in
  * @param name The station name being checked.
@@ -141,7 +141,7 @@ int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name);
 int ASDF_station_exists(hid_t file_id, const char *name);
 
 /** 
- * @brief Checks if a waveform \p waveform_name is present for station
+ * @brief Check if a waveform \p waveform_name is present for station
  *        \p station_name in file \p file_id
  * 
  * @param file_id
