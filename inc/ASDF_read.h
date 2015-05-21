@@ -66,7 +66,7 @@ int ASDF_get_num_elements_dataset(hid_t dataset_id);
  * @brief Get the number of elements of a dataset from its path.
  *
  * @param file_id Id of the file containing the dataset.
- * @param path Path of the dataset in the hdf5 file.
+ * @param path Path of the dataset in the HDF5 file.
  *
  * @return 0 for success
  */

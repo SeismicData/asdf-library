@@ -25,7 +25,7 @@
 #include <mpi.h>
 
 /**
- * @brief Create a new parallel HDF-5 file.
+ * @brief Create a new parallel HDF5 file.
  *
  * @param filename Name of the ASDF file to create.
  * @param comm The communicator in which the file will be accessed.
@@ -51,7 +51,7 @@ herr_t ASDF_write_string_attribute(hid_t dataset_id,
 /**
  * @brief Write an ASDF specfic "Auxiliary" group
  *
- * @param loc_id Where this group should be written in the hDF5 file
+ * @param loc_id Where this group should be written in the HDF5 file
  *
  * @return 0 for success.
  */
@@ -60,7 +60,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id);
 /**
  * @brief Write an ASDF specfic "Provenance" group
  *
- * @param loc_id Where this group should be written in the hDF5 file
+ * @param loc_id Where this group should be written in the HDF5 file
  *
  * @return 0 for success.
  */
@@ -69,7 +69,7 @@ herr_t ASDF_write_provenance_data(hid_t loc_id);
 /**
  * @brief Write a QuakeML string as a dataset
  *
- * @param loc_id Where this dataset should be written in the hDF5 file
+ * @param loc_id Where this dataset should be written in the HDF5 file
  * @param quakeml_string A XML string following the QuakeML convention.
  *
  * @return 0 for success.
@@ -110,7 +110,7 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
  *
  * @return The dataset id if successful, negative number otherwise.
  *
- * @note this function should be called collectively as every hdf5 call
+ * @note this function should be called collectively as every HDF5 call
  *       defining data should be done collectively. See:
  *       http://www.hdfgroup.org/HDF5/doc/RM/CollectiveCalls.html
  */
@@ -124,7 +124,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
  * There should be as many groups as waveforms. They will be later used
  * to actually write waveform data. Every array should be preallocated.
  *
- * @param loc_id Where this dataset should be written in the hDF5 file
+ * @param loc_id Where this dataset should be written in the HDF5 file
  * @param num_waveforms Number of groups to define
  * @param nsamples number of samples per waveform. 
  *                 FIXME: James, nsamples should be an array?
@@ -136,7 +136,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
  *
  * @return 0 for success.
  *
- * @note this function should be called collectively as every hdf5 call
+ * @note this function should be called collectively as every HDF5 call
  *       defining data should be done collectively. See:
  *       http://www.hdfgroup.org/HDF5/doc/RM/CollectiveCalls.html
  */
