@@ -43,7 +43,7 @@ int ASDF_initialize_hdf5(void);
 int ASDF_finalize_hdf5(void);
 
 /**
- * @brief Close a given hdf5 file
+ * @brief Close a given HDF5 file
  *
  * @param file_id The file to be closed.
  *

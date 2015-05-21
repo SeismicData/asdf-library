@@ -44,16 +44,16 @@ if (BUILD_DOCUMENTATION)
     message (FATAL_ERROR "Doxygen is needed to build the documentation.")
   endif ()
 
-  set (doxyfile ${CMAKE_SOURCE_DIR}/Doxyfile)
+  set (doxyfile_in ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
+  set (doxyfile ${CMAKE_BINARY_DIR}/Doxyfile)
+
+  configure_file(${doxyfile_in} ${doxyfile} @ONLY)
 
   add_custom_target (doc
       command ${DOXYGEN_EXECUTABLE} ${doxyfile}
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
       COMMENT "Generating API documentation with Doxygen"
       VERBATIM)
-
-  install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html 
-           DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/doc)
 endif()
 
 
