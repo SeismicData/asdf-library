@@ -149,7 +149,7 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
  * @brief Write a full seismogram \p waveform in a dataset \p data_id
  *
  * @param data_id The id of the containing dataset
- * @param waveform The time serie to be written
+ * @param waveform The time series to be written
  *
  * @return 0 for success.
  */
@@ -159,7 +159,7 @@ herr_t ASDF_write_full_waveform(hid_t data_id, const float *waveform);
  * @brief Write a slice of seismogram \p waveform in a dataset \p data_id
  *
  * @param data_id The id of the containing dataset
- * @param waveform The time serie to be written
+ * @param waveform The time series to be written
  * @param offset Where to start writing in the dataset
  * @param nsamples How many elements to write
  *
