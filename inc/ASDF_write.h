@@ -175,7 +175,7 @@ herr_t ASDF_write_partial_waveform(hid_t data_id, const float *waveform,
  *
  * @return 0 for success
  *
- * @note The ASDF calls opening groups are:
+ * @see The ASDF calls opening groups are:
  *       - ASDF_create_waveforms_group
  *       - ASDF_create_stations_group
  */
@@ -188,7 +188,7 @@ herr_t ASDF_close_group(hid_t group_id);
  *
  * @return 0 for success
  *
- * @note The ASDF calls opening datasets are:
+ * @see The ASDF calls opening datasets are:
  *       - ASDF_define_waveform
  */
 herr_t ASDF_close_dataset(hid_t dataset_id);
