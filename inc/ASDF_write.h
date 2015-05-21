@@ -128,7 +128,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
  * @param nsamples number of samples per waveform. 
  *                 FIXME: James, nsamples should be an array?
  * @param start_time 
- * @param sampling rate
+ * @param sampling_rate
  * @param event_name Name of the earthquake, shot, ...
  * @param waveform_names Names of stations, channel, ... FIXME: explain better
  * @param data_id Dataset in which waveform will be written
