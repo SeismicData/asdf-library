@@ -3,6 +3,8 @@ cmake_minimum_required (VERSION 2.8)
 ############################################################
 project (ASDF)
 
+include(GNUInstallDirs)
+
 find_package(HDF5 1.8.0 REQUIRED)
 include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
@@ -30,6 +32,13 @@ add_library (asdf
 
 target_link_libraries(asdf ${HDF5_LIBRARIES} ${MPI_C_LIBRARIES})
 
+install(TARGETS asdf
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+file(GLOB inc_files inc/*.h)
+install(FILES ${inc_files}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
 ############################################################
 ### Documentation Generation                             ###
 ############################################################
@@ -54,8 +63,13 @@ if (BUILD_DOCUMENTATION)
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
       COMMENT "Generating API documentation with Doxygen"
       VERBATIM)
+
+  install(DIRECTORY ${CMAKE_BINARY_DIR}/doc/html
+          DESTINATION ${CMAKE_INSTALL_DOCDIR})
 endif()
 
+install(FILES README.md
+        DESTINATION ${CMAKE_INSTALL_DOCDIR})
 
 ############################################################
 if (TEST)
