@@ -36,3 +36,6 @@ target_link_libraries(read_example_f90
                       ${MPI_Fortran_LINK_FLAGS}
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})
+
+install(FILES write_ASDF.c write_example.f90 read_example.f90
+        DESTINATION ${CMAKE_INSTALL_DOCDIR}/examples/)
