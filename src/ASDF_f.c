@@ -53,7 +53,7 @@ void asdf_create_new_file_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
 
 void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name, 
                                     char *attr_value, int *err) {
-  ASDF_write_string_attribute(*dataset_id, attr_name, attr_value);
+  *err = ASDF_write_string_attribute(*dataset_id, attr_name, attr_value);
 }
 
 void asdf_write_auxiliary_data_f_(hid_t *loc_id, int *err) {
