@@ -48,3 +48,22 @@ Once build, you may run test with:
 ```bash
 $ make test
 ```
+
+To install in a nonstandard location (e.g., a user directory without root
+privileges), you can either set ``CMAKE_INSTALL_PREFIX`` during configuration
+or ``DESTDIR`` during install, e.g.,
+
+```bash
+$ cmake -DCMAKE_INSTALL_PREFIX=/path/to/toplevel/install/directory <options> .
+$ make
+$ make install
+```
+or
+```bash
+$ cmake <options> .
+$ make
+$ make DESTDIR=/path/to/toplevel/install/directory install
+```
+
+Note that the files end up in ``$DESTDIR/$CMAKE_INSTALL_PREFIX/*``, so it is
+only necessary to set one of these.
