@@ -158,8 +158,6 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
   snprintf(char_sampling_rate, 
            sizeof(char_sampling_rate), "%1.7f", sampling_rate);
 
-  char char_buf[256];
-
   hid_t space_id, dcpl;
   hsize_t dims[1] = {nsamples}; // Length of waveform
   CHK_H5(space_id= H5Screate_simple(1, dims, NULL));
@@ -190,10 +188,6 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
            sizeof(char_sampling_rate), "%1.7f", sampling_rate);
 
   for (i = 0; i < num_waveforms; ++i) {
-    char char_buf[256];
-
-    //sprintf(char_sampling_rate,"%d", sampling_rate); // converts to decimal base
-
     //CHK_H5(groups[i] = H5Gcreate(loc_id, waveform_names[i],
     //                      H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
 
