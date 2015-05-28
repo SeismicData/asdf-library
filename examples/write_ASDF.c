@@ -48,6 +48,7 @@ int main(int argc, char *argv[]) {
   char *event_name = "event0123456789";
   char *station_name = "AF.CVNA";
   char *station_xml = "station_xml_string";
+  char *provenance_string = "provenance_string";
   char *quakeml_string = "quakemlstringstring";
     /*
       "quakemlstring = '<quakeml>\\n<event unique_id=\"EV_01\">\\n<location"
@@ -99,7 +100,7 @@ int main(int argc, char *argv[]) {
   ASDF_write_string_attribute(file_id, "file_version", "0.0.1b");
   /*------------------------------------*/
   ASDF_write_auxiliary_data(file_id);
-  ASDF_write_provenance_data(file_id);
+  ASDF_write_provenance_data(file_id, provenance_string);
   /*------------------------------------*/
   ASDF_write_quakeml(file_id, quakeml_string);
   /*------------------------------------*/

@@ -73,12 +73,21 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id) {
   return 0; // Success
 }
 
-herr_t ASDF_write_provenance_data(hid_t loc_id) {
-  hid_t group_id;
+herr_t ASDF_write_provenance_data(hid_t loc_id, const char *provenance_string) {
+  hsize_t dims[1] = {strlen(provenance_string)+1};
+
+  hid_t array_id, group_id, space_id;
+  CHK_H5(space_id = H5Screate_simple(1, dims, NULL));
   CHK_H5(group_id = H5Gcreate(loc_id, "Provenance", 
         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
-  /* Fill up with whatever Provenance contains. */
+  CHK_H5(array_id = H5Dcreate(group_id, "XML", H5T_STD_I8LE, space_id,
+	H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+  CHK_H5(H5Dwrite(array_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL,
+	H5P_DEFAULT, provenance_string));
+
+  CHK_H5(H5Dclose(array_id));
   CHK_H5(H5Gclose(group_id));
+  CHK_H5(H5Sclose(space_id));
 
   return 0; // Success
 }

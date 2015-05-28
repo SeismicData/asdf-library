@@ -69,7 +69,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id);
  *
  * @return 0 for success.
  */
-herr_t ASDF_write_provenance_data(hid_t loc_id);
+herr_t ASDF_write_provenance_data(hid_t loc_id, const char *provenance_string);
 
 /**
  * @brief Write a QuakeML string as a dataset

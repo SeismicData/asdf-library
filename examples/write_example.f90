@@ -35,6 +35,7 @@ program write_example
   !--- Data to be written to the ASDF file
   character(len=MAX_STRING_LENGTH) :: event_name
   character(len=MAX_STRING_LENGTH) :: station_name
+  character(len=MAX_STRING_LENGTH) :: provenance
   character(len=MAX_STRING_LENGTH) :: quakeml
   character(len=MAX_STRING_LENGTH) :: station_xml 
   ! TODO: check if a single station_xml is enough
@@ -94,6 +95,7 @@ program write_example
   !--------------------------------------------------------
   filename = "synthetic.h5"
   event_name = "event0123456789"
+  provenance = "<provenance>"
   quakeml = "<quakeml>"
   station_xml = "<station_xml>"
 
@@ -156,8 +158,14 @@ program write_example
                       displs, &
                       MPI_CHARACTER, &
                       MPI_COMM_WORLD, ier)
-  deallocate(displs)
-  deallocate(rcounts)
+
+  do k = 1, 2
+    do j = 1,2
+
+      print *, station_names_gather(j,k )
+      print *, network_names_gather(j,k)
+    enddo
+  enddo
 
   allocate(station_grps_gather(max_num_stations_gather, mysize))
   
@@ -177,7 +185,7 @@ program write_example
                                      "0.0.1.b" // C_NULL_CHAR, ier)
 
   call ASDF_write_auxiliary_data_f(file_id, ier)
-  call ASDF_write_provenance_data_f(file_id, ier)
+  call ASDF_write_provenance_data_f(file_id, trim(provenance), ier)
   call ASDF_write_quakeml_f(file_id, trim(quakeml), ier)
 
   call ASDF_create_waveforms_group_f(file_id, waveforms_grp)

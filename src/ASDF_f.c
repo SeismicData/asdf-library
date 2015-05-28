@@ -60,8 +60,8 @@ void asdf_write_auxiliary_data_f_(hid_t *loc_id, int *err) {
   *err = ASDF_write_auxiliary_data(*loc_id);
 }
 
-void asdf_write_provenance_data_f_(hid_t *loc_id, int *err) {
-  *err = ASDF_write_provenance_data(*loc_id);
+void asdf_write_provenance_data_f_(hid_t *loc_id, char *provenance_string, int *err) {
+  *err = ASDF_write_provenance_data(*loc_id, provenance_string);
 }
 
 void asdf_write_quakeml_f_(hid_t *loc_id, char *quakeml_string, int *err) {
