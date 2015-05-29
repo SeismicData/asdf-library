@@ -113,7 +113,7 @@ TEST_F(ReadWrite, ProvenanceData) {
   int exists;
   {
   hid_t file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
-  ASDF_write_provenance_data(file_id);
+  ASDF_write_provenance_data(file_id, "test_provenance");
   ASDF_close_file(file_id);
   }
   {
