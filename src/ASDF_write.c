@@ -49,7 +49,7 @@ herr_t ASDF_write_string_attribute(hid_t dataset_id,
   CHK_H5(space_id  = H5Screate(H5S_SCALAR));
   CHK_H5(type_id = H5Tcopy(H5T_C_S1));
   CHK_H5(H5Tset_size(type_id, strlen(attr_value)+1));
-  CHK_H5(H5Tset_strpad(type_id,H5T_STR_NULLTERM));
+  CHK_H5(H5Tset_strpad(type_id,H5T_STR_NULLPAD));
 
   CHK_H5(attr_id = H5Acreate(dataset_id, attr_name, type_id, space_id,
         H5P_DEFAULT, H5P_DEFAULT));

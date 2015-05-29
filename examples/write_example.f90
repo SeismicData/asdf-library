@@ -159,14 +159,6 @@ program write_example
                       MPI_CHARACTER, &
                       MPI_COMM_WORLD, ier)
 
-  do k = 1, 2
-    do j = 1,2
-
-      print *, station_names_gather(j,k )
-      print *, network_names_gather(j,k)
-    enddo
-  enddo
-
   allocate(station_grps_gather(max_num_stations_gather, mysize))
   
   allocate(data_ids(num_channels_per_station, &
