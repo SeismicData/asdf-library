@@ -180,12 +180,14 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
                               H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
   /* Get some space for the StationXML dataset */
   hsize_t dims[1] = {strlen(station_xml)+1};
-  CHK_H5(space_id= H5Screate_simple(1, dims, NULL));
+  hsize_t maxdims[1] = {H5S_UNLIMITED};
 
+  CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
   CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
+  CHK_H5(H5Pset_chunk(dcpl, 1, dims));
 
-  CHK_H5(data_id = H5Dcreate(group_id, "StationXML", H5T_IEEE_F32LE, space_id,
-                             H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+  CHK_H5(data_id = H5Dcreate(group_id, "StationXML", H5T_STD_I8LE, space_id,
+                             H5P_DEFAULT, dcpl, H5P_DEFAULT));
 
   /* We can write it there for now, 
    * since there is only one stationXML per station */
