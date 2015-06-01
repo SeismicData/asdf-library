@@ -212,11 +212,14 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
 
   hid_t space_id, dcpl;
   hsize_t dims[1] = {nsamples}; // Length of waveform
-  CHK_H5(space_id= H5Screate_simple(1, dims, NULL));
+  hsize_t maxdims[1] = {H5S_UNLIMITED};
+
+  CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
   CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
+  CHK_H5(H5Pset_chunk(dcpl, 1, dims));
 
   CHK_H5(data_id = H5Dcreate(loc_id, waveform_name, H5T_IEEE_F32LE, space_id,
-                                H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+                                H5P_DEFAULT, dcpl, H5P_DEFAULT));
 
   CHK_H5(ASDF_write_string_attribute(data_id, "event_id",
                                      event_name));
@@ -249,11 +252,14 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
 
     hid_t space_id, dcpl;
     hsize_t dims[1] = {nsamples}; // Length of waveform
-    CHK_H5(space_id= H5Screate_simple(1, dims, NULL));
+    hsize_t maxdims[1] = {H5S_UNLIMITED};
+
+    CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
     CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
+    CHK_H5(H5Pset_chunk(dcpl, 1, dims));
 
     CHK_H5(data_id[i] = H5Dcreate(loc_id, waveform_names[i], H5T_IEEE_F32LE, space_id,
-                                  H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+                                  H5P_DEFAULT, dcpl, H5P_DEFAULT));
 
     CHK_H5(ASDF_write_string_attribute(data_id[i], "event_id",
                                        event_name));
