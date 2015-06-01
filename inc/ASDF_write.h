@@ -54,6 +54,18 @@ herr_t ASDF_write_string_attribute(hid_t dataset_id,
                                    const char *attr_value);
 
 /**
+ *  @brief Write an ASDF integer attribute
+ *
+ *  @param dataset_id Id of the dataset in which the attribute will be written..
+ *  @param attr_name Name of the attribute
+ *  @param attr_value
+ *
+ *  @return 0 for success.
+ */
+herr_t ASDF_write_integer_attribute(hid_t dataset_id,
+				    const char *attr_name,
+				    int attr_value);
+/**
  * @brief Write an ASDF specfic "Auxiliary" group
  *
  * @param loc_id Where this group should be written in the HDF5 file
