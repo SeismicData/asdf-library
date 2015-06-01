@@ -95,7 +95,7 @@ herr_t ASDF_write_double_attribute(hid_t dataset_id,
   CHK_H5(H5Sclose(space_id));
 
   return 0; // Success
-};
+}
 
 herr_t ASDF_write_auxiliary_data(hid_t loc_id) {
   hid_t group_id;
