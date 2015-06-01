@@ -40,7 +40,7 @@ extern "C" {
 hid_t ASDF_create_new_file(const char *filename, MPI_Comm comm);
 
 /**
- * @brief Write an attribute \p attr_name with value \p attr_value in
+ * @brief Write a string attribute \p attr_name with value \p attr_value in
  *        \p dataset_id
  *
  * @param dataset_id Id of the dataset in which the attribute will be written..
@@ -54,7 +54,8 @@ herr_t ASDF_write_string_attribute(hid_t dataset_id,
                                    const char *attr_value);
 
 /**
- *  @brief Write an ASDF integer attribute
+ *  @brief Write an integer attribute \p attr_name with value \p attr_value in
+ *         \p dataset_id
  *
  *  @param dataset_id Id of the dataset in which the attribute will be written..
  *  @param attr_name Name of the attribute
@@ -65,6 +66,21 @@ herr_t ASDF_write_string_attribute(hid_t dataset_id,
 herr_t ASDF_write_integer_attribute(hid_t dataset_id,
 				    const char *attr_name,
 				    int attr_value);
+
+/**
+ *  @brief Write a double attribute \p attr_name with value \p attr_value in
+ *         \p dataset_id
+ *
+ *  @param dataset_id Id of the dataset in which the attribute will be written..
+ *  @param attr_name Name of the attribute
+ *  @param attr_value
+ *
+ *  @return 0 for success.
+ */
+herr_t ASDF_write_double_attribute(hid_t dataset_id,
+				    const char *attr_name,
+				    double attr_value);
+
 /**
  * @brief Write an ASDF specfic "Auxiliary" group
  *
