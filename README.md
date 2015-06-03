@@ -1,5 +1,5 @@
 
-[![Build Status](https://travis-ci.org/SeismicData/ASDF_f90.svg)](https://travis-ci.org/SeismicData/ASDF_f90)
+[![Build Status](https://travis-ci.org/SeismicData/asdf-library.svg)](https://travis-ci.org/SeismicData/asdf-library)
 
 #### Usage
 
