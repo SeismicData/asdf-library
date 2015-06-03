@@ -27,7 +27,7 @@ program read_example
   integer :: num_stations, num_channels_per_station
   integer :: num_waveforms  ! == num_stations * num_channels_per_station
   ! The number of channels per station is constant, as in SPECFEM
-  integer :: start_time, nsamples  ! constant, as in SPECFEM
+  integer :: nsamples  ! constant, as in SPECFEM
   ! Network names and station names are two different beast, as in SPECFEM
   ! network_names(i) is related to station_names(i)
   character(len=MAX_STRING_LENGTH), dimension(:), allocatable :: network_names
@@ -45,7 +45,7 @@ program read_example
   !--- MPI variables
   integer :: myrank, mysize, comm
   !--- Loop variables
-  integer :: i, j, k
+  integer :: i, j
   !--- Error variable
   integer :: ier
 

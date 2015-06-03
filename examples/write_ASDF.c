@@ -88,7 +88,6 @@ int main(int argc, char *argv[]) {
    ******************************************************/
 
   hid_t file_id;
-  hid_t groups[num_waveforms];
   hid_t data_id[num_waveforms];
   
   ASDF_initialize_hdf5();

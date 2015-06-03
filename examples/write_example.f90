@@ -34,7 +34,6 @@ program write_example
 
   !--- Data to be written to the ASDF file
   character(len=MAX_STRING_LENGTH) :: event_name
-  character(len=MAX_STRING_LENGTH) :: station_name
   character(len=MAX_STRING_LENGTH) :: provenance
   character(len=MAX_STRING_LENGTH) :: quakeml
   character(len=MAX_STRING_LENGTH) :: station_xml 
@@ -60,7 +59,6 @@ program write_example
   !   They have to be cleaned as soon as they become useless
   integer :: file_id   ! HDF5 file id, also root group "/"
   integer :: waveforms_grp  ! Group "/Waveforms/" 
-  integer, dimension(:), allocatable :: station_grps
   integer, dimension(:, :, :), allocatable :: data_ids 
 
   !--- MPI variables
