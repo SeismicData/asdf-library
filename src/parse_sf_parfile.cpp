@@ -9,22 +9,14 @@
 
 #include <boost/fusion/include/adapt_struct.hpp>
 
+#include "prov_parameter.h"
+
 namespace qi = boost::spirit::qi;
 namespace phoenix = boost::phoenix;
 
-namespace specfem {
-
-struct parameter {
-  std::string name;
-  std::string type;
-  std::string value;
-};  // struct parameter
-
-}  // namespace specfem
-
 // Needs to be in the global namespace
 BOOST_FUSION_ADAPT_STRUCT (
-  specfem::parameter,
+  parameter,
   (std::string, name)
   (std::string, type)
   (std::string, value)
@@ -127,11 +119,11 @@ std::vector<parameter> parse(std::string filename) {
 }
 
 }  // namespace specfem
-
+/*
 int main(int argc, char *argv[]) {
   std::string filename = "Par_file";
 
-  std::vector<specfem::parameter> params = specfem::parse("Par_file");
+  std::vector<parameter> params = specfem::parse("Par_file");
 
   for (auto p : params) {
     //std::cout << "-------------------------\n";
@@ -141,4 +133,4 @@ int main(int argc, char *argv[]) {
 
   return 0;
 }
-
+*/
