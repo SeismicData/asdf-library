@@ -1,5 +1,5 @@
 #ifndef _ASDF_PROV_PARAMETER_H_
-#define _ASDF__PROV_PARAMETER_H_
+#define _ASDF_PROV_PARAMETER_H_
 
 struct parameter {
   std::string name;

@@ -28,6 +28,8 @@ add_library (asdf
              ${SRC_DIR}/ASDF_init.c
              ${SRC_DIR}/ASDF_read.c
              ${SRC_DIR}/ASDF_write.c
+             ${SRC_DIR}/parse_sf_parfile.cpp
+             ${SRC_DIR}/ASDF_generate_provenance.cpp
              ${SRC_DIR}/ASDF_f.c)
 
 target_link_libraries(asdf ${HDF5_LIBRARIES} ${MPI_C_LIBRARIES})
@@ -38,6 +40,27 @@ install(TARGETS asdf
 file(GLOB inc_files inc/*.h)
 install(FILES ${inc_files}
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+if (${CMAKE_VERSION} VERSION_GREATER 3.1)
+  set_property(TARGET asdf PROPERTY CXX_STANDARD 11)
+else()
+  include(CheckCXXCompilerFlag)
+  CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+  CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+  if (COMPILER_SUPPORTS_CXX11)
+    set_source_files_properties(test_read_write.cpp
+                                PROPERTIES
+                                COMPILE_FLAGS "-std=c++11")
+  elseif (COMPILER_SUPPORTS_CXX0X)
+    set_source_files_properties(test_read_write.cpp
+                                PROPERTIES
+                                COMPILE_FLAGS "-std=c++0x")
+  else()
+    message(FATAL_ERROR
+            "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. "
+            "Please use a different C++ compiler.")
+  endif()
+endif()
 
 ############################################################
 ### Documentation Generation                             ###
