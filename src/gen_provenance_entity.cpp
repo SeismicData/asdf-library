@@ -32,6 +32,7 @@ std::string generate_provenance_entity(const std::string label,
 
   std::ostringstream prov;
 
+  // Write entity start tag and general information
   prov << "<prov:entity prov:id=\"seis_prov:" << id << "\">"
        << "<prov:label>" << label << "</prov:label>"
        << "<prov:type xsi:type=\"xsd:string\">"
@@ -43,6 +44,9 @@ std::string generate_provenance_entity(const std::string label,
          << "</seis_prov:" << p.name << ">";
   }
 
+  // Write entity end tag
+  prov << "</prov:entity>\0";
+  prov.flush();
 
   return prov.str();
 }

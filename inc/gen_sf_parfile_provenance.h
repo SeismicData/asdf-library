@@ -37,6 +37,8 @@ extern "C" {
  * @return A pointer to the generated C string.
  *
  * @note Bind C++ functions with the C API.
+ *
+ * @warning DO NOT FORGET TO CALL clean_sf_parfile_provenance
  */
 char *generate_sf_parfile_provenance(const char *filename,
                                      const char *prov_label,

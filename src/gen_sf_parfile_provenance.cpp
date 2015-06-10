@@ -32,13 +32,19 @@
 char *generate_sf_parfile_provenance(const char *filename,
                                      const char *prov_label,
                                      const char *prov_id) {
+  // 1) Parse Par_file
   std::vector<parameter> params = parse_sf_parfile(std::string(filename));
 
+  // 2) Generate string from parameters
   std::string xml_str = generate_provenance_entity(std::string(prov_label),
                                                    std::string(prov_id),
                                                    params);
+
+  // 3) Copy the std::string to a C-string to interface
+  //    with the C and Fortran APIs.
   char *sub_provenance = new char[xml_str.length() +1];
   std::strncpy(sub_provenance, xml_str.c_str(), xml_str.length());
+  sub_provenance[xml_str.length()] = '\0';
 
   return sub_provenance;
 }
