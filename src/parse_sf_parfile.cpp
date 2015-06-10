@@ -22,7 +22,7 @@ BOOST_FUSION_ADAPT_STRUCT (
   (std::string, value)
 )
 
-namespace specfem {
+//namespace specfem {
 
 std::vector<std::string> read_par_file(const std::string &filename) {
   std::vector<std::string> lines;
@@ -118,7 +118,8 @@ std::vector<parameter> parse(std::string filename) {
   return params;
 }
 
-}  // namespace specfem
+
+//}  // namespace specfem
 /*
 int main(int argc, char *argv[]) {
   std::string filename = "Par_file";
