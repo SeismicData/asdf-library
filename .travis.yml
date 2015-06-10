@@ -1,4 +1,4 @@
-language: c
+language: cpp
 
 env:
     - SHARED=off
@@ -6,7 +6,7 @@ env:
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install gfortran openmpi-bin libhdf5-openmpi-dev doxygen graphviz
+    - sudo apt-get install gfortran openmpi-bin libhdf5-openmpi-dev doxygen graphviz libboost-all-dev
 
 install:
     - mkdir build

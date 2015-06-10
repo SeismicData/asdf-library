@@ -37,5 +37,11 @@ target_link_libraries(read_example_f90
                       ${MPI_LIBRARIES}
                       ${MPI_Fortran_LIBRARIES})
 
-install(FILES write_ASDF.c write_example.f90 read_example.f90
+add_executable(parse_parfile_example parse_parfile_example.c)
+target_link_libraries(parse_parfile_example
+                      asdf)
+
+install(FILES write_ASDF.c write_example.f90 read_example.f90 parse_parfile_example.c Par_file
         DESTINATION ${CMAKE_INSTALL_DOCDIR}/examples/)
+
+configure_file(Par_file Par_file COPYONLY)
