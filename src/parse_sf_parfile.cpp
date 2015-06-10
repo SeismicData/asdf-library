@@ -50,7 +50,7 @@ BOOST_FUSION_ADAPT_STRUCT (
 // Fill a vector with the content of the Par_file
 std::vector<std::string> read_par_file(const std::string &filename) {
   std::vector<std::string> lines;
-  std::ifstream is (filename);
+  std::ifstream is (filename.c_str());
 
   // TODO: determine what to do in case of failure.
   if (is.is_open()) {
