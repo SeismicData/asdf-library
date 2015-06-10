@@ -22,6 +22,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <cstring>
 
 #include "prov_parameter.h"
 #include "parse_sf_parfile.h"
@@ -43,7 +44,7 @@ char *generate_sf_parfile_provenance(const char *filename,
   // 3) Copy the std::string to a C-string to interface
   //    with the C and Fortran APIs.
   char *sub_provenance = new char[xml_str.length() +1];
-  std::strncpy(sub_provenance, xml_str.c_str(), xml_str.length());
+  strncpy(sub_provenance, xml_str.c_str(), xml_str.length());
   sub_provenance[xml_str.length()] = '\0';
 
   return sub_provenance;
