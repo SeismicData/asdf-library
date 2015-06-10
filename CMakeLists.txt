@@ -5,6 +5,7 @@ project (ASDF)
 
 include(GNUInstallDirs)
 
+find_package(Boost 1.49 REQUIRED)
 find_package(HDF5 1.8.0 REQUIRED)
 include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
