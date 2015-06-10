@@ -1,3 +1,24 @@
+/******************************************************************************
+ * Copyright 2015 ASDF developers
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *****************************************************************************/
+/** 
+ * @file parse_sf_parfile.h
+ * @brief 
+ * @author Matthieu Lefebvre
+ */
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -10,11 +31,14 @@
 #include <boost/fusion/include/adapt_struct.hpp>
 
 #include "prov_parameter.h"
+#include "parse_sf_parfile.h"
 
+///////////////////////////////////////////////////////////
 namespace qi = boost::spirit::qi;
 namespace phoenix = boost::phoenix;
 
-// Needs to be in the global namespace
+///////////////////////////////////////////////////////////
+// Make struct act as a tuple
 BOOST_FUSION_ADAPT_STRUCT (
   parameter,
   (std::string, name)
@@ -22,8 +46,8 @@ BOOST_FUSION_ADAPT_STRUCT (
   (std::string, value)
 )
 
-//namespace specfem {
-
+///////////////////////////////////////////////////////////
+// Fill a vector with the content of the Par_file
 std::vector<std::string> read_par_file(const std::string &filename) {
   std::vector<std::string> lines;
   std::ifstream is (filename);
@@ -42,6 +66,8 @@ std::vector<std::string> read_par_file(const std::string &filename) {
   return lines;
 }
 
+///////////////////////////////////////////////////////////
+// Define the Grammar use to parse the Par_file
 template <typename Iterator>
 struct par_file_grammar : qi::grammar<Iterator, parameter()> {
   par_file_grammar() : par_file_grammar::base_type(expr) {
@@ -97,7 +123,10 @@ struct par_file_grammar : qi::grammar<Iterator, parameter()> {
   qi::rule<Iterator, std::string()> gnl_id;
 };
 
-std::vector<parameter> parse(std::string filename) {
+///////////////////////////////////////////////////////////
+// Actual parsing function
+//
+std::vector<parameter> parse_sf_parfile(const std::string filename) {
   std::vector<std::string> lines = read_par_file(filename);
 
   typedef std::string::const_iterator iterator_type;
@@ -117,21 +146,3 @@ std::vector<parameter> parse(std::string filename) {
   }
   return params;
 }
-
-
-//}  // namespace specfem
-/*
-int main(int argc, char *argv[]) {
-  std::string filename = "Par_file";
-
-  std::vector<parameter> params = specfem::parse("Par_file");
-
-  for (auto p : params) {
-    //std::cout << "-------------------------\n";
-    std::cout << p.name << " / " << p.type << " / " << p.value;
-    std::cout << std::endl;
-  }
-
-  return 0;
-}
-*/

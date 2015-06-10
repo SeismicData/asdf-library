@@ -29,7 +29,8 @@ add_library (asdf
              ${SRC_DIR}/ASDF_read.c
              ${SRC_DIR}/ASDF_write.c
              ${SRC_DIR}/parse_sf_parfile.cpp
-             ${SRC_DIR}/gen_param_provenance.cpp
+             ${SRC_DIR}/gen_provenance_entity.cpp
+             ${SRC_DIR}/gen_sf_parfile_provenance.cpp
              ${SRC_DIR}/ASDF_generate_provenance.c
              ${SRC_DIR}/ASDF_f.c)
 

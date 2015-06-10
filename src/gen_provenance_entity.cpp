@@ -14,22 +14,35 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file prov_parameter.h
+ * @file gen_provenance_entity.h
  * @brief 
  * @author Matthieu Lefebvre
  */
 
-#ifndef _ASDF_PROV_PARAMETER_H_
-#define _ASDF_PROV_PARAMETER_H_
+#include <iostream>
+#include <sstream>
+#include <vector>
 
-/** 
- * @brief A parameter has three compononents of interest to write
- *        in a provenance file: a name, a type and a value.
- */
-struct parameter {
-  std::string name;
-  std::string type;
-  std::string value;
-};  // struct parameter
+#include "prov_parameter.h"
+#include "gen_provenance_entity.h"
 
-#endif  // _ASDF_PROV_PARAMETER_H_
+std::string generate_provenance_entity(const std::string label, 
+                                       const std::string id,
+                                       const std::vector<parameter> params) {
+
+  std::ostringstream prov;
+
+  prov << "<prov:entity prov:id=\"seis_prov:" << id << "\">"
+       << "<prov:label>" << label << "</prov:label>"
+       << "<prov:type xsi:type=\"xsd:string\">"
+          "seis_prov:input_parameter</prov:type>";
+
+  for (auto p : params) {
+    prov << "<seis_prov:" << p.name << " xsi:type=\"" << p.type << "\">" 
+         << p.value 
+         << "</seis_prov:" << p.name << ">";
+  }
+
+
+  return prov.str();
+}

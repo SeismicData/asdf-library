@@ -14,22 +14,26 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file prov_parameter.h
+ * @file gen_provenance_entity.h
  * @brief 
  * @author Matthieu Lefebvre
  */
 
-#ifndef _ASDF_PROV_PARAMETER_H_
-#define _ASDF_PROV_PARAMETER_H_
+#ifndef _ASDF_GEN_PROVENANCE_ENTITY_
+#define _ASDF_GEN_PROVENANCE_ENTITY_
 
 /** 
- * @brief A parameter has three compononents of interest to write
- *        in a provenance file: a name, a type and a value.
+ * @brief Generate a provenance entity identified by label and id, from the
+ *        values in params.
+ * 
+ * @param label
+ * @param id
+ * @param params
+ * 
+ * @return  The generated string
  */
-struct parameter {
-  std::string name;
-  std::string type;
-  std::string value;
-};  // struct parameter
+std::string generate_provenance_entity(const std::string label, 
+                                       const std::string id,
+                                       const std::vector<parameter> params);
 
-#endif  // _ASDF_PROV_PARAMETER_H_
+#endif  // _ASDF_GEN_PROVENANCE_ENTITY_
