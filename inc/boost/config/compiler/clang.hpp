@@ -201,16 +201,6 @@
 #  define BOOST_NO_CXX11_INLINE_NAMESPACES
 #endif
 
-// Apple Clang uses libc++ by default on Mavericks (OS X 10.9)  and higher
-// Apple Clang uses libstdc++ by default on Mountain Lion (OS X 10.8) and lower
-
-#ifdef __APPLE__
-#include <ciso646>
-#ifndef _LIBCPP_VERSION
-#  define BOOST_APPLE_CLANG_NO_LIBCXX
-#endif
-#endif
-
 #if !__has_feature(cxx_override_control)
 #  define BOOST_NO_CXX11_FINAL
 #endif
