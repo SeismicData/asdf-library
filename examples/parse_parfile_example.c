@@ -25,28 +25,29 @@
 
 int main(int argc, char *argv[]) {
   char *prov;
+  FILE *fd;
 
-  /////////////////////////////////////////////////////////
-  // Function call of interest:
+  /*=====================================================*/
+  /* Function call of interest:                          */
   ASDF_generate_par_file_provenance(
-      "Par_file",                       // Par_file path
-      "SPECFEM-style input parameters", // provenance label
-      "id_1234",                        // provenance id
-      &prov);                           // result
-  /////////////////////////////////////////////////////////
+      "Par_file",                       /* Par_file path    */
+      "SPECFEM-style input parameters", /* provenance label */
+      "id_1234",                        /* provenance id    */
+      &prov);                           /* result           */
+  /*=====================================================*/
   
   /*fprintf(stderr, "\n\n%s\n\n", prov);*/
-
-  FILE *fd = fopen("prov_par_file.txt", "w");
+  fd = fopen("prov_par_file.txt", "w");
 
   if (fd) {
     fputs(prov, fd);
     fclose(fd);
   }
 
-  /////////////////////////////////////////////////////////
-  // Do not forget to clean:
+  /*=====================================================*/
+  /* Do not forget to clean:                             */
   ASDF_clean_par_file_provenance(prov);
-  /////////////////////////////////////////////////////////
+  /*=====================================================*/
   return 0;
 }
+

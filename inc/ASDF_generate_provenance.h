@@ -53,4 +53,4 @@ void ASDF_clean_par_file_provenance(char *sub_provenance);
 }
 #endif
 
-#endif  // _ASDF_GENERATE_PROVENANCE_H_
+#endif  /* _ASDF_GENERATE_PROVENANCE_H_ */
