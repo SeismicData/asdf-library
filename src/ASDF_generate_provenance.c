@@ -24,6 +24,10 @@
 #include "gen_sf_parfile_provenance.h"
 #include "ASDF_generate_provenance.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void ASDF_generate_par_file_provenance(const char *filename,
                                        const char *prov_label,
                                        const char *prov_id,
@@ -34,3 +38,7 @@ void ASDF_generate_par_file_provenance(const char *filename,
 void ASDF_clean_par_file_provenance(char *sub_provenance) {
   clean_sf_parfile_provenance(sub_provenance);
 }
+
+#ifdef __cplusplus
+}
+#endif
