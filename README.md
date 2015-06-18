@@ -27,6 +27,15 @@ $ cmake . -DCMAKE_Fortran_COMPILER=h5pfc
 $ make 
 ```
 
+If you want to get cmake to find your local boost directory, try:
+
+```bash
+$ cmake -DBoost_NO_BOOST_CMAKE=TRUE \
+    -DBoost_NO_SYSTEM_PATHS=TRUE \
+    -DBOOST_ROOT:PATHNAME=$TARGET \
+    -DBoost_LIBRARY_DIRS:FILEPATH=${TARGET}/lib
+```
+
 It should create a library in ``lib/``
 examples programs are in ``test/`` and generated there.
 
@@ -47,14 +56,6 @@ and follow the previous instructions, replacing ``.`` with ``..``
 Once build, you may run test with:
 ```bash
 $ make test
-```
-
-If you want to get cmake to find your local boost directory, try:
-
-```cmake -DBoost_NO_BOOST_CMAKE=TRUE \
-    -DBoost_NO_SYSTEM_PATHS=TRUE \
-    -DBOOST_ROOT:PATHNAME=$TARGET \
-    -DBoost_LIBRARY_DIRS:FILEPATH=${TARGET}/lib
 ```
 
 To install in a nonstandard location (e.g., a user directory without root
