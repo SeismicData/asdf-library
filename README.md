@@ -49,6 +49,14 @@ Once build, you may run test with:
 $ make test
 ```
 
+If you want to get cmake to find your local boost directory, try:
+
+```cmake -DBoost_NO_BOOST_CMAKE=TRUE \
+    -DBoost_NO_SYSTEM_PATHS=TRUE \
+    -DBOOST_ROOT:PATHNAME=$TARGET \
+    -DBoost_LIBRARY_DIRS:FILEPATH=${TARGET}/lib
+```
+
 To install in a nonstandard location (e.g., a user directory without root
 privileges), you can either set ``CMAKE_INSTALL_PREFIX`` during configuration
 or ``DESTDIR`` during install, e.g.,
