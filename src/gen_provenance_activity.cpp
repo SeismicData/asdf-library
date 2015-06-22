@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file gen_provenance_entity.h
+ * @file gen_provenance_activity.h
  * @brief 
  * @author Matthieu Lefebvre
  */
@@ -24,17 +24,17 @@
 #include <vector>
 
 #include "prov_parameter.h"
-#include "gen_provenance_entity.h"
+#include "gen_provenance_activity.h"
 
-std::string generate_provenance_entity(const std::string label, 
-                                       const std::string type,
-                                       const std::string id,
-                                       const std::vector<parameter> params) {
+std::string generate_provenance_activity(const std::string label, 
+                                         const std::string type,
+                                         const std::string id,
+                                         const std::vector<parameter> params) {
 
   std::ostringstream prov;
 
-  // Write entity start tag and general information
-  prov << "<prov:entity prov:id=\"seis_prov:" << id << "\">"
+  // Write activity start tag and general information
+  prov << "<prov:activity prov:id=\"seis_prov:" << id << "\">"
        << "<prov:label>" << label << "</prov:label>"
        << "<prov:type>" << type << "</prov:type>";
 
@@ -44,8 +44,8 @@ std::string generate_provenance_entity(const std::string label,
          << "</seis_prov:" << p.name << ">";
   }
 
-  // Write entity end tag
-  prov << "</prov:entity>\0";
+  // Write activity end tag
+  prov << "</prov:activity>\0";
   prov.flush();
 
   return prov.str();

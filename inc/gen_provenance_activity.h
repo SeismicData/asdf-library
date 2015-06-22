@@ -14,16 +14,16 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file gen_provenance_entity.h
+ * @file gen_provenance_activity.h
  * @brief 
  * @author Matthieu Lefebvre
  */
 
-#ifndef _ASDF_GEN_PROVENANCE_ENTITY_
-#define _ASDF_GEN_PROVENANCE_ENTITY_
+#ifndef _ASDF_GEN_PROVENANCE_ACTIVITY_
+#define _ASDF_GEN_PROVENANCE_ACTIVITY_
 
 /** 
- * @brief Generate a provenance entity identified by label, type, and id, from the
+ * @brief Generate a provenance activity identified by label, type, and id, from the
  *        values in params.
  * 
  * @param label
@@ -33,9 +33,9 @@
  * 
  * @return  The generated string
  */
-std::string generate_provenance_entity(const std::string label, 
-                                       const std::string type,
-                                       const std::string id,
-                                       const std::vector<parameter> params);
+std::string generate_provenance_activity(const std::string label, 
+                                         const std::string type,
+                                         const std::string id,
+                                         const std::vector<parameter> params);
 
-#endif  // _ASDF_GEN_PROVENANCE_ENTITY_
+#endif  // _ASDF_GEN_PROVENANCE_ACTIVITY_

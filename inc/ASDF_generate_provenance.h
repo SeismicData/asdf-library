@@ -37,6 +37,7 @@ extern "C" {
  */
 void ASDF_generate_par_file_provenance(const char *filename,
                                        const char *prov_label,
+                                       const char *prov_type,
                                        const char *prov_id,
                                        char **prov);
 

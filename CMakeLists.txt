@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 2.8.10)
 
 ############################################################
 project (ASDF)
@@ -11,6 +11,15 @@ include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 option (TEST "Run unit tests" OFF)
+
+#set(Boost_NO_SYSTEM_PATHS TRUE) 
+#if (Boost_NO_SYSTEM_PATHS)
+#  set(BOOST_ROOT BOOST_ROOT)
+#  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
+#  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
+#endif (Boost_NO_SYSTEM_PATHS)
+#find_package(Boost REQUIRED)
+#include_directories(${BOOST_INCLUDE_DIRS})
 
 ############################################################
 ### Setup directory structure                            ###
@@ -31,6 +40,8 @@ add_library (asdf
              ${SRC_DIR}/ASDF_write.c
              ${SRC_DIR}/parse_sf_parfile.cpp
              ${SRC_DIR}/gen_provenance_entity.cpp
+             ${SRC_DIR}/gen_provenance_agent.cpp
+             ${SRC_DIR}/gen_provenance_activity.cpp
              ${SRC_DIR}/gen_sf_parfile_provenance.cpp
              ${SRC_DIR}/ASDF_generate_provenance.c
              ${SRC_DIR}/ASDF_f.c)

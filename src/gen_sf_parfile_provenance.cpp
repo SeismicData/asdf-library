@@ -32,12 +32,14 @@
 
 char *generate_sf_parfile_provenance(const char *filename,
                                      const char *prov_label,
+                                     const char *prov_type,
                                      const char *prov_id) {
   // 1) Parse Par_file
   std::vector<parameter> params = parse_sf_parfile(std::string(filename));
 
   // 2) Generate string from parameters
   std::string xml_str = generate_provenance_entity(std::string(prov_label),
+                                                   std::string(prov_type),
                                                    std::string(prov_id),
                                                    params);
 
