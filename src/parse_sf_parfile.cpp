@@ -78,17 +78,23 @@ struct par_file_grammar : qi::grammar<Iterator, parameter()> {
     // We actually don't care about comments or blank lines.
     // A parse failure is good enough for us.
 
-    boolean = qi::no_case [qi::string(".true.") 
-                         | qi::string(".false.")];
+    // xsd:boolean representation is {true, bool}
+    boolean = qi::no_case [ qi::string(".true.") [_val = "true" ]
+                          | qi::string(".false.") [_val = "false"]
+                          ];
+    // xsd:double does not include 'd0' at the end
     real = -qi::char_("-") 
         >> +qi::digit 
         >> qi::char_(".") 
         >> *qi::digit 
-        >> -qi::string("d0");
+        >> qi::omit[-qi::string("d0")];
 
-    integer = -qi::char_("-") >> +qi::char_("0-9~.");
+    //integer = -qi::char_("-") >> +(qi::char_("0-9") - qi::char_("."));
+    integer = -qi::char_("-") >> +qi::digit;
 
     identifier = +(qi::alnum | qi::char_("_"));
+
+    path = +(qi::alnum | qi::char_("_./"));
     
     // Identifier that can start with a number.
     // Forced by geophycists practice in model naming.
@@ -110,6 +116,7 @@ struct par_file_grammar : qi::grammar<Iterator, parameter()> {
         | qi::hold [real]    [at_c<1>(_val) = "xsd:double"]
         | qi::hold [gnl_id]  [at_c<1>(_val) = "xsd:string"]
         | qi::hold [integer] [at_c<1>(_val) = "xsd:int"]
+        |           path     [at_c<1>(_val) = "xsd:string"]
         ) [at_c<2>(_val) = _1]
       >> qi::omit [-(*qi::space >> comment)];
   }
@@ -121,6 +128,7 @@ struct par_file_grammar : qi::grammar<Iterator, parameter()> {
   qi::rule<Iterator, std::string()> integer;
   qi::rule<Iterator, std::string()> identifier;
   qi::rule<Iterator, std::string()> gnl_id;
+  qi::rule<Iterator, std::string()> path;
 };
 
 ///////////////////////////////////////////////////////////
