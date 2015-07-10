@@ -14,38 +14,37 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file gen_provenance_entity.h
+ * @file gen_sf_provenance.cpp.h
  * @brief 
  * @author Matthieu Lefebvre
  */
 
 #include <iostream>
 #include <sstream>
-#include <vector>
+#include <cstring>
 
-#include "prov_parameter.h"
-#include "gen_provenance_entity.h"
+#include "gen_usage_provenance.h"
 
-std::string generate_provenance_entity(const std::string label,
-                                       const std::string id,
-                                       const std::vector<parameter> params) {
+char *generate_usage_provenance(const char *prov_id1,
+                                const char *prov_id2) {
 
-  std::ostringstream prov;
+  std::ostringstream usage_prov;
+  std::string prov;
 
-  // Write entity start tag and general information
-  prov << "<prov:entity prov:id=\"seis_prov:" << id << "\">"
-       << "<prov:label>" << label << "</prov:label>"
-       << "<prov:type></prov:type>";
+  // 1) Generate Association provenace
+  usage_prov << "<prov:used><prov:activity prov:ref=" << prov_id1 << "/><prov:entity prov:ref=" << prov_id2 << "/></prov:used>\0";
+  prov = usage_prov.str();
 
-  for (auto p : params) {
-    prov << "<seis_prov:" << p.name << " xsi:type=\"" << p.type << "\">" 
-         << p.value
-         << "</seis_prov:" << p.name << ">";
-  }
+  // 3) Copy the std::string to a C-string to interface
+  //    with the C and Fortran APIs.
+  char *usage_provenance = new char[prov.length() +1];
+  strncpy(usage_provenance, prov.c_str(), prov.length());
+  usage_provenance[prov.length()] = '\0';
 
-  // Write entity end tag
-  prov << "</prov:entity>\0";
-  prov.flush();
+  return usage_provenance;
+}
 
-  return prov.str();
+void clean_usage_provenance(char *usage_provenance) {
+  if (usage_provenance)
+    delete[] usage_provenance;
 }

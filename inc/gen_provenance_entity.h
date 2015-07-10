@@ -27,14 +27,12 @@
  *        values in params.
  * 
  * @param label
- * @param type
  * @param id
  * @param params
  * 
  * @return  The generated string
  */
 std::string generate_provenance_entity(const std::string label, 
-                                       const std::string type,
                                        const std::string id,
                                        const std::vector<parameter> params);
 

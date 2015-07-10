@@ -14,48 +14,45 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file gen_sf_parfile_provenance.h
+ * @file gen_sf_provenance.h
  * @brief 
  * @author Matthieu Lefebvre
  */
 
-#ifndef _ASDF_GEN_SF_PARFILE_PROVENANCE_
-#define _ASDF_GEN_SF_PARFILE_PROVENANCE_
+#ifndef _ASDF_GEN_ASSOCATION_PROVENANCE_
+#define _ASDF_GEN_ASSOCATION_PROVENANCE_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /** 
- * @brief Generate a provenance entity with id prov_id and label prov_label
- *        from a specfem style parameter file ("Par_file").
+ * @brief Generate provenance for the waveform simulation
  * 
- * @param filename Name of the "Par_file".
- * @param prov_label Description, for instance "SPECFEM Input Parameters".
- * @param prov_id Unique id for this provenance item.
+ * @param prov_id1 The first provenance id.
+ * @param prov_id2 The second provenance id.
  * 
  * @return A pointer to the generated C string.
  *
  * @note Bind C++ functions with the C API.
  *
- * @warning DO NOT FORGET TO CALL clean_sf_parfile_provenance
+ * @warning DO NOT FORGET TO CALL clean_sf_provenance
  */
-char *generate_sf_parfile_provenance(const char *filename,
-                                     const char *prov_label,
-                                     const char *prov_id);
+char *generate_association_provenance(const char *prov_id1,
+                                      const char *prov_id2);
 
 /** 
- * @brief Deallocate the sub_provenance string build by
- *        generate_sf_parfile_provenance.
+ * @brief Deallocate the provenance string build by
+ *        generate_sf_provenance.
  * 
- * @param sub_provenance Pointer to the C string to deallocate.
+ * @param sf_provenance Pointer to the C string to deallocate.
  *
  * @note Bind C++ functions with the C API.
  */
-void clean_sf_parfile_provenance(char *sub_provenance);
+void clean_sf_provenance(char *sf_provenance);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // _ASDF_GEN_SF_PARFILE_PROVENANCE_
+#endif  // _ASDF_GEN_SF_PROVENANCE_

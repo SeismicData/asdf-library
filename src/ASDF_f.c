@@ -24,6 +24,7 @@
 #include "ASDF_init.h"
 #include "ASDF_write.h"
 #include "ASDF_read.h"
+#include "ASDF_generate_provenance.h"
 
 /**********************************************************
  *  Wrappers for ASDF_init                                *
@@ -171,3 +172,7 @@ void asdf_waveform_exists_f_(hid_t *file_id, char *station_name,
 
 // TODO: It is probably irrelevant to export every function used to generate
 // provenance information. check ASDF_write_provenance_data.
+ 
+void asdf_generate_provenance_f_(char *filename, char *startTime, char *endTime, char **provenance) {
+  ASDF_generate_sf_provenance(filename, startTime, endTime, provenance);
+} 

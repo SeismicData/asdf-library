@@ -14,48 +14,51 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file gen_sf_parfile_provenance.h
+ * @file gen_sf_provenance.h
  * @brief 
  * @author Matthieu Lefebvre
  */
 
-#ifndef _ASDF_GEN_SF_PARFILE_PROVENANCE_
-#define _ASDF_GEN_SF_PARFILE_PROVENANCE_
+#ifndef _ASDF_GEN_SIMULATION_PROVENANCE_
+#define _ASDF_GEN_SIMULATION_PROVENANCE_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /** 
- * @brief Generate a provenance entity with id prov_id and label prov_label
- *        from a specfem style parameter file ("Par_file").
+ * @brief Generate provenance for the waveform simulation
  * 
- * @param filename Name of the "Par_file".
- * @param prov_label Description, for instance "SPECFEM Input Parameters".
- * @param prov_id Unique id for this provenance item.
+ * @param person The name of the person, for instance "Hans Mustermann"
+ * @param email The email of the person, for instance "hans.mustermann@email.com"
+ * @param software_version The version of the waveform solver, for instance "7.0"
+ * @param software_website The website that hosts the solver, for instance "https://geodynamics.org/cig/software/specfem3d_globe/"
+ * @param model_name The name of the initial model used in the solver, for instance "PREM"
+ * @param model_website The website that hosts the inital model, for instance "http://ds.iris.edu/ds/products/emc-prem/"
  * 
  * @return A pointer to the generated C string.
  *
  * @note Bind C++ functions with the C API.
  *
- * @warning DO NOT FORGET TO CALL clean_sf_parfile_provenance
+ * @warning DO NOT FORGET TO CALL clean_sf_provenance
  */
-char *generate_sf_parfile_provenance(const char *filename,
+char *generate_simulation_provenance(const char *startTime,
+                                     const char *endTime,
                                      const char *prov_label,
                                      const char *prov_id);
 
 /** 
- * @brief Deallocate the sub_provenance string build by
- *        generate_sf_parfile_provenance.
+ * @brief Deallocate the provenance string build by
+ *        generate_sf_provenance.
  * 
- * @param sub_provenance Pointer to the C string to deallocate.
+ * @param sf_provenance Pointer to the C string to deallocate.
  *
  * @note Bind C++ functions with the C API.
  */
-void clean_sf_parfile_provenance(char *sub_provenance);
+void clean_sf_provenance(char *sf_provenance);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // _ASDF_GEN_SF_PARFILE_PROVENANCE_
+#endif  // _ASDF_GEN_SF_PROVENANCE_

@@ -19,8 +19,9 @@
  * @author Matthieu Lefebvre
  */
 
-#ifndef _ASDF_GEN_SF_PARFILE_PROVENANCE_
-#define _ASDF_GEN_SF_PARFILE_PROVENANCE_
+#ifndef _ASDF_GEN_SF_PROVFILE_
+#define _ASDF_GEN_SF_PROVFILE_
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,19 +41,8 @@ extern "C" {
  *
  * @warning DO NOT FORGET TO CALL clean_sf_parfile_provenance
  */
-char *generate_sf_parfile_provenance(const char *filename,
-                                     const char *prov_label,
-                                     const char *prov_id);
-
-/** 
- * @brief Deallocate the sub_provenance string build by
- *        generate_sf_parfile_provenance.
- * 
- * @param sub_provenance Pointer to the C string to deallocate.
- *
- * @note Bind C++ functions with the C API.
- */
-void clean_sf_parfile_provenance(char *sub_provenance);
+void generate_sf_provfile(const char *filename, char *software_name, char *software_version, char *software_website,
+                          char *software_label, char *parfile, char *parfile_label, char *trace_label, char *simulation_label);
 
 #ifdef __cplusplus
 }

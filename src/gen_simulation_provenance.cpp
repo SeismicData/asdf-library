@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file gen_sf_parfile_provenance.cpp.h
+ * @file gen_sf_provenance.cpp.h
  * @brief 
  * @author Matthieu Lefebvre
  */
@@ -26,31 +26,34 @@
 
 #include "prov_parameter.h"
 #include "parse_sf_parfile.h"
-#include "gen_provenance_entity.h"
 
 #include "gen_sf_parfile_provenance.h"
+#include "gen_simulation_provenance.h"
 
-char *generate_sf_parfile_provenance(const char *filename,
+char *generate_simulation_provenance(const char *startTime,
+                                     const char *endTime,
                                      const char *prov_label,
                                      const char *prov_id) {
-  // 1) Parse Par_file
-  std::vector<parameter> params = parse_sf_parfile(std::string(filename));
 
-  // 2) Generate string from parameters
-  std::string xml_str = generate_provenance_entity(std::string(prov_label),
-                                                   std::string(prov_id),
-                                                   params);
+  std::ostringstream simulation_prov;
+  std::string prov;
+
+  simulation_prov << "<prov:activity prov:id=" << prov_id << "><prov:startTime>" << startTime
+                  << "</prov:startTime><prov:endTime>" << endTime << "</prov:endtime>" << "<prov:label>" << prov_label 
+                  << "</prov:label><prov:type xsi:type=\"xsd:string\">seis_prov:waveform_simulation</prov:type></prov:activity>";
+  
+  prov = simulation_prov.str();
 
   // 3) Copy the std::string to a C-string to interface
   //    with the C and Fortran APIs.
-  char *sub_provenance = new char[xml_str.length() +1];
-  strncpy(sub_provenance, xml_str.c_str(), xml_str.length());
-  sub_provenance[xml_str.length()] = '\0';
+  char *simulation_provenance = new char[prov.length() +1];
+  strncpy(simulation_provenance, prov.c_str(), prov.length());
+  simulation_provenance[prov.length()] = '\0';
 
-  return sub_provenance;
+  return simulation_provenance;
 }
 
-void clean_sf_parfile_provenance(char *sub_provenance) {
-  if (sub_provenance)
-    delete[] sub_provenance;
+void clean_simulation_provenance(char *simulation_provenance) {
+  if (simulation_provenance)
+    delete[] simulation_provenance;
 }

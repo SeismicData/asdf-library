@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file gen_sf_parfile_provenance.cpp.h
+ * @file gen_sf_provenance.cpp.h
  * @brief 
  * @author Matthieu Lefebvre
  */
@@ -26,31 +26,31 @@
 
 #include "prov_parameter.h"
 #include "parse_sf_parfile.h"
-#include "gen_provenance_entity.h"
 
 #include "gen_sf_parfile_provenance.h"
+#include "gen_trace_provenance.h"
 
-char *generate_sf_parfile_provenance(const char *filename,
-                                     const char *prov_label,
-                                     const char *prov_id) {
-  // 1) Parse Par_file
-  std::vector<parameter> params = parse_sf_parfile(std::string(filename));
+char *generate_trace_provenance(const char *prov_label,
+                                const char *prov_id) {
 
-  // 2) Generate string from parameters
-  std::string xml_str = generate_provenance_entity(std::string(prov_label),
-                                                   std::string(prov_id),
-                                                   params);
+  std::ostringstream trace_prov;
+  std::string prov;
+
+  // 1) Generate Trace provenance
+  trace_prov << "<prov:entity prov:id=" << prov_id << "><prov:label>" << prov_label
+             << "</prov:label><prov:type xsi:type=xsd:string>seis_prov:waveform_trace</prov:entity>";
+  prov = trace_prov.str();
 
   // 3) Copy the std::string to a C-string to interface
   //    with the C and Fortran APIs.
-  char *sub_provenance = new char[xml_str.length() +1];
-  strncpy(sub_provenance, xml_str.c_str(), xml_str.length());
-  sub_provenance[xml_str.length()] = '\0';
+  char *trace_provenance = new char[prov.length() +1];
+  strncpy(trace_provenance, prov.c_str(), prov.length());
+  trace_provenance[prov.length()] = '\0';
 
-  return sub_provenance;
+  return trace_provenance;
 }
 
-void clean_sf_parfile_provenance(char *sub_provenance) {
-  if (sub_provenance)
-    delete[] sub_provenance;
+void clean_trace_provenance(char *sf_provenance) {
+  if (sf_provenance)
+    delete[] sf_provenance;
 }

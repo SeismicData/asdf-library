@@ -32,7 +32,6 @@ int main(int argc, char *argv[]) {
   ASDF_generate_par_file_provenance(
       "Par_file",                       /* Par_file path    */
       "SPECFEM-style input parameters", /* provenance label */
-      "seis_prov:input_parameter",      /* provenance type */
       "id_1234",                        /* provenance id    */
       &prov);                           /* result           */
   /*=====================================================*/

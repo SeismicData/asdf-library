@@ -14,28 +14,23 @@
  * limitations under the License.
  *****************************************************************************/
 /** 
- * @file gen_provenance_agent.h
+ * @file parse_sf_parfile.h
  * @brief 
  * @author Matthieu Lefebvre
  */
 
-#ifndef _ASDF_GEN_PROVENANCE_AGENT_
-#define _ASDF_GEN_PROVENANCE_AGENT_
+#ifndef _ASDF_PARSE_PROVFILE_H_
+#define _ASDF_PARSE_PROVFILE_H_
 
 /** 
- * @brief Generate a provenance agent identified by label, type, and id, from the
- *        values in params.
+ * @brief Parse a SpecFem-like (sf) parameter file.
  * 
- * @param label
- * @param type
- * @param id
- * @param params
+ * @param filename Name of the parameter file.
  * 
- * @return  The generated string
+ * @return A vector of parameters (name, type, value).
  */
-std::string generate_provenance_agent(const std::string label, 
-                                      const std::string type,
-                                      const std::string id,
-                                      const std::vector<parameter> params);
+void parse_provfile(const char *filename, char *software_name, char *software_version, char *software_website,
+                    char *software_label, char *parfile, char *parfile_label,
+                    char *trace_label, char *simulation_label);
 
-#endif  // _ASDF_GEN_PROVENANCE_AGENT_
+#endif  // _ASDF_PARSE_SF_PARFILE_H_

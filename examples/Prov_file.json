@@ -1,0 +1,18 @@
+{
+  "Software":   {
+                  "software_name": "SPECFEM3D_GLOBE",
+                  "software_version": "6.0.0",
+                  "software_website": "http://geodynamics.org/cig/software/specfem3d",
+                  "software_label": "SPECFEM3D_GLOBE"
+                },
+  "Par file":   {
+                  "Parfile": "Par_file",
+                  "parfile_label: "specfem input parameters",
+                },
+  "Trace":      {
+                  "trace_label": "Waveform Trace"
+                },
+  "Simulation": {            
+                  "simulation_label": "Waveform Simulation"
+                }
+}
