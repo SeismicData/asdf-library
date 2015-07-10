@@ -95,7 +95,7 @@ void ASDF_generate_sf_provenance(const char *filename, const char *startTime, co
   char *simulation_label='\0', *simulation_id='\0';
   char *prov_id='\0';
 
-  generate_sf_provfile(filename, software_name, software_version, software_website, software_label, parfile, parfile_label, trace_label, simulation_label);
+  //generate_sf_provfile(filename, software_name, software_version, software_website, software_label, parfile, parfile_label, trace_label, simulation_label);
 
   software_id = generate_provenance_ID();
   ASDF_generate_software_agent(software_name, software_version, software_website, software_label, software_id, &sf_prov);
