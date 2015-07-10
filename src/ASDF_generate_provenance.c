@@ -97,16 +97,16 @@ void ASDF_generate_sf_provenance(const char *filename, const char *startTime, co
 
   //generate_sf_provfile(filename, software_name, software_version, software_website, software_label, parfile, parfile_label, trace_label, simulation_label);
 
-  software_id = generate_provenance_ID();
+  //software_id = generate_provenance_ID();
   ASDF_generate_software_agent(software_name, software_version, software_website, software_label, software_id, &sf_prov);
 
-  parfile_id = generate_provenance_ID();
+  //parfile_id = generate_provenance_ID();
   ASDF_generate_par_file_provenance(parfile, parfile_label, parfile_id, &pf_prov);
 
-  trace_id = generate_provenance_ID();
+  //trace_id = generate_provenance_ID();
   ASDF_generate_trace_entity(trace_label, trace_id, &tr_prov);
 
-  simulation_id = generate_provenance_ID();
+  //simulation_id = generate_provenance_ID();
   ASDF_generate_simulation_activity(startTime, endTime, simulation_label, simulation_id, &ws_prov);
 
   ASDF_association(simulation_id, software_id, &association_prov);
