@@ -5,16 +5,35 @@ sudo: false
 addons:
   apt:
     packages:
-      - gfortran
-      - openmpi-bin
-      - libhdf5-openmpi-dev
-      - doxygen
-      - graphviz
-      - libboost-all-dev
+      - &required
+        - gfortran
+        - doxygen
+        - graphviz
+        - libboost-all-dev
+      - &openmpi
+        - openmpi-bin
+        - libhdf5-openmpi-dev
+      - &mpich
+        - mpich-bin
+        - libhdf5-mpich-dev
+      - &lam
+        - lam-runtime
+        - libhdf5-lam-dev
 
-env:
-    - SHARED=off
-    - SHARED=on
+matrix:
+  include:
+    - env: SHARED=off
+      addons: { apt: { packages: [ *required, *openmpi ] } }
+    - env: SHARED=off
+      addons: { apt: { packages: [ *required, *mpich ] } }
+    - env: SHARED=off
+      addons: { apt: { packages: [ *required, *lam ] } }
+    - env: SHARED=on
+      addons: { apt: { packages: [ *required, *openmpi ] } }
+    - env: SHARED=on
+      addons: { apt: { packages: [ *required, *mpich ] } }
+    - env: SHARED=on
+      addons: { apt: { packages: [ *required, *lam ] } }
 
 install:
     - mkdir build
