@@ -5,21 +5,21 @@ project (ASDF)
 
 include(GNUInstallDirs)
 
-#find_package(Boost 1.43 REQUIRED)
+find_package(Boost 1.43 REQUIRED)
 find_package(HDF5 1.8.0 REQUIRED)
 include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 option (TEST "Run unit tests" OFF)
 
-set(Boost_NO_SYSTEM_PATHS TRUE) 
-if (Boost_NO_SYSTEM_PATHS)
-  set(BOOST_ROOT /tigress/jas11/packages/boost)
-  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
-  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
-endif (Boost_NO_SYSTEM_PATHS)
-find_package(Boost REQUIRED)
-include_directories(${BOOST_INCLUDE_DIRS})
+#set(Boost_NO_SYSTEM_PATHS TRUE) 
+#if (Boost_NO_SYSTEM_PATHS)
+#  set(BOOST_ROOT /tigress/jas11/packages/boost)
+#  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
+#  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
+#endif (Boost_NO_SYSTEM_PATHS)
+#find_package(Boost REQUIRED)
+#include_directories(${BOOST_INCLUDE_DIRS})
 
 ############################################################
 ### Setup directory structure                            ###
