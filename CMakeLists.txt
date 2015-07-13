@@ -5,7 +5,6 @@ project (ASDF)
 
 include(GNUInstallDirs)
 
-find_package(Boost 1.43 REQUIRED)
 find_package(HDF5 1.8.0 REQUIRED)
 include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
@@ -18,8 +17,9 @@ option (TEST "Run unit tests" OFF)
 #  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
 #  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
 #endif (Boost_NO_SYSTEM_PATHS)
-#find_package(Boost REQUIRED)
-#include_directories(${BOOST_INCLUDE_DIRS})
+
+find_package(Boost 1.43 REQUIRED COMPONENTS system)
+include_directories(${Boost_INCLUDE_DIRS})
 
 ############################################################
 ### Setup directory structure                            ###
@@ -54,7 +54,8 @@ add_library (asdf
              ${SRC_DIR}/ASDF_generate_provenance.c
              ${SRC_DIR}/ASDF_f.c)
 
-target_link_libraries(asdf ${HDF5_LIBRARIES} ${MPI_C_LIBRARIES})
+target_link_libraries(asdf
+                      ${Boost_LIBRARIES} ${HDF5_LIBRARIES} ${MPI_C_LIBRARIES})
 
 install(TARGETS asdf
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
