@@ -5,21 +5,22 @@ project (ASDF)
 
 include(GNUInstallDirs)
 
-find_package(Boost 1.43 REQUIRED)
+#find_package(Boost 1.43 REQUIRED)
+#include_directories(${BOOST_INCLUDE_DIRS})
 find_package(HDF5 1.8.0 REQUIRED)
 include_directories(${HDF5_INCLUDE_DIR})
 find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
-option (TEST "Run unit tests" OFF)
+option (TEST "Run unit tests" ON)
 
-#set(Boost_NO_SYSTEM_PATHS TRUE) 
-#if (Boost_NO_SYSTEM_PATHS)
-#  set(BOOST_ROOT /tigress/jas11/packages/boost)
-#  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
-#  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
-#endif (Boost_NO_SYSTEM_PATHS)
-#find_package(Boost REQUIRED)
-#include_directories(${BOOST_INCLUDE_DIRS})
+set(Boost_NO_SYSTEM_PATHS TRUE) 
+if (Boost_NO_SYSTEM_PATHS)
+  set(BOOST_ROOT /tigress/jas11/packages/boost)
+  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
+  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
+endif (Boost_NO_SYSTEM_PATHS)
+find_package(Boost REQUIRED)
+include_directories(${BOOST_INCLUDE_DIRS})
 
 ############################################################
 ### Setup directory structure                            ###
@@ -39,18 +40,18 @@ add_library (asdf
              ${SRC_DIR}/ASDF_read.c
              ${SRC_DIR}/ASDF_write.c
              ${SRC_DIR}/parse_sf_parfile.cpp
-             ${SRC_DIR}/parse_provfile.cpp
+             #${SRC_DIR}/parse_provfile.cpp
              ${SRC_DIR}/gen_provenance_entity.cpp
              ${SRC_DIR}/gen_sf_parfile_provenance.cpp
-             ${SRC_DIR}/gen_sf_provenance.cpp
+             #${SRC_DIR}/gen_sf_provenance.cpp
              #${SRC_DIR}/gen_sf_provfile.cpp
              #${SRC_DIR}/gen_provenance_id.cpp
-             ${SRC_DIR}/gen_software_provenance.cpp
-             ${SRC_DIR}/gen_simulation_provenance.cpp
-             ${SRC_DIR}/gen_trace_provenance.cpp
-             ${SRC_DIR}/gen_association_provenance.cpp
-             ${SRC_DIR}/gen_usage_provenance.cpp
-             ${SRC_DIR}/gen_wasGeneratedby_provenance.cpp
+             #${SRC_DIR}/gen_software_provenance.cpp
+             #${SRC_DIR}/gen_simulation_provenance.cpp
+             #${SRC_DIR}/gen_trace_provenance.cpp
+             #${SRC_DIR}/gen_association_provenance.cpp
+             #${SRC_DIR}/gen_usage_provenance.cpp
+             #${SRC_DIR}/gen_wasGeneratedby_provenance.cpp
              ${SRC_DIR}/ASDF_generate_provenance.c
              ${SRC_DIR}/ASDF_f.c)
 
