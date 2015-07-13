@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file ASDF_read.c
  * @author Matthieu Lefebvre
  */
@@ -70,7 +70,7 @@ int ASDF_get_num_elements_dataset(hid_t dataset_id) {
     CHK_H5(memsize = H5Dget_storage_size(dataset_id));
     CHK_H5(dataset_type = H5Dget_type(dataset_id));
     CHK_H5(type_size = H5Tget_size(dataset_type));
-    
+
     return (int) memsize / type_size;
 }
 
@@ -85,7 +85,7 @@ int ASDF_get_num_elements_from_path(hid_t file_id, const char *path) {
     return num_elems;
 }
 
-int ASDF_read_full_waveform(hid_t file_id, const char *path, 
+int ASDF_read_full_waveform(hid_t file_id, const char *path,
                             float * const waveform) {
     hid_t dataset_id;
     CHK_H5(dataset_id = H5Dopen(file_id, path, H5P_DEFAULT));
@@ -107,7 +107,7 @@ int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
 
   CHK_H5(dataset_id = H5Dopen(file_id, path, H5P_DEFAULT));
   CHK_H5(space_id = H5Dget_space(dataset_id));
-  CHK_H5(H5Sselect_hyperslab(space_id, H5S_SELECT_SET, start, 
+  CHK_H5(H5Sselect_hyperslab(space_id, H5S_SELECT_SET, start,
                              NULL, count, block));
   H5Dread(dataset_id, H5T_IEEE_F32LE, H5S_ALL, H5S_ALL,
           H5P_DEFAULT, waveform);
@@ -139,7 +139,7 @@ int ASDF_station_exists(hid_t file_id, const char *name) {
 }
 
 
-int ASDF_waveform_exists(hid_t file_id, const char *station_name, 
+int ASDF_waveform_exists(hid_t file_id, const char *station_name,
                          const char *waveform_name) {
   int station_exists;
   station_exists = ASDF_station_exists(file_id, station_name);

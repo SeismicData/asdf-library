@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file gen_sf_provenance.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -26,16 +26,16 @@
 extern "C" {
 #endif
 
-/** 
+/**
  * @brief Generate provenance for the waveform simulation
- * 
+ *
  * @param person The name of the person, for instance "Hans Mustermann"
  * @param email The email of the person, for instance "hans.mustermann@email.com"
  * @param software_version The version of the waveform solver, for instance "7.0"
  * @param software_website The website that hosts the solver, for instance "https://geodynamics.org/cig/software/specfem3d_globe/"
  * @param model_name The name of the initial model used in the solver, for instance "PREM"
  * @param model_website The website that hosts the inital model, for instance "http://ds.iris.edu/ds/products/emc-prem/"
- * 
+ *
  * @return A pointer to the generated C string.
  *
  * @note Bind C++ functions with the C API.
@@ -45,10 +45,10 @@ extern "C" {
 char *generate_wasGeneratedby_provenance(const char *prov_id1,
                                          const char *prov_id2);
 
-/** 
+/**
  * @brief Deallocate the provenance string build by
  *        generate_sf_provenance.
- * 
+ *
  * @param sf_provenance Pointer to the C string to deallocate.
  *
  * @note Bind C++ functions with the C API.

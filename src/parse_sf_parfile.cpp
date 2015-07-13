@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file parse_sf_parfile.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -83,10 +83,10 @@ struct par_file_grammar : qi::grammar<Iterator, parameter()> {
                           | qi::string(".false.") [_val = "false"]
                           ];
     // xsd:double does not include 'd0' at the end
-    real = -qi::char_("-") 
-        >> +qi::digit 
-        >> qi::char_(".") 
-        >> *qi::digit 
+    real = -qi::char_("-")
+        >> +qi::digit
+        >> qi::char_(".")
+        >> *qi::digit
         >> qi::omit[-qi::string("d0")];
 
     //integer = -qi::char_("-") >> +(qi::char_("0-9") - qi::char_("."));
@@ -95,11 +95,11 @@ struct par_file_grammar : qi::grammar<Iterator, parameter()> {
     identifier = +(qi::alnum | qi::char_("_"));
 
     path = +(qi::alnum | qi::char_("_./"));
-    
+
     // Identifier that can start with a number.
     // Forced by geophycists practice in model naming.
-    gnl_id = *qi::digit 
-          >> (qi::alnum | qi::char_("_")) 
+    gnl_id = *qi::digit
+          >> (qi::alnum | qi::char_("_"))
           >> identifier;
 
     comment = qi::char_("#") >> *qi::char_;
@@ -141,7 +141,7 @@ std::vector<parameter> parse_sf_parfile(const std::string filename) {
   typedef par_file_grammar<iterator_type> par_file_grammar;
 
   par_file_grammar par_file_parser;
-  
+
   std::vector<parameter> params;
 
   for (auto str : lines) {

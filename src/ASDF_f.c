@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file ASDF_f.c
  * @author Matthieu Lefebvre
  */
@@ -52,7 +52,7 @@ void asdf_create_new_file_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
   *file_id = ASDF_create_new_file(filename, comm);
 }
 
-void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name, 
+void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name,
                                     char *attr_value, int *err) {
   *err = ASDF_write_string_attribute(*dataset_id, attr_name, attr_value);
 }
@@ -78,7 +78,7 @@ void asdf_create_stations_group_f_(hid_t *loc_id, char *station_name,
   *group_id = ASDF_create_stations_group(*loc_id, station_name, station_xml);
 }
 
-void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples, 
+void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
                           int *start_time, double *sampling_rate,
                           char *event_name, char *waveform_name,
                           int *data_id) {
@@ -88,11 +88,11 @@ void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
 
 
 void asdf_define_waveforms_f_(hid_t *loc_id, int *num_waveforms, int *nsamples,
-                              int *start_time, double *sampling_rate, 
+                              int *start_time, double *sampling_rate,
                               char *event_name, char **waveform_names,
                               int *data_id, int *err) {
-  *err = ASDF_define_waveforms(*loc_id, *num_waveforms, *nsamples, 
-                               *start_time, *sampling_rate, 
+  *err = ASDF_define_waveforms(*loc_id, *num_waveforms, *nsamples,
+                               *start_time, *sampling_rate,
                                event_name, waveform_names,
                                data_id);
 }
@@ -144,7 +144,7 @@ void asdf_read_full_waveform_f_(hid_t *file_id, char *path, float *waveform,
 
 void asdf_read_partial_waveform_f_(hid_t *file_id, char *path, int *offset,
                                    int *nsamples, float *waveform, int *err) {
-  *err = ASDF_read_partial_waveform(*file_id, path, *offset, 
+  *err = ASDF_read_partial_waveform(*file_id, path, *offset,
                                     *nsamples, waveform);
 }
 
@@ -161,7 +161,7 @@ void asdf_station_exists_f_(hid_t *file_id, char *name, int *exists) {
   *exists = ASDF_station_exists(*file_id, name);
 }
 
-void asdf_waveform_exists_f_(hid_t *file_id, char *station_name, 
+void asdf_waveform_exists_f_(hid_t *file_id, char *station_name,
                              char *waveform_name, int *exists) {
   *exists = ASDF_waveform_exists(*file_id, station_name, waveform_name);
 }
@@ -172,7 +172,7 @@ void asdf_waveform_exists_f_(hid_t *file_id, char *station_name,
 
 // TODO: It is probably irrelevant to export every function used to generate
 // provenance information. check ASDF_write_provenance_data.
- 
+
 void asdf_generate_provenance_f_(char *filename, char *startTime, char *endTime, char **provenance) {
   ASDF_generate_sf_provenance(filename, startTime, endTime, provenance);
-} 
+}

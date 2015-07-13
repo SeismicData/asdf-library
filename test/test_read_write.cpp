@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file test_read_write.cpp
  * @author Matthieu Lefebvre
  */
@@ -59,7 +59,7 @@ class ReadWrite : public ::testing::Test {
     ASDF_finalize_hdf5();
   }
 
-  char *file_ptr; 
+  char *file_ptr;
   char filename[17];
 };
 
@@ -147,7 +147,7 @@ TEST_F(ReadWrite, SingleWaveform) {
   {
   hid_t file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
   hid_t waveforms_group = ASDF_create_waveforms_group(file_id);
-  hid_t station_group = ASDF_create_stations_group(waveforms_group, 
+  hid_t station_group = ASDF_create_stations_group(waveforms_group,
                                                    station_name, station_xml);
   hid_t data_id = ASDF_define_waveform(station_group, nsamples, start_time,
                                     sampling_rate, event_name, waveform_name);
@@ -160,9 +160,9 @@ TEST_F(ReadWrite, SingleWaveform) {
   {
   hid_t file_id = ASDF_open_read_only(filename, MPI_COMM_WORLD);
   station_exists = ASDF_station_exists(file_id, station_name);
-  waveform_exists = ASDF_waveform_exists(file_id, station_name, 
+  waveform_exists = ASDF_waveform_exists(file_id, station_name,
                                          waveform_name);
-  std::string path = "/Waveforms/" + std::string(station_name) 
+  std::string path = "/Waveforms/" + std::string(station_name)
                    + "/" + std::string(waveform_name);
   nsamples_infered = ASDF_get_num_elements_from_path(file_id, path.c_str());
 
@@ -175,7 +175,7 @@ TEST_F(ReadWrite, SingleWaveform) {
   ASSERT_GT(station_exists, 0);
   ASSERT_GT(waveform_exists, 0);
   ASSERT_EQ(nsamples_infered, nsamples);
-  
+
   for (int i = 0; i < nsamples; ++i) {
     ASSERT_EQ(waveform[i], waveform_read[i]);
   }

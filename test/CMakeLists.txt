@@ -1,6 +1,6 @@
 
 ############################################################
-### Unit testing                                         ### 
+### Unit testing                                         ###
 ############################################################
 add_subdirectory(gtest-1.7.0)
 enable_testing()
@@ -30,7 +30,7 @@ else()
   endif()
 endif()
 
-target_link_libraries(runUnitTests 
+target_link_libraries(runUnitTests
                       gtest
                       gtest_main
                       asdf

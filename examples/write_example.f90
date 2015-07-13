@@ -36,7 +36,7 @@ program write_example
   character(len=MAX_STRING_LENGTH) :: event_name
   character(len=MAX_STRING_LENGTH) :: provenance
   character(len=MAX_STRING_LENGTH) :: quakeml
-  character(len=MAX_STRING_LENGTH) :: station_xml 
+  character(len=MAX_STRING_LENGTH) :: station_xml
   ! TODO: check if a single station_xml is enough
 
   integer :: num_stations, num_channels_per_station
@@ -54,12 +54,12 @@ program write_example
   ! data. dimension = nsamples * num_channels_per_station * num_stations
   real, dimension(:, :, :), allocatable :: waveforms
 
-  !-- ASDF variables 
+  !-- ASDF variables
   !   These variables are used to know where further writes should be done.
   !   They have to be cleaned as soon as they become useless
   integer :: file_id   ! HDF5 file id, also root group "/"
-  integer :: waveforms_grp  ! Group "/Waveforms/" 
-  integer, dimension(:, :, :), allocatable :: data_ids 
+  integer :: waveforms_grp  ! Group "/Waveforms/"
+  integer, dimension(:, :, :), allocatable :: data_ids
 
   !--- MPI variables
   integer :: myrank, mysize, comm
@@ -81,7 +81,7 @@ program write_example
   character(len=MAX_STRING_LENGTH) :: waveform_name
 
   !--------------------------------------------------------
-  ! Init MPI 
+  ! Init MPI
   !--------------------------------------------------------
   call MPI_Init(ier)
   call MPI_Comm_rank(MPI_COMM_WORLD, myrank, ier)
@@ -112,12 +112,12 @@ program write_example
 
   do i = 1, num_stations
     write(network_names(i), '(a,i0.2)') "NTWK_", myrank
-    write(station_names(i), '(a,i0.2,a,i0.2)') "STAT_", myrank, "_", i 
+    write(station_names(i), '(a,i0.2,a,i0.2)') "STAT_", myrank, "_", i
   enddo
 
   ! -- We do not care about seeding.
   call random_number(waveforms)
-  
+
   !--------------------------------------------------------
   ! ASDF variables
   !--------------------------------------------------------
@@ -158,13 +158,13 @@ program write_example
                       MPI_COMM_WORLD, ier)
 
   allocate(station_grps_gather(max_num_stations_gather, mysize))
-  
+
   allocate(data_ids(num_channels_per_station, &
                     max_num_stations_gather, &
                     mysize))
 
   !--------------------------------------------------------
-  ! write ASDF 
+  ! write ASDF
   !--------------------------------------------------------
   call ASDF_initialize_hdf5_f(ier);
   call ASDF_create_new_file_f(trim(filename), comm, file_id)
@@ -179,8 +179,8 @@ program write_example
   call ASDF_write_quakeml_f(file_id, trim(quakeml), ier)
 
   call ASDF_create_waveforms_group_f(file_id, waveforms_grp)
-  
-  do k = 1, mysize  
+
+  do k = 1, mysize
     do j = 1, num_stations_gather(k)
       call ASDF_create_stations_group_f(waveforms_grp,   &
            trim(network_names_gather(j, k)) // "." //      &
@@ -192,7 +192,7 @@ program write_example
         ! Generate unique dummy waveform names
         write(waveform_name, '(a,i0.2)') &
            trim(network_names_gather(j,k)) // "." //      &
-           trim(station_names_gather(j,k)) // ".channel_", i 
+           trim(station_names_gather(j,k)) // ".channel_", i
 
         ! Create the dataset where waveform will be written later on.
         call ASDF_define_waveform_f(station_grps_gather(j,k), &

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file write_ASDF.c
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -89,9 +89,9 @@ int main(int argc, char *argv[]) {
 
   hid_t file_id;
   hid_t data_id[num_waveforms];
-  
+
   ASDF_initialize_hdf5();
- 
+
   file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
 
   /*------------------------------------*/
@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 
   hid_t waveforms_grp = ASDF_create_waveforms_group(file_id);
 
-  hid_t station_grp = ASDF_create_stations_group(waveforms_grp, station_name, station_xml); 
+  hid_t station_grp = ASDF_create_stations_group(waveforms_grp, station_name, station_xml);
 
   ASDF_define_waveforms(station_grp, num_waveforms, nsamples, start_time, sampling_rate,
                         event_name, waveform_names,
@@ -119,17 +119,17 @@ int main(int argc, char *argv[]) {
   int j;
   for (j = 0; j < num_steps; ++j) {
     int offset, nsamples_to_write;
-    offset = write_size * j; 
+    offset = write_size * j;
     if (j < num_steps-1) {
       nsamples_to_write = write_size;
     } else {
       nsamples_to_write = nsamples - offset;
     }
-    
+
     for (i = 0; i < num_waveforms; ++i) {
       if (i == rank) {
         /*ASDF_write_full_waveform(data_id[i], waveforms[i]);*/
-        ASDF_write_partial_waveform(data_id[i], waveforms[i], 
+        ASDF_write_partial_waveform(data_id[i], waveforms[i],
                                     offset, nsamples_to_write);
       }
     }
@@ -151,7 +151,7 @@ int main(int argc, char *argv[]) {
   }
   free(waveform_names);
   free(waveforms);
- 
+
   /*------------------------------------*/
   H5Fclose(file_id);
 

@@ -37,7 +37,7 @@ program read_example
 
   character(len=MAX_STRING_LENGTH) :: station_name, waveform_name, path
 
-  !-- ASDF variables 
+  !-- ASDF variables
   integer :: file_id   ! HDF5 file id, also root group "/"
   integer :: station_exists, waveform_exists
   integer :: nsamples_infered
@@ -50,7 +50,7 @@ program read_example
   integer :: ier
 
   !--------------------------------------------------------
-  ! Init MPI 
+  ! Init MPI
   !--------------------------------------------------------
   call MPI_Init(ier)
   call MPI_Comm_rank(MPI_COMM_WORLD, myrank, ier)
@@ -75,7 +75,7 @@ program read_example
 
   do i = 1, num_stations
     write(network_names(i), '(a,i0.2)') "NTWK_", myrank
-    write(station_names(i), '(a,i0.2,a,i0.2)') "STAT_", myrank, "_", i 
+    write(station_names(i), '(a,i0.2,a,i0.2)') "STAT_", myrank, "_", i
   enddo
 
   !--------------------------------------------------------
@@ -86,7 +86,7 @@ program read_example
 
   do j = 1, num_stations
     station_name = trim(network_names(j)) // '.' // &
-                   trim(station_names(j)) 
+                   trim(station_names(j))
     call ASDF_station_exists_f(file_id, &
                                trim(station_name) // C_NULL_CHAR, &
                                station_exists)

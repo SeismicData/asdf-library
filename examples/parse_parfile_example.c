@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file parse_parfile_example.c
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
       "id_1234",                        /* provenance id    */
       &prov);                           /* result           */
   /*=====================================================*/
-  
+
   /*fprintf(stderr, "\n\n%s\n\n", prov);*/
   fd = fopen("prov_par_file.txt", "w");
 

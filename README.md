@@ -7,24 +7,24 @@ The following instructions are for in-source builds.
 
 ```bash
 $ cmake .
-$ make 
+$ make
 ```
 
-Finding the correct MPI / HDF5 libraries does not seem to be working all the 
+Finding the correct MPI / HDF5 libraries does not seem to be working all the
 same on different systems.
 
 If the compilation complains about a missing ``use mpi``, try the following:
 
 ```bash
 $ cmake . -DCMAKE_Fortran_COMPILER=mpif90
-$ make 
+$ make
 ```
 
 If the compilation still complains about missing hdf5 libraries, try:
 
 ```bash
 $ cmake . -DCMAKE_Fortran_COMPILER=h5pfc
-$ make 
+$ make
 ```
 
 If you want to get cmake to find your local boost directory, try:

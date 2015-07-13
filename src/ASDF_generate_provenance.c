@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file ASDF_generate_provenance.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 

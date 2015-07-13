@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file gen_sf_provenance.cpp.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -39,9 +39,9 @@ char *generate_simulation_provenance(const char *startTime,
   std::string prov;
 
   simulation_prov << "<prov:activity prov:id=" << prov_id << "><prov:startTime>" << startTime
-                  << "</prov:startTime><prov:endTime>" << endTime << "</prov:endtime>" << "<prov:label>" << prov_label 
+                  << "</prov:startTime><prov:endTime>" << endTime << "</prov:endtime>" << "<prov:label>" << prov_label
                   << "</prov:label><prov:type xsi:type=\"xsd:string\">seis_prov:waveform_simulation</prov:type></prov:activity>";
-  
+
   prov = simulation_prov.str();
 
   // 3) Copy the std::string to a C-string to interface

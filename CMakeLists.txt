@@ -12,7 +12,7 @@ find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 option (TEST "Run unit tests" OFF)
 
-#set(Boost_NO_SYSTEM_PATHS TRUE) 
+#set(Boost_NO_SYSTEM_PATHS TRUE)
 #if (Boost_NO_SYSTEM_PATHS)
 #  set(BOOST_ROOT /tigress/jas11/packages/boost)
 #  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
@@ -34,7 +34,7 @@ set (SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 ############################################################
 ### ASDF library                                         ###
 ############################################################
-add_library (asdf 
+add_library (asdf
              ${SRC_DIR}/ASDF_init.c
              ${SRC_DIR}/ASDF_read.c
              ${SRC_DIR}/ASDF_write.c

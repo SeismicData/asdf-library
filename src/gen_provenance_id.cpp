@@ -12,7 +12,7 @@ using namespace boost::uuids;
 char *generate_provenance_ID() {
 
   random_generator gen;
-  
+
   uuid random_id = gen();
 
   std::string full_prov_id = boost::lexical_cast<std::string>(random_id);

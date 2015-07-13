@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file gen_sf_provenance.cpp.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -47,7 +47,7 @@ char *generate_sf_provenance(char *sf_prov,
 
   // 3) Combine sub_provenance into one string
   prov = initial_prov+sf+pf+tr+ws+as+us+gr+"</prov:document>";
-  
+
   // 4) Copy the std::string to a C-string to interface
   //    with the C and Fortran APIs.
   char *sf_provenance = new char[prov.length() +1];

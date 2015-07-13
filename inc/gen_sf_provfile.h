@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file gen_sf_parfile_provenance.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -27,14 +27,14 @@
 extern "C" {
 #endif
 
-/** 
+/**
  * @brief Generate a provenance entity with id prov_id and label prov_label
  *        from a specfem style parameter file ("Par_file").
- * 
+ *
  * @param filename Name of the "Par_file".
  * @param prov_label Description, for instance "SPECFEM Input Parameters".
  * @param prov_id Unique id for this provenance item.
- * 
+ *
  * @return A pointer to the generated C string.
  *
  * @note Bind C++ functions with the C API.

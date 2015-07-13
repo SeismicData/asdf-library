@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file parse_sf_parfile.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
 #ifndef _ASDF_PARSE_PROVFILE_H_
 #define _ASDF_PARSE_PROVFILE_H_
 
-/** 
+/**
  * @brief Parse a SpecFem-like (sf) parameter file.
- * 
+ *
  * @param filename Name of the parameter file.
- * 
+ *
  * @return A vector of parameters (name, type, value).
  */
 void parse_provfile(const char *filename, char *software_name, char *software_version, char *software_website,

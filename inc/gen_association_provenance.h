@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file gen_sf_provenance.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -26,12 +26,12 @@
 extern "C" {
 #endif
 
-/** 
+/**
  * @brief Generate provenance for the waveform simulation
- * 
+ *
  * @param prov_id1 The first provenance id.
  * @param prov_id2 The second provenance id.
- * 
+ *
  * @return A pointer to the generated C string.
  *
  * @note Bind C++ functions with the C API.
@@ -41,10 +41,10 @@ extern "C" {
 char *generate_association_provenance(const char *prov_id1,
                                       const char *prov_id2);
 
-/** 
+/**
  * @brief Deallocate the provenance string build by
  *        generate_sf_provenance.
- * 
+ *
  * @param sf_provenance Pointer to the C string to deallocate.
  *
  * @note Bind C++ functions with the C API.

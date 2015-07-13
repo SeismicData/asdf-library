@@ -12,7 +12,7 @@
   "Trace":      {
                   "trace_label": "Waveform Trace"
                 },
-  "Simulation": {            
+  "Simulation": {
                   "simulation_label": "Waveform Simulation"
                 }
 }
