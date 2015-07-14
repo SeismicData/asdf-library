@@ -22,6 +22,10 @@
 #ifndef _ASDF_GENERATE_PROVENANCE_H_
 #define _ASDF_GENERATE_PROVENANCE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  *  @brief Generate a provenance entity with prov_id and prov_label
  *         for the software used in the waveform simulation.
@@ -126,5 +130,9 @@ void ASDF_generate_par_file_provenance(const char *filename,
 void ASDF_clean_par_file_provenance(char *sub_provenance);
 
 void ASDF_generate_sf_provenance(const char *filename, const char *startTime, const char *endTime, char **prov);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* _ASDF_GENERATE_PROVENANCE_H_ */

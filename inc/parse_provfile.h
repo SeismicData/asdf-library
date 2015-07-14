@@ -22,6 +22,10 @@
 #ifndef _ASDF_PARSE_PROVFILE_H_
 #define _ASDF_PARSE_PROVFILE_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief Parse a SpecFem-like (sf) parameter file.
  *
@@ -32,5 +36,9 @@
 void parse_provfile(const char *filename, char *software_name, char *software_version, char *software_website,
                     char *software_label, char *parfile, char *parfile_label,
                     char *trace_label, char *simulation_label);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // _ASDF_PARSE_SF_PARFILE_H_

@@ -40,7 +40,7 @@ extern "C" {
  *
  * @warning DO NOT FORGET TO CALL clean_sf_parfile_provenance
  */
-char *generate_provenance_ID();
+char *generate_provenance_ID(void);
 
 #ifdef __cplusplus
 }
