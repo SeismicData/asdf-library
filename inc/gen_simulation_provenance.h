@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file gen_sf_provenance.h
+ * @file gen_simulation_provenance.h
  * @brief
  * @author Matthieu Lefebvre
  */
@@ -49,16 +49,16 @@ char *generate_simulation_provenance(const char *startTime,
 
 /**
  * @brief Deallocate the provenance string build by
- *        generate_sf_provenance.
+ *        generate_simulation_provenance.
  *
- * @param sf_provenance Pointer to the C string to deallocate.
+ * @param simulation_provenance Pointer to the C string to deallocate.
  *
  * @note Bind C++ functions with the C API.
  */
-void clean_sf_provenance(char *sf_provenance);
+void clean_simulation_provenance(char *simulation_provenance);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // _ASDF_GEN_SF_PROVENANCE_
+#endif  // _ASDF_GEN_SIMULATION_PROVENANCE_

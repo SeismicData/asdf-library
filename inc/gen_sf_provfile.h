@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file gen_sf_parfile_provenance.h
+ * @file gen_sf_provfile.h
  * @brief
  * @author Matthieu Lefebvre
  */
@@ -48,4 +48,4 @@ void generate_sf_provfile(const char *filename, char *software_name, char *softw
 }
 #endif
 
-#endif  // _ASDF_GEN_SF_PARFILE_PROVENANCE_
+#endif  // _ASDF_GEN_SF_PROVFILE_

@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file parse_sf_parfile.h
+ * @file parse_provfile.h
  * @brief
  * @author Matthieu Lefebvre
  */
@@ -41,4 +41,4 @@ void parse_provfile(const char *filename, char *software_name, char *software_ve
 }
 #endif
 
-#endif  // _ASDF_PARSE_SF_PARFILE_H_
+#endif  // _ASDF_PARSE_PROVFILE_H_

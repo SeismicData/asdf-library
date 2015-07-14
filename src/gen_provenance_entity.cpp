@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file gen_provenance_entity.h
+ * @file gen_provenance_entity.cpp
  * @brief
  * @author Matthieu Lefebvre
  */

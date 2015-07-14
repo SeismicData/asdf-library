@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file ASDF_generate_provenance.h
+ * @file ASDF_generate_provenance.c
  * @brief
  * @author Matthieu Lefebvre
  */

@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file parse_sf_parfile.h
+ * @file parse_sf_parfile.cpp
  * @brief
  * @author Matthieu Lefebvre
  */

@@ -14,13 +14,13 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file gen_sf_provenance.h
+ * @file gen_association_provenance.h
  * @brief
  * @author Matthieu Lefebvre
  */
 
-#ifndef _ASDF_GEN_ASSOCATION_PROVENANCE_
-#define _ASDF_GEN_ASSOCATION_PROVENANCE_
+#ifndef _ASDF_GEN_ASSOCIATION_PROVENANCE_
+#define _ASDF_GEN_ASSOCIATION_PROVENANCE_
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,16 +43,16 @@ char *generate_association_provenance(const char *prov_id1,
 
 /**
  * @brief Deallocate the provenance string build by
- *        generate_sf_provenance.
+ *        generate_association_provenance.
  *
- * @param sf_provenance Pointer to the C string to deallocate.
+ * @param association_provenance Pointer to the C string to deallocate.
  *
  * @note Bind C++ functions with the C API.
  */
-void clean_sf_provenance(char *sf_provenance);
+void clean_association_provenance(char *association_provenance);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // _ASDF_GEN_SF_PROVENANCE_
+#endif  // _ASDF_GEN_ASSOCIATION_PROVENANCE_

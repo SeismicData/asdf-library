@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file gen_sf_parfile_provenance.cpp.h
+ * @file gen_sf_parfile_provenance.cpp
  * @brief
  * @author Matthieu Lefebvre
  */

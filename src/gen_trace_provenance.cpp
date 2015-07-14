@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file gen_sf_provenance.cpp.h
+ * @file gen_trace_provenance.cpp
  * @brief
  * @author Matthieu Lefebvre
  */
@@ -50,7 +50,7 @@ char *generate_trace_provenance(const char *prov_label,
   return trace_provenance;
 }
 
-void clean_trace_provenance(char *sf_provenance) {
-  if (sf_provenance)
-    delete[] sf_provenance;
+void clean_trace_provenance(char *trace_provenance) {
+  if (trace_provenance)
+    delete[] trace_provenance;
 }

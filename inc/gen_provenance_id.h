@@ -14,7 +14,7 @@
  * limitations under the License.
  *****************************************************************************/
 /**
- * @file gen_sf_parfile_provenance.h
+ * @file gen_provenance_id.h
  * @brief
  * @author Matthieu Lefebvre
  */
@@ -46,4 +46,4 @@ char *generate_provenance_ID(void);
 }
 #endif
 
-#endif  // _ASDF_GEN_SF_PARFILE_PROVENANCE_
+#endif  // _ASDF_GEN_PROVENANCE_ID_
