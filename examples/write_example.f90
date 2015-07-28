@@ -100,7 +100,7 @@ program write_example
   !--------------------------------------------------------
   filename = "synthetic.h5"
   event_name = "event0123456789"
-  !provenance = "<provenance>"
+  provenance = "<provenance>"
   quakeml = "<quakeml>"
   station_xml = "<station_xml>"
 
@@ -181,15 +181,14 @@ program write_example
   call ASDF_write_string_attribute_f(file_id, "file_version" // C_NULL_CHAR, &
                                      "0.0.1.b" // C_NULL_CHAR, ier)
 
-  call ASDF_write_auxiliary_data_f(file_id, ier)
+  !call ASDF_write_auxiliary_data_f(file_id, ier)
   call ASDF_write_provenance_data_f(file_id, trim(provenance), ier)
   call ASDF_write_quakeml_f(file_id, trim(quakeml), ier)
-  call ASDF_generate_sf_provenance_f("Prov_file"//C_NULL_CHAR, "2005"//C_NULL_CHAR, "2006"//C_NULL_CHAR, cptr, len, ier)
+  call ASDF_generate_sf_provenance_f("2005"//C_NULL_CHAR, "2006"//C_NULL_CHAR, cptr, len)
   call c_f_pointer(cptr, fptr, [len])
 
   print *, fptr
   call ASDF_clean_provenance_f(cptr)
-
 
   call ASDF_create_waveforms_group_f(file_id, waveforms_grp)
 

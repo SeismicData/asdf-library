@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
   ASDF_write_string_attribute(file_id, "file_format", "ASDF");
   ASDF_write_string_attribute(file_id, "file_version", "0.0.1b");
   /*------------------------------------*/
-  ASDF_write_auxiliary_data(file_id);
+  ASDF_write_auxiliary_data(file_id, "test", "test2");
   ASDF_write_provenance_data(file_id, provenance_string);
   /*------------------------------------*/
   ASDF_write_quakeml(file_id, quakeml_string);
