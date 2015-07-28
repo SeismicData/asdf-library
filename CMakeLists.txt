@@ -11,20 +11,21 @@ find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 option (TEST "Run unit tests" OFF)
 
-#set(Boost_NO_SYSTEM_PATHS TRUE)
-#if (Boost_NO_SYSTEM_PATHS)
-#  set(BOOST_ROOT /tigress/jas11/packages/boost)
-#  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
-#  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
-#endif (Boost_NO_SYSTEM_PATHS)
+set(Boost_NO_SYSTEM_PATHS FALSE)
+if (Boost_NO_SYSTEM_PATHS)
+  set(BOOST_ROOT /tigress/jas11/packages/boost)
+  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
+  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
+endif (Boost_NO_SYSTEM_PATHS)
 
-find_package(Boost 1.43 REQUIRED COMPONENTS system)
-include_directories(${Boost_INCLUDE_DIRS})
+find_package(Boost REQUIRED COMPONENTS system)
+include_directories(${BOOST_INCLUDE_DIRS})
 
 ############################################################
 ### Setup directory structure                            ###
 ############################################################
 include_directories (./inc)
+include_directories(${BOOST_INCLUDE_DIRS})
 
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)  # .so
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)  # .a
@@ -39,23 +40,15 @@ add_library (asdf
              ${SRC_DIR}/ASDF_read.c
              ${SRC_DIR}/ASDF_write.c
              ${SRC_DIR}/parse_sf_parfile.cpp
-             ${SRC_DIR}/parse_provfile.cpp
+             ${SRC_DIR}/gen_provenance_id.cpp
              ${SRC_DIR}/gen_provenance_entity.cpp
              ${SRC_DIR}/gen_sf_parfile_provenance.cpp
              ${SRC_DIR}/gen_sf_provenance.cpp
-             #${SRC_DIR}/gen_sf_provfile.cpp
-             #${SRC_DIR}/gen_provenance_id.cpp
-             ${SRC_DIR}/gen_software_provenance.cpp
-             ${SRC_DIR}/gen_simulation_provenance.cpp
-             ${SRC_DIR}/gen_trace_provenance.cpp
-             ${SRC_DIR}/gen_association_provenance.cpp
-             ${SRC_DIR}/gen_usage_provenance.cpp
-             ${SRC_DIR}/gen_wasGeneratedby_provenance.cpp
-             ${SRC_DIR}/ASDF_generate_provenance.c
+             ${SRC_DIR}/ASDF_provenance.c
              ${SRC_DIR}/ASDF_f.c)
 
 target_link_libraries(asdf
-                      ${Boost_LIBRARIES} ${HDF5_LIBRARIES} ${MPI_C_LIBRARIES})
+		      ${HDF5_LIBRARIES} ${MPI_C_LIBRARIES})
 
 install(TARGETS asdf
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

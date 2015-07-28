@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/**
- * @file gen_provenance_entity.cpp
- * @brief
+/** 
+ * @file gen_provenance_entity.h
+ * @brief 
  * @author Matthieu Lefebvre
  */
 
@@ -38,7 +38,7 @@ std::string generate_provenance_entity(const std::string label,
        << "<prov:type></prov:type>";
 
   for (auto p : params) {
-    prov << "<seis_prov:" << p.name << " xsi:type=\"" << p.type << "\">"
+    prov << "<seis_prov:" << p.name << " xsi:type=\"" << p.type << "\">" 
          << p.value
          << "</seis_prov:" << p.name << ">";
   }

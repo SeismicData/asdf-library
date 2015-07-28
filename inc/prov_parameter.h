@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/**
+/** 
  * @file prov_parameter.h
- * @brief
+ * @brief 
  * @author Matthieu Lefebvre
  */
 
 #ifndef _ASDF_PROV_PARAMETER_H_
 #define _ASDF_PROV_PARAMETER_H_
 
-/**
+/** 
  * @brief A parameter has three compononents of interest to write
  *        in a provenance file: a name, a type and a value.
  */
