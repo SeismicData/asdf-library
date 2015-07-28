@@ -57,8 +57,8 @@ void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name,
   *err = ASDF_write_string_attribute(*dataset_id, attr_name, attr_value);
 }
 
-void asdf_write_auxiliary_data_f_(hid_t *loc_id, int *err) {
-  *err = ASDF_write_auxiliary_data(*loc_id);
+void asdf_write_auxiliary_data_f_(hid_t *loc_id, char *sf_constants_file, char *sf_Parfile, int *err) {
+  *err = ASDF_write_auxiliary_data(*loc_id, sf_constants_file, sf_Parfile);
 }
 
 void asdf_write_provenance_data_f_(hid_t *loc_id, char *provenance_string, int *err) {

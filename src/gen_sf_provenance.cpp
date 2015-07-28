@@ -48,6 +48,12 @@ char *generate_sf_provenance(const char *startTime,
   software_prov.flush();
   software_string = software_prov.str();
 
+  // TODO: Store The constant.h file
+  // Generate Entity
+  //
+  // TODO: Store the Par_file
+  // Generate Entity
+  
   std::string trace_id = gen_provenance_ID();
   trace_prov << "<prov:entity prov:id=" << trace_id << "><prov:label>Waveform Trace"
              << "</prov:label><prov:type xsi:type=xsd:string>seis_prov:waveform_trace</prov:entity>";
@@ -75,8 +81,8 @@ char *generate_sf_provenance(const char *startTime,
 
   sf_prov = initial_string + software_string + trace_string + simulation_string + association_string + usage_string + generatedBy_string + "</prov:document>";
 
-  // 4) Copy the std::string to a C-string to interface
-  //    with the C and Fortran APIs.
+  // Copy the std::string to a C-string to interface
+  // with the C and Fortran APIs.
   char *sf_provenance = new char[sf_prov.length() +1];
   strncpy(sf_provenance, sf_prov.c_str(), sf_prov.length());
   sf_provenance[sf_prov.length()] = '\0';

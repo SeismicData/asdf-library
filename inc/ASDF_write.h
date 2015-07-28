@@ -88,7 +88,9 @@ herr_t ASDF_write_double_attribute(hid_t dataset_id,
  *
  * @return 0 for success.
  */
-herr_t ASDF_write_auxiliary_data(hid_t loc_id);
+herr_t ASDF_write_auxiliary_data(hid_t loc_id,
+                                  const char *sf_constants_file, 
+                                  const char *sf_Parfile);
 
 /**
  * @brief Write an ASDF specfic "Provenance" group
