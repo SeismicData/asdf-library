@@ -102,9 +102,12 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
   hsize_t dims2[1] = {strlen(sf_Parfile)+1};
   hsize_t maxdims[1] = {H5S_UNLIMITED};
 
-  hid_t array_id, group_id, space_id, dcpl_id;
+  hid_t array_id, group_id, group_id2, space_id, dcpl_id;
   CHK_H5(group_id = H5Gcreate(loc_id, "AuxiliaryData",
         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+  CHK_H5(group_id2 = H5Gcreate(loc_id, "AuxiliaryData/File",
+        H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+
   /* Fill up with whatever AuxiliaryData contains. */
   
   /* Write specfem3d constants.h */
@@ -113,7 +116,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
   CHK_H5(dcpl_id = H5Pcreate(H5P_DATASET_CREATE));
   CHK_H5(H5Pset_chunk(dcpl_id, 1, dims));
 
-  CHK_H5(array_id = H5Dcreate(group_id, "constants.h", H5T_STD_I8LE, space_id,
+  CHK_H5(array_id = H5Dcreate(group_id2, "constants_h", H5T_STD_I8LE, space_id,
         H5P_DEFAULT, dcpl_id, H5P_DEFAULT));
   CHK_H5(H5Dwrite(array_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL,
         H5P_DEFAULT, sf_constants_file));
@@ -126,13 +129,14 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
   CHK_H5(dcpl_id = H5Pcreate(H5P_DATASET_CREATE));
   CHK_H5(H5Pset_chunk(dcpl_id, 1, dims2));
 
-  CHK_H5(array_id = H5Dcreate(group_id, "Parfile", H5T_STD_I8LE, space_id,
+  CHK_H5(array_id = H5Dcreate(group_id2, "Parfile", H5T_STD_I8LE, space_id,
         H5P_DEFAULT, dcpl_id, H5P_DEFAULT));
   CHK_H5(H5Dwrite(array_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL,
         H5P_DEFAULT, sf_Parfile));
   CHK_H5(H5Dclose(array_id));
   CHK_H5(H5Sclose(space_id));
 
+  CHK_H5(H5Gclose(group_id2));
   CHK_H5(H5Gclose(group_id));
 
   return 0; // Success

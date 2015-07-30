@@ -35,8 +35,8 @@
 char *generate_sf_provenance(const char *startTime,
                              const char *endTime) {
 
-  std::ostringstream software_prov, trace_prov, simulation_prov, association_prov, usage_prov, generatedBy_prov;
-  std::string initial_string, association_string, usage_string, generatedBy_string, simulation_string;
+  std::ostringstream software_prov, trace_prov, simulation_prov, constants_prov, association_prov, usage_prov, generatedBy_prov, parfile_prov;
+  std::string initial_string, association_string, constants_string, usage_string, generatedBy_string, simulation_string, parfile_string;
   std::string sf_prov, software_string ,trace_string;
 
   initial_string = "<?xml version='1.0' encoding='UTF-8'?><prov:document xmlns:prov=\"http://www.w3.org/ns/prov#\" xmlns:seis_prov=\"http://asdf.readthedocs.org/seis_prov/0.0/#\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">";
@@ -48,12 +48,22 @@ char *generate_sf_provenance(const char *startTime,
   software_prov.flush();
   software_string = software_prov.str();
 
-  // TODO: Store The constant.h file
-  // Generate Entity
-  //
-  // TODO: Store the Par_file
-  // Generate Entity
-  
+  std::string constants_id = gen_provenance_ID();
+  constants_prov << "<prov:entity prov:id=" << constants_id << "><prov:label>File</prov:label><prov:type xsi:type=\"xsd:string\">seis_prov:file</prov:type>"
+    << "<seis_prov:filename>constants.h</seis_prov:filename>"
+    << "<seis_prov:location>/AuxiliaryData/Files/constants_h</seis_prov:location>"
+    << "<seis_prov:location_type>HDF5 Data Set</seis_prov:location_type></prov:entity>";
+  constants_prov.flush();
+  constants_string = constants_prov.str();
+
+  std::string parfile_id = gen_provenance_ID();
+  parfile_prov << "<prov:entity prov:id=" << parfile_id << "><prov:label>File</prov:label><prov:type xsi:type=\"xsd:string\">seis_prov:file</prov:type>"
+    << "<seis_prov:filename>Parfile</seis_prov:filename>"
+    << "<seis_prov:location>/AuxiliaryData/Files/Parfile</seis_prov:location>"
+    << "<seis_prov:location_type>HDF5 Data Set</seis_prov:location_type></prov:entity>";
+  parfile_prov.flush();
+  parfile_string = parfile_prov.str();
+
   std::string trace_id = gen_provenance_ID();
   trace_prov << "<prov:entity prov:id=" << trace_id << "><prov:label>Waveform Trace"
              << "</prov:label><prov:type xsi:type=xsd:string>seis_prov:waveform_trace</prov:entity>";
@@ -79,7 +89,7 @@ char *generate_sf_provenance(const char *startTime,
   generatedBy_prov.flush();
   generatedBy_string = generatedBy_prov.str();
 
-  sf_prov = initial_string + software_string + trace_string + simulation_string + association_string + usage_string + generatedBy_string + "</prov:document>";
+  sf_prov = initial_string + software_string + constants_string + parfile_string + trace_string + simulation_string + association_string + usage_string + generatedBy_string + "</prov:document>";
 
   // Copy the std::string to a C-string to interface
   // with the C and Fortran APIs.
