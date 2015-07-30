@@ -105,7 +105,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
   hid_t array_id, group_id, group_id2, space_id, dcpl_id;
   CHK_H5(group_id = H5Gcreate(loc_id, "AuxiliaryData",
         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
-  CHK_H5(group_id2 = H5Gcreate(loc_id, "AuxiliaryData/File",
+  CHK_H5(group_id2 = H5Gcreate(loc_id, "/AuxiliaryData/File",
         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
 
   /* Fill up with whatever AuxiliaryData contains. */
