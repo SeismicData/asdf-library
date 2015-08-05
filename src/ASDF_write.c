@@ -143,7 +143,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
 }
 
 herr_t ASDF_write_provenance_data(hid_t loc_id, const char *provenance_string) {
-  hsize_t dims[1] = {strlen(provenance_string)+1};
+  hsize_t dims[1] = {strlen(provenance_string)};
   hsize_t maxdims[1] = {H5S_UNLIMITED};
 
   hid_t array_id, group_id, space_id, dcpl_id;
@@ -154,7 +154,7 @@ herr_t ASDF_write_provenance_data(hid_t loc_id, const char *provenance_string) {
 
   CHK_H5(group_id = H5Gcreate(loc_id, "Provenance",
         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
-  CHK_H5(array_id = H5Dcreate(group_id, "XML", H5T_STD_I8LE, space_id,
+  CHK_H5(array_id = H5Dcreate(group_id, "373da5fe_d424_4f44_9bca_4334d77ed10b", H5T_STD_I8LE, space_id,
 	H5P_DEFAULT, dcpl_id, H5P_DEFAULT));
   CHK_H5(H5Dwrite(array_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL,
 	H5P_DEFAULT, provenance_string));
@@ -236,7 +236,7 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
 }
 
 hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
-                           int start_time, double sampling_rate,
+                           long long int start_time, double sampling_rate,
                            const char *event_name, const char *waveform_name) {
   int data_id;
   char char_sampling_rate[10];
@@ -271,7 +271,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
 }
 
 herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
-                            int start_time, double sampling_rate,
+                            long long int start_time, double sampling_rate,
                             char *event_name, char **waveform_names,
                             int *data_id) {
   int i;

@@ -150,7 +150,7 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
  *       http://www.hdfgroup.org/HDF5/doc/RM/CollectiveCalls.html
  */
 hid_t ASDF_define_waveform(hid_t loc_id, int nsamples, 
-                           int start_time, double sampling_rate,
+                           long long int start_time, double sampling_rate,
                            const char *event_name, const char *waveform_name);
 
 /**
@@ -176,7 +176,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
  *       http://www.hdfgroup.org/HDF5/doc/RM/CollectiveCalls.html
  */
 herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples, 
-                             int start_time, double sampling_rate, 
+                             long long int start_time, double sampling_rate, 
                              char *event_name, char **waveform_names,
                              int *data_id);
 
