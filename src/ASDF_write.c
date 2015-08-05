@@ -65,7 +65,7 @@ herr_t ASDF_write_string_attribute(hid_t dataset_id,
 
 herr_t ASDF_write_integer_attribute(hid_t dataset_id,
 			            const char *attr_name,
-				    int attr_value) {
+				    long long int attr_value) {
   hid_t space_id, attr_id;
 
   CHK_H5(space_id = H5Screate(H5S_SCALAR));
