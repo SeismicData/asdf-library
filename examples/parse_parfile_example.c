@@ -21,7 +21,7 @@
 
 #include <stdio.h>
 
-#include "ASDF_generate_provenance.h"
+#include "ASDF_provenance.h"
 
 int main(int argc, char *argv[]) {
   char *prov;

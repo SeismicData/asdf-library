@@ -24,7 +24,7 @@
 #include "ASDF_init.h"
 #include "ASDF_write.h"
 #include "ASDF_read.h"
-#include "ASDF_generate_provenance.h"
+#include "ASDF_provenance.h"
 
 /**********************************************************
  *  Wrappers for ASDF_init                                *
@@ -57,8 +57,8 @@ void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name,
   *err = ASDF_write_string_attribute(*dataset_id, attr_name, attr_value);
 }
 
-void asdf_write_auxiliary_data_f_(hid_t *loc_id, int *err) {
-  *err = ASDF_write_auxiliary_data(*loc_id);
+void asdf_write_auxiliary_data_f_(hid_t *loc_id, char *sf_constants_file, char *sf_Parfile, int *err) {
+  *err = ASDF_write_auxiliary_data(*loc_id, sf_constants_file, sf_Parfile);
 }
 
 void asdf_write_provenance_data_f_(hid_t *loc_id, char *provenance_string, int *err) {
@@ -79,7 +79,7 @@ void asdf_create_stations_group_f_(hid_t *loc_id, char *station_name,
 }
 
 void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
-                          int *start_time, double *sampling_rate,
+                          long long int *start_time, double *sampling_rate,
                           char *event_name, char *waveform_name,
                           int *data_id) {
   *data_id = ASDF_define_waveform(*loc_id, *nsamples, *start_time,
@@ -88,7 +88,7 @@ void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
 
 
 void asdf_define_waveforms_f_(hid_t *loc_id, int *num_waveforms, int *nsamples,
-                              int *start_time, double *sampling_rate,
+                              long long int *start_time, double *sampling_rate,
                               char *event_name, char **waveform_names,
                               int *data_id, int *err) {
   *err = ASDF_define_waveforms(*loc_id, *num_waveforms, *nsamples,
@@ -173,6 +173,10 @@ void asdf_waveform_exists_f_(hid_t *file_id, char *station_name,
 // TODO: It is probably irrelevant to export every function used to generate
 // provenance information. check ASDF_write_provenance_data.
 
-void asdf_generate_provenance_f_(char *filename, char *startTime, char *endTime, char **provenance) {
-  ASDF_generate_sf_provenance(filename, startTime, endTime, provenance);
+void asdf_generate_sf_provenance_f_(char *startTime, char *endTime, char **provenance, int *length) {
+  ASDF_generate_sf_provenance(startTime, endTime, provenance, length);
+}
+
+void asdf_clean_provenance_f_(char **provenance) {
+  ASDF_clean_provenance(provenance);
 }

@@ -13,37 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/**
+/** 
  * @file gen_provenance_id.h
- * @brief
+ * @brief 
  * @author Matthieu Lefebvre
  */
 
 #ifndef _ASDF_GEN_PROVENANCE_ID_
 #define _ASDF_GEN_PROVENANCE_ID_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * @brief Generate a provenance entity with id prov_id and label prov_label
- *        from a specfem style parameter file ("Par_file").
+/** 
+ * @brief Generate a provenance id
+ * 
+ * @return The provenance ID
  *
- * @param filename Name of the "Par_file".
- * @param prov_label Description, for instance "SPECFEM Input Parameters".
- * @param prov_id Unique id for this provenance item.
- *
- * @return A pointer to the generated C string.
- *
- * @note Bind C++ functions with the C API.
- *
- * @warning DO NOT FORGET TO CALL clean_sf_parfile_provenance
  */
-char *generate_provenance_ID(void);
+std::string gen_provenance_ID();
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif  // _ASDF_GEN_PROVENANCE_ID_
+#endif  // _ASDF_GEN_PROVENANCE_ID

@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/**
+/** 
  * @file gen_provenance_entity.h
- * @brief
+ * @brief 
  * @author Matthieu Lefebvre
  */
 
 #ifndef _ASDF_GEN_PROVENANCE_ENTITY_
 #define _ASDF_GEN_PROVENANCE_ENTITY_
 
-/**
+/** 
  * @brief Generate a provenance entity identified by label, type, and id, from the
  *        values in params.
- *
+ * 
  * @param label
  * @param id
  * @param params
- *
+ * 
  * @return  The generated string
  */
-std::string generate_provenance_entity(const std::string label,
+std::string generate_provenance_entity(const std::string label, 
                                        const std::string id,
                                        const std::vector<parameter> params);
 

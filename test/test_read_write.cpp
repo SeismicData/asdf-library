@@ -98,7 +98,7 @@ TEST_F(ReadWrite, AuxiliaryData) {
   int exists;
   {
   hid_t file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
-  ASDF_write_auxiliary_data(file_id);
+  ASDF_write_auxiliary_data(file_id, "Yeah", "Buddy");
   ASDF_close_file(file_id);
   }
   {
