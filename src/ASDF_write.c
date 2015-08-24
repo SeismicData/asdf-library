@@ -48,7 +48,7 @@ herr_t ASDF_write_string_attribute(hid_t dataset_id,
 
   CHK_H5(space_id  = H5Screate(H5S_SCALAR));
   CHK_H5(type_id = H5Tcopy(H5T_C_S1));
-  CHK_H5(H5Tset_size(type_id, strlen(attr_value)+1));
+  CHK_H5(H5Tset_size(type_id, strlen(attr_value)));
   CHK_H5(H5Tset_strpad(type_id,H5T_STR_NULLPAD));
 
   CHK_H5(attr_id = H5Acreate(dataset_id, attr_name, type_id, space_id,
@@ -98,8 +98,8 @@ herr_t ASDF_write_double_attribute(hid_t dataset_id,
 }
 
 herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, const char *sf_Parfile) {
-  hsize_t dims[1] = {strlen(sf_constants_file)+1};
-  hsize_t dims2[1] = {strlen(sf_Parfile)+1};
+  hsize_t dims[1] = {strlen(sf_constants_file)};
+  hsize_t dims2[1] = {strlen(sf_Parfile)};
   hsize_t maxdims[1] = {H5S_UNLIMITED};
 
   hid_t array_id, group_id, group_id2, space_id, dcpl_id;
@@ -167,7 +167,7 @@ herr_t ASDF_write_provenance_data(hid_t loc_id, const char *provenance_string) {
 }
 
 herr_t ASDF_write_quakeml(hid_t loc_id, const char *quakeml_string) {
-  hsize_t dims[1] = {strlen(quakeml_string)+1};
+  hsize_t dims[1] = {strlen(quakeml_string)};
   hsize_t maxdims[1] = {H5S_UNLIMITED};
 
   hid_t space_id, dcpl_id, array_id;
@@ -214,7 +214,7 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
   CHK_H5(group_id = H5Gcreate(loc_id, station_name,
                               H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
   /* Get some space for the StationXML dataset */
-  hsize_t dims[1] = {strlen(station_xml)+1};
+  hsize_t dims[1] = {strlen(station_xml)};
   hsize_t maxdims[1] = {H5S_UNLIMITED};
 
   CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
