@@ -64,14 +64,27 @@ int ASDF_read_str_attr(hid_t file_id, const char *grp_name,
 
 int ASDF_get_num_elements_dataset(hid_t dataset_id) {
     hsize_t memsize;
+    hid_t dspace;
     hid_t dataset_type;
     size_t type_size;
 
-    CHK_H5(memsize = H5Dget_storage_size(dataset_id));
-    CHK_H5(dataset_type = H5Dget_type(dataset_id));
-    CHK_H5(type_size = H5Tget_size(dataset_type));
+    // CHK_H5(memsize = H5Dget_storage_size(dataset_id));
+    // CHK_H5(dataset_type = H5Dget_type(dataset_id));
+    // CHK_H5(type_size = H5Tget_size(dataset_type));
 
-    return (int) memsize / type_size;
+    dspace = H5Dget_space(dataset_id);
+
+    // get the number of dimensions
+    const int ndims = H5Sget_simple_extent_ndims(dspace);
+    hsize_t dims[ndims];
+
+    // get the size of each dimension
+    H5Sget_simple_extent_dims(dspace, dims, NULL);
+
+    // returns the size of the first dimension
+    return (int) dims[0];
+
+    //return (int) memsize / type_size;
 }
 
 int ASDF_get_num_elements_from_path(hid_t file_id, const char *path) {
