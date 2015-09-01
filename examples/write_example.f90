@@ -187,7 +187,6 @@ program write_example
   call ASDF_generate_sf_provenance_f("2005"//C_NULL_CHAR, "2006"//C_NULL_CHAR, cptr, len)
   call c_f_pointer(cptr, fptr, [len])
 
-  print *, fptr
   call ASDF_clean_provenance_f(cptr)
 
   call ASDF_create_waveforms_group_f(file_id, waveforms_grp)
