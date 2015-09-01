@@ -151,6 +151,9 @@ int ASDF_station_exists(hid_t file_id, const char *name) {
   return ASDF_exists_in_path(file_id, "/Waveforms", name);
 }
 
+int ASDF_adjoint_station_exists(hid_t file_id, const char *name) {
+  return ASDF_exists_in_path(file_id, "/AuxiliaryData/AdjointSource", name);
+}
 
 int ASDF_waveform_exists(hid_t file_id, const char *station_name,
                          const char *waveform_name) {

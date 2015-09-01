@@ -161,10 +161,15 @@ void asdf_station_exists_f_(hid_t *file_id, char *name, int *exists) {
   *exists = ASDF_station_exists(*file_id, name);
 }
 
+void asdf_adjoint_station_exists_f_(hid_t *file_id, char *name, int *exists) {
+  *exists = ASDF_adjoint_station_exists(*file_id, name);
+}
+
 void asdf_waveform_exists_f_(hid_t *file_id, char *station_name,
                              char *waveform_name, int *exists) {
   *exists = ASDF_waveform_exists(*file_id, station_name, waveform_name);
 }
+
 
 /**********************************************************
  *  Wrappers for ASDF_generate_provenance                 *
