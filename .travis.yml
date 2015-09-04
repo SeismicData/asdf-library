@@ -16,6 +16,7 @@ install:
         -DTEST=ON
         -DBUILD_SHARED_LIBS=$SHARED
         -DCMAKE_Fortran_COMPILER=mpif90
+        -DCMAKE_BUILD_TYPE=Debug
         ..
     - make
     - make doc
