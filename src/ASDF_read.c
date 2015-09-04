@@ -63,14 +63,7 @@ int ASDF_read_str_attr(hid_t file_id, const char *grp_name,
 }
 
 int ASDF_get_num_elements_dataset(hid_t dataset_id) {
-    hsize_t memsize;
     hid_t dspace;
-    hid_t dataset_type;
-    size_t type_size;
-
-    // CHK_H5(memsize = H5Dget_storage_size(dataset_id));
-    // CHK_H5(dataset_type = H5Dget_type(dataset_id));
-    // CHK_H5(type_size = H5Tget_size(dataset_type));
 
     dspace = H5Dget_space(dataset_id);
 
@@ -83,8 +76,6 @@ int ASDF_get_num_elements_dataset(hid_t dataset_id) {
 
     // returns the size of the first dimension
     return (int) dims[0];
-
-    //return (int) memsize / type_size;
 }
 
 int ASDF_get_num_elements_from_path(hid_t file_id, const char *path) {
