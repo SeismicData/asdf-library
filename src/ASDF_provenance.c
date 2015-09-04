@@ -20,6 +20,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "ASDF_provenance.h"
 #include "gen_sf_parfile_provenance.h"

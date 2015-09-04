@@ -144,6 +144,18 @@ int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name);
  */
 int ASDF_station_exists(hid_t file_id, const char *name);
 
+/**
+ * @brief Check if an adjoint source called \p name exists in file \p file_id
+ *
+ * @param file_id The identifier of the file to look in
+ * @param name The adjoint source name being checked.
+ *
+ * @return
+ *
+ * @note It is looking for a variable `"/AuxiliaryData/AdjointSource/<name>"`
+ */
+int ASDF_adjoint_source_exists(hid_t file_id, const char *name);
+
 /** 
  * @brief Check if a waveform \p waveform_name is present for station
  *        \p station_name in file \p file_id
