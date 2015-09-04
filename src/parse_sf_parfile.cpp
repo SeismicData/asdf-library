@@ -30,8 +30,8 @@
 
 #include <boost/fusion/include/adapt_struct.hpp>
 
-#include "prov_parameter.h"
-#include "parse_sf_parfile.h"
+#include "private/prov_parameter.h"
+#include "private/parse_sf_parfile.h"
 
 ///////////////////////////////////////////////////////////
 namespace qi = boost::spirit::qi;

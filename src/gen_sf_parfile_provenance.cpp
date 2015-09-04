@@ -24,11 +24,11 @@
 #include <vector>
 #include <cstring>
 
-#include "prov_parameter.h"
-#include "parse_sf_parfile.h"
-#include "gen_provenance_entity.h"
+#include "private/prov_parameter.h"
+#include "private/parse_sf_parfile.h"
+#include "private/gen_provenance_entity.h"
 
-#include "gen_sf_parfile_provenance.h"
+#include "private/gen_sf_parfile_provenance.h"
 
 char *generate_sf_parfile_provenance(const char *filename,
                                      const char *prov_label,

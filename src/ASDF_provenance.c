@@ -22,8 +22,8 @@
 #include <stdio.h>
 
 #include "ASDF_provenance.h"
-#include "gen_sf_parfile_provenance.h"
-#include "gen_sf_provenance.h"
+#include "private/gen_sf_parfile_provenance.h"
+#include "private/gen_sf_provenance.h"
 
 void ASDF_generate_par_file_provenance(const char *filename,
                                        const char *prov_label,

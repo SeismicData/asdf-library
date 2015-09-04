@@ -5,7 +5,7 @@
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
 #include <boost/lexical_cast.hpp>
 
-#include "gen_provenance_id.h"
+#include "private/gen_provenance_id.h"
 
 using namespace boost::uuids;
 
