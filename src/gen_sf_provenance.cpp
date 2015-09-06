@@ -24,12 +24,12 @@
 #include <vector>
 #include <cstring>
 
-#include "prov_parameter.h"
-#include "parse_sf_parfile.h"
+#include "private/prov_parameter.h"
+#include "private/parse_sf_parfile.h"
 
-#include "gen_provenance_id.h"
-#include "gen_sf_parfile_provenance.h"
-#include "gen_sf_provenance.h"
+#include "private/gen_provenance_id.h"
+#include "private/gen_sf_parfile_provenance.h"
+#include "private/gen_sf_provenance.h"
 #include "ASDF_provenance.h"
 
 char *generate_sf_provenance(const char *startTime,

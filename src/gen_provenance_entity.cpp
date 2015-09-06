@@ -23,8 +23,8 @@
 #include <sstream>
 #include <vector>
 
-#include "prov_parameter.h"
-#include "gen_provenance_entity.h"
+#include "private/prov_parameter.h"
+#include "private/gen_provenance_entity.h"
 
 std::string generate_provenance_entity(const std::string label,
                                        const std::string id,
