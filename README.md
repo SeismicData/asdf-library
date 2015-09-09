@@ -76,3 +76,19 @@ $ make DESTDIR=/path/to/toplevel/install/directory install
 
 Note that the files end up in ``$DESTDIR/$CMAKE_INSTALL_PREFIX/*``, so it is
 only necessary to set one of these.
+
+
+#### Titan compilation
+
+##### modules
+```
+PrgEnv-gnu/5.2.40
+cray-hdf5-parallel/1.8.12
+boost/1.57.0
+```
+
+##### configuration
+
+```
+cmake .. -DCMAKE_Fortran_COMPILER=ftn -DHDF5_LIBRARIES=/opt/cray/hdf5-parallel/1.8.12/gnu/48/lib -DHDF5_INCLUDE_DIRS=/opt/cray/hdf5-parallel/1.8.12/gnu/48/include/ -DBoost_NO_BOOST_CMAKE=TRUE -DBoost_NO_SYSTEM_PATHS=TRUE -DBOOST_ROOT:PATHNAME=/sw/xk6/boost/1.57.0/cle5.2_gnu4.8.2/  -DBoost_LIBRARY_DIRS:FILEPATH=/sw/xk6/boost/1.57.0/cle5.2_gnu4.8.2/lib
+```
