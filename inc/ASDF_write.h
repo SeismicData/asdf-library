@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file ASDF_write.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -49,8 +49,8 @@ hid_t ASDF_create_new_file(const char *filename, MPI_Comm comm);
  *
  * @return 0 for success.
  */
-herr_t ASDF_write_string_attribute(hid_t dataset_id, 
-                                   const char *attr_name, 
+herr_t ASDF_write_string_attribute(hid_t dataset_id,
+                                   const char *attr_name,
                                    const char *attr_value);
 
 /**
@@ -89,8 +89,8 @@ herr_t ASDF_write_double_attribute(hid_t dataset_id,
  * @return 0 for success.
  */
 herr_t ASDF_write_auxiliary_data(hid_t loc_id,
-                                  const char *sf_constants_file, 
-                                  const char *sf_Parfile);
+                                 const char *sf_constants_file,
+                                 const char *sf_Parfile);
 
 /**
  * @brief Write an ASDF specfic "Provenance" group
@@ -130,7 +130,7 @@ hid_t ASDF_create_waveforms_group(hid_t loc_id);
  *
  * @return group id if successful, negative number otherwise.
  */
-hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name, 
+hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
                                  const char *station_xml);
 
 /**
@@ -149,7 +149,7 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
  *       defining data should be done collectively. See:
  *       http://www.hdfgroup.org/HDF5/doc/RM/CollectiveCalls.html
  */
-hid_t ASDF_define_waveform(hid_t loc_id, int nsamples, 
+hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
                            long long int start_time, double sampling_rate,
                            const char *event_name, const char *waveform_name);
 
@@ -161,9 +161,9 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
  *
  * @param loc_id Where this dataset should be written in the HDF5 file
  * @param num_waveforms Number of groups to define
- * @param nsamples number of samples per waveform. 
+ * @param nsamples number of samples per waveform.
  *                 FIXME: James, nsamples should be an array?
- * @param start_time 
+ * @param start_time
  * @param sampling_rate
  * @param event_name Name of the earthquake, shot, ...
  * @param waveform_names Names of stations, channel, ... FIXME: explain better
@@ -175,8 +175,8 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
  *       defining data should be done collectively. See:
  *       http://www.hdfgroup.org/HDF5/doc/RM/CollectiveCalls.html
  */
-herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples, 
-                             long long int start_time, double sampling_rate, 
+herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
+                             long long int start_time, double sampling_rate,
                              char *event_name, char **waveform_names,
                              int *data_id);
 

@@ -72,9 +72,9 @@ char *generate_sf_provenance(const char *startTime,
 
   std::string simulation_id = gen_provenance_ID();
   simulation_prov << "<prov:activity prov:id=\"seis_prov:sp000_ws_" << simulation_id << "\"><prov:startTime>" << startTime
-                  << "</prov:startTime><prov:endTime>" << endTime << "</prov:endTime>" << "<prov:label>Waveform Simulation" 
+                  << "</prov:startTime><prov:endTime>" << endTime << "</prov:endTime>" << "<prov:label>Waveform Simulation"
                   << "</prov:label><prov:type xsi:type=\"xsd:string\">seis_prov:waveform_simulation</prov:type></prov:activity>";
-  simulation_prov.flush();  
+  simulation_prov.flush();
   simulation_string = simulation_prov.str();
 
   association_prov << "<prov:wasAssociatedWith><prov:activity prov:ref=\"seis_prov:sp000_ws_" << simulation_id << "\"/><prov:agent prov:ref=\"seis_prov:sp000_sa_" << software_id << "\"/></prov:wasAssociatedWith>";

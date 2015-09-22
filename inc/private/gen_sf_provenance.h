@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file gen_sf_provenance.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -26,13 +26,13 @@
 extern "C" {
 #endif
 
-/** 
+/**
  * @brief Generate provenance for the waveform simulation
- * 
+ *
  * @param startTime start time  of the simulation
  * @param endTime end time of the simulation
  *
- * @return Provenance string 
+ * @return Provenance string
  *
  */
 char *generate_sf_provenance(const char *startTime, const char *endTime);

@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file gen_provenance_id.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
 #ifndef _ASDF_GEN_PROVENANCE_ID_
 #define _ASDF_GEN_PROVENANCE_ID_
 
-/** 
+/**
  * @brief Generate a provenance id
- * 
+ *
  * @return The provenance ID
  *
  */

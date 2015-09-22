@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file ASDF_provenance.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
 #ifndef _ASDF_PROVENANCE_H_
 #define _ASDF_PROVENANCE_H_
 
-/** 
+/**
  * @brief Generate a provenance entity with id prov_id and label prov_label
  *        from a specfem style parameter file ("Par_file") into a C string prov.
- * 
+ *
  * @param filename Name of the "Par_file".
  * @param prov_label Description, for instance "SPECFEM Input Parameters".
  * @param prov_id Unique id for this provenance item.
@@ -36,10 +36,10 @@ void ASDF_generate_par_file_provenance(const char *filename,
                                        const char *prov_id,
                                        char **prov);
 
-/** 
+/**
  * @brief Deallocate the sub_provenance string build by
  *        ASDF_generate_par_file_provenance and other provenance subroutines
- * 
+ *
  * @param sub_provenance Pointer to the C string to deallocate.
  */
 void ASDF_clean_par_file_provenance(char *sub_provenance);

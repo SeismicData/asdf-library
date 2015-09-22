@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file parse_sf_parfile.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -24,11 +24,11 @@
 
 #include "prov_parameter.h"
 
-/** 
+/**
  * @brief Parse a SpecFem-like (sf) parameter file.
- * 
+ *
  * @param filename Name of the parameter file.
- * 
+ *
  * @return A vector of parameters (name, type, value).
  */
 std::vector<parameter> parse_sf_parfile(const std::string filename);

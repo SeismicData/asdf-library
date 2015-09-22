@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file ASDF_init.h
- * @brief 
+ * @brief
  * @author Matthieu Lefebvre
  */
 
@@ -28,14 +28,14 @@
 extern "C" {
 #endif
 
-/** 
+/**
  * @brief Initialize ASDF by initializing HDF5.
  *
  * @return 0 for success, -1 for failure.
  */
 int ASDF_initialize_hdf5(void);
 
-/** 
+/**
  * @brief Finalize ASDF by finalizing HDF5.
  *
  * @return 0 for success, -1 for failure.
