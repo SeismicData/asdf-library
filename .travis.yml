@@ -23,3 +23,7 @@ install:
 
 script:
     - make test ARGS='-V --output-on-failure'
+    - if git --no-pager grep --color -n --full-name '[ 	]$' -- CMakeLists.txt \*.[fF] \*.[fF]90 \*.c \*.cpp \*.h; then
+        echo "ERROR - Trailing whitespace found in source file(s)";
+        exit 1;
+      fi
