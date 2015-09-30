@@ -109,7 +109,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
 
   /* Fill up with whatever AuxiliaryData contains. */
-  
+
   /* Write specfem3d constants.h */
 
   CHK_H5(space_id = H5Screate_simple(1, dims, maxdims));
@@ -122,7 +122,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
         H5P_DEFAULT, sf_constants_file));
   CHK_H5(H5Dclose(array_id));
   CHK_H5(H5Sclose(space_id));
- 
+
   /* Write specfem3d Parfile */
 
   CHK_H5(space_id = H5Screate_simple(1, dims2, maxdims));

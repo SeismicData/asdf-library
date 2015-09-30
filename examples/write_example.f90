@@ -79,7 +79,7 @@ program write_example
 
   ! temporary name built from network, station and channel names.
   character(len=MAX_STRING_LENGTH) :: waveform_name
- 
+
   ! C/Fortran interop for C-allocated strings
 
   type(c_ptr) :: cptr

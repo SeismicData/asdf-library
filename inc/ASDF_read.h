@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *****************************************************************************/
-/** 
+/**
  * @file ASDF_read.h
  * @brief Routines to read values from ASDF files.
  * @author Matthieu Lefebvre
@@ -78,7 +78,7 @@ int ASDF_get_num_elements_from_path(hid_t file_id, const char *path);
 
 /**
  * @brief Read a complete waveform from a dataset
- * 
+ *
  * @param file_id Id of the file containing the waveform.
  * @param path The path to the waveform
  * @param waveform The array to read the waveform in.
@@ -93,11 +93,11 @@ int ASDF_read_full_waveform(hid_t file_id, const char *path,
 
 /**
  * @brief Read a partial waveform from a dataset
- * 
+ *
  * @param file_id Id of the file containing the waveform.
  * @param path The path to the waveform
  * @param offset Where to start reading in the dataset
- * @param nsamples How many elements to read 
+ * @param nsamples How many elements to read
  * @param waveform The array to read the waveform in.
  *
  * @return 0 for success
@@ -121,24 +121,24 @@ int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
  */
 char *ASDF_extend_path(const char *path, const char *name);
 
-/** 
+/**
  * @brief Check if there is an object \p name under \p path in file \p file_id
- * 
+ *
  * @param file_id The identifier of the file to look in
  * @param path The path where name is look for.
  * @param name The name being looked for
- * 
+ *
  * @return > 0 if present, 0 if not, < 0 in case of failure
  */
 int ASDF_exists_in_path(hid_t file_id, const char *path, const char *name);
 
-/** 
+/**
  * @brief Check if a station called \p name exists in file \p file_id
- * 
+ *
  * @param file_id The identifier of the file to look in
  * @param name The station name being checked.
- * 
- * @return  
+ *
+ * @return
  *
  * @note It is looking for a variable `"/Waveforms/<name>"`
  */
@@ -156,18 +156,18 @@ int ASDF_station_exists(hid_t file_id, const char *name);
  */
 int ASDF_adjoint_source_exists(hid_t file_id, const char *name);
 
-/** 
+/**
  * @brief Check if a waveform \p waveform_name is present for station
  *        \p station_name in file \p file_id
- * 
+ *
  * @param file_id
  * @param station_name
  * @param waveform_name
- * 
+ *
  * @return > 0 if present, 0 if not, < 0 in case of failure
  */
 
-int ASDF_waveform_exists(hid_t file_id, const char *station_name, 
+int ASDF_waveform_exists(hid_t file_id, const char *station_name,
                          const char *waveform_name);
 
 #ifdef __cplusplus
