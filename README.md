@@ -82,6 +82,7 @@ only necessary to set one of these.
 
 ##### modules
 ```
+cmake/2.8.10 (or higher)
 PrgEnv-gnu/5.2.40
 cray-hdf5-parallel/1.8.12
 boost/1.57.0
