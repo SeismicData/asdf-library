@@ -281,7 +281,7 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
   char char_start_time[10];
 
   // converts to decimal base.
-  snprintf(char_start_time, sizeof(char_start_time), "%11d", start_time);
+  snprintf(char_start_time, sizeof(char_start_time), "%lld", start_time);
   snprintf(char_sampling_rate,
            sizeof(char_sampling_rate), "%1.7f", sampling_rate);
 
