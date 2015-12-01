@@ -250,7 +250,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
            sizeof(char_sampling_rate), "%1.7f", sampling_rate);
 
   hid_t space_id, dcpl;
-  hsize_t dims[1] = {10}; // Length of waveform
+  hsize_t dims[1] = {nsamples}; // Length of waveform
   hsize_t maxdims[1] = {H5S_UNLIMITED};
 
   CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
