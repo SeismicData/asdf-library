@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
   char *filename = "synthetic.h5";
   char *event_name = "event0123456789";
   char *station_name = "AF.CVNA";
-  char *station_xml = "station_xml_string";
+  // char *station_xml = "station_xml_string";
   char *provenance_string = "provenance_string";
   char *quakeml_string = "quakemlstringstring";
     /*
