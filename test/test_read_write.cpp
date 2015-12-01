@@ -130,7 +130,7 @@ TEST_F(ReadWrite, SingleWaveform) {
   double sampling_rate = 0.1;
   char event_name[] = "my_event";
   char station_name[] = "my_station";
-  char station_xml[] = "<station_xml>";
+  // char station_xml[] = "<station_xml>";
   char waveform_name [] = "my_waveform";
   float *waveform = new float[nsamples];
   for (int i = 0; i < nsamples; ++i) {
