@@ -148,7 +148,7 @@ TEST_F(ReadWrite, SingleWaveform) {
   hid_t file_id = ASDF_create_new_file(filename, MPI_COMM_WORLD);
   hid_t waveforms_group = ASDF_create_waveforms_group(file_id);
   hid_t station_group = ASDF_create_stations_group(waveforms_group,
-                                                   station_name, station_xml);
+                                                   station_name);
   hid_t data_id = ASDF_define_waveform(station_group, nsamples, start_time,
                                     sampling_rate, event_name, waveform_name);
   ASDF_write_full_waveform(data_id, waveform);
