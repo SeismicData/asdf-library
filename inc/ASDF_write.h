@@ -126,12 +126,18 @@ hid_t ASDF_create_waveforms_group(hid_t loc_id);
  *
  * @param loc_id Where to create the group
  * @param station_name Name of the station, eg AF.CVNA
- * @param station_xml XML string following the stationXML format
  *
  * @return group id if successful, negative number otherwise.
  */
-hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
-                                 const char *station_xml);
+hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name);
+
+/**
+ * @param group_id The group id for station name
+ * @param StationXML_length The length of the StationXML
+ *
+ * @return data id if successful, negative number otherwise.
+ */
+hid_t ASDF_define_station_xml(hid_t group_id, int StationXML_length);
 
 /**
  * @brief Define a dataset to write a waveform in.
@@ -179,6 +185,15 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
                              long long int start_time, double sampling_rate,
                              char *event_name, char **waveform_names,
                              int *data_id);
+
+/**
+ * @brief Write the station xml in data_id
+ * 
+ * @param data_id The id of the containing dataset
+ * @param station_xml XML string following the stationXML format
+ */
+herr_t ASDF_write_station_xml(hid_t data_id, const char* StationXML);
+
 
 /**
  * @brief Write a full seismogram \p waveform in a dataset \p data_id

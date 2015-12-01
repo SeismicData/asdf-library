@@ -106,7 +106,7 @@ int main(int argc, char *argv[]) {
 
   hid_t waveforms_grp = ASDF_create_waveforms_group(file_id);
 
-  hid_t station_grp = ASDF_create_stations_group(waveforms_grp, station_name, station_xml);
+  hid_t station_grp = ASDF_create_stations_group(waveforms_grp, station_name);
 
   ASDF_define_waveforms(station_grp, num_waveforms, nsamples, start_time, sampling_rate,
                         event_name, waveform_names,

@@ -109,7 +109,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
 
   /* Fill up with whatever AuxiliaryData contains. */
-
+  
   /* Write specfem3d constants.h */
 
   CHK_H5(space_id = H5Screate_simple(1, dims, maxdims));
@@ -122,7 +122,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
         H5P_DEFAULT, sf_constants_file));
   CHK_H5(H5Dclose(array_id));
   CHK_H5(H5Sclose(space_id));
-
+ 
   /* Write specfem3d Parfile */
 
   CHK_H5(space_id = H5Screate_simple(1, dims2, maxdims));
@@ -207,14 +207,21 @@ herr_t ASDF_close_dataset(hid_t dataset_id) {
   return 0;
 }
 
-hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
-                                 const char *station_xml) {
-  hid_t group_id, space_id, dcpl, data_id;
+hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name) {
+  hid_t group_id;
   /* Create the group "/Waveform/<station_name>" */
   CHK_H5(group_id = H5Gcreate(loc_id, station_name,
                               H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
+
+  return group_id;
+}
+
+hid_t ASDF_define_station_xml(hid_t group_id, int StationXML_length) {
+  int data_id;
+  hid_t dcpl, space_id;
+
   /* Get some space for the StationXML dataset */
-  hsize_t dims[1] = {strlen(station_xml)};
+  hsize_t dims[1] = {StationXML_length};
   hsize_t maxdims[1] = {H5S_UNLIMITED};
 
   CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
@@ -224,15 +231,10 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name,
   CHK_H5(data_id = H5Dcreate(group_id, "StationXML", H5T_STD_I8LE, space_id,
                              H5P_DEFAULT, dcpl, H5P_DEFAULT));
 
-  /* We can write it there for now,
-   * since there is only one stationXML per station */
-  CHK_H5(H5Dwrite(data_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL,
-                  H5P_DEFAULT, station_xml));
-
-  CHK_H5(H5Dclose(data_id));
   CHK_H5(H5Pclose(dcpl));
+  CHK_H5(H5Sclose(space_id));
 
-  return group_id;
+  return data_id; // Success
 }
 
 hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
@@ -248,7 +250,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
            sizeof(char_sampling_rate), "%1.7f", sampling_rate);
 
   hid_t space_id, dcpl;
-  hsize_t dims[1] = {nsamples}; // Length of waveform
+  hsize_t dims[1] = {10}; // Length of waveform
   hsize_t maxdims[1] = {H5S_UNLIMITED};
 
   CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
@@ -279,7 +281,7 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
   char char_start_time[10];
 
   // converts to decimal base.
-  snprintf(char_start_time, sizeof(char_start_time), "%lld", start_time);
+  snprintf(char_start_time, sizeof(char_start_time), "%d", start_time);
   snprintf(char_sampling_rate,
            sizeof(char_sampling_rate), "%1.7f", sampling_rate);
 
@@ -308,6 +310,13 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
     CHK_H5(H5Pclose(dcpl));
     CHK_H5(H5Sclose(space_id));
   }
+  return 0; // Success
+}
+
+herr_t ASDF_write_station_xml(hid_t data_id, const char* StationXML) {
+  CHK_H5(H5Dwrite(data_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL,
+                  H5P_DEFAULT, StationXML));
+
   return 0; // Success
 }
 

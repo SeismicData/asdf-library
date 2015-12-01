@@ -196,7 +196,6 @@ program write_example
       call ASDF_create_stations_group_f(waveforms_grp,   &
            trim(network_names_gather(j, k)) // "." //      &
            trim(station_names_gather(j,k)) // C_NULL_CHAR, &
-           trim(station_xml) // C_NULL_CHAR,             &
            station_grps_gather(j, k))
 
       do  i = 1, num_channels_per_station

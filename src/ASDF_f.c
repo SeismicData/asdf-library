@@ -74,8 +74,13 @@ void asdf_create_waveforms_group_f_(hid_t *loc_id, hid_t *group_id) {
 }
 
 void asdf_create_stations_group_f_(hid_t *loc_id, char *station_name,
-                                  char *station_xml, hid_t *group_id) {
-  *group_id = ASDF_create_stations_group(*loc_id, station_name, station_xml);
+                                   hid_t *group_id) {
+  *group_id = ASDF_create_stations_group(*loc_id, station_name);
+}
+
+void asdf_define_station_xml_f_(hid_t *group_id, int *StationXML_length,
+                                   hid_t *data_id) {
+  *data_id = ASDF_define_station_xml(*group_id, *StationXML_length);
 }
 
 void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
@@ -95,6 +100,10 @@ void asdf_define_waveforms_f_(hid_t *loc_id, int *num_waveforms, int *nsamples,
                                *start_time, *sampling_rate,
                                event_name, waveform_names,
                                data_id);
+}
+
+void asdf_write_station_xml_f_(hid_t *data_id, char *station_xml, int *err) {
+  *err = ASDF_write_station_xml(*data_id, station_xml);
 }
 
 void asdf_write_full_waveform_f_(hid_t *data_id, float *waveform, int *err) {
