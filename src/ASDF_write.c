@@ -35,6 +35,7 @@ hid_t ASDF_create_new_file(const char *filename, MPI_Comm comm) {
   CHK_H5(plist_id = H5Pcreate(H5P_FILE_ACCESS));
   CHK_H5(H5Pset_fapl_mpio(plist_id, comm, MPI_INFO_NULL));
   /* Create the file collectively.*/
+  H5Pset_libver_bounds (plist_id, H5F_LIBVER_LATEST, H5F_LIBVER_LATEST);
   CHK_H5(file_id = H5Fcreate(filename, H5F_ACC_TRUNC, H5P_DEFAULT, plist_id));
   CHK_H5(H5Pclose(plist_id));
 
@@ -114,7 +115,8 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
 
   CHK_H5(space_id = H5Screate_simple(1, dims, maxdims));
   CHK_H5(dcpl_id = H5Pcreate(H5P_DATASET_CREATE));
-  CHK_H5(H5Pset_chunk(dcpl_id, 1, dims));
+  //CHK_H5(H5Pset_layout(dcpl_id, H5D_COMPACT));
+   CHK_H5(H5Pset_chunk(dcpl_id, 1, dims));
 
   CHK_H5(array_id = H5Dcreate(group_id2, "constants_h", H5T_STD_I8LE, space_id,
         H5P_DEFAULT, dcpl_id, H5P_DEFAULT));
@@ -127,7 +129,8 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
 
   CHK_H5(space_id = H5Screate_simple(1, dims2, maxdims));
   CHK_H5(dcpl_id = H5Pcreate(H5P_DATASET_CREATE));
-  CHK_H5(H5Pset_chunk(dcpl_id, 1, dims2));
+  //CHK_H5(H5Pset_layout(dcpl_id, H5D_COMPACT));
+   CHK_H5(H5Pset_chunk(dcpl_id, 1, dims2));
 
   CHK_H5(array_id = H5Dcreate(group_id2, "Parfile", H5T_STD_I8LE, space_id,
         H5P_DEFAULT, dcpl_id, H5P_DEFAULT));
@@ -150,7 +153,8 @@ herr_t ASDF_write_provenance_data(hid_t loc_id, const char *provenance_string) {
 
   CHK_H5(space_id = H5Screate_simple(1, dims, maxdims));
   CHK_H5(dcpl_id = H5Pcreate(H5P_DATASET_CREATE));
-  CHK_H5(H5Pset_chunk(dcpl_id, 1, dims));
+  //CHK_H5(H5Pset_layout(dcpl_id, H5D_COMPACT));
+   CHK_H5(H5Pset_chunk(dcpl_id, 1, dims));
 
   CHK_H5(group_id = H5Gcreate(loc_id, "Provenance",
         H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT));
@@ -174,6 +178,7 @@ herr_t ASDF_write_quakeml(hid_t loc_id, const char *quakeml_string) {
 
   CHK_H5(space_id = H5Screate_simple(1, dims, maxdims));
   CHK_H5(dcpl_id = H5Pcreate(H5P_DATASET_CREATE));
+  //CHK_H5(H5Pset_layout(dcpl_id, H5D_COMPACT));
   CHK_H5(H5Pset_chunk(dcpl_id, 1, dims));
 
   CHK_H5(array_id = H5Dcreate(loc_id, "/QuakeML", H5T_STD_I8LE, space_id,
@@ -218,7 +223,7 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name) {
 
 hid_t ASDF_define_station_xml(hid_t group_id, int StationXML_length) {
   int data_id;
-  hid_t dcpl, space_id;
+  hid_t space_id, dcpl;
 
   /* Get some space for the StationXML dataset */
   hsize_t dims[1] = {StationXML_length};
@@ -226,6 +231,7 @@ hid_t ASDF_define_station_xml(hid_t group_id, int StationXML_length) {
 
   CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
   CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
+  //CHK_H5(H5Pset_layout(dcpl, H5D_COMPACT));
   CHK_H5(H5Pset_chunk(dcpl, 1, dims));
 
   CHK_H5(data_id = H5Dcreate(group_id, "StationXML", H5T_STD_I8LE, space_id,
@@ -255,6 +261,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
 
   CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
   CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
+  //CHK_H5(H5Pset_layout(dcpl, H5D_COMPACT));
   CHK_H5(H5Pset_chunk(dcpl, 1, dims));
 
   CHK_H5(data_id = H5Dcreate(loc_id, waveform_name, H5T_IEEE_F32LE, space_id,
@@ -295,6 +302,7 @@ herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
 
     CHK_H5(space_id= H5Screate_simple(1, dims, maxdims));
     CHK_H5(dcpl = H5Pcreate(H5P_DATASET_CREATE));
+    //CHK_H5(H5Pset_layout(dcpl, H5D_COMPACT));
     CHK_H5(H5Pset_chunk(dcpl, 1, dims));
 
     CHK_H5(data_id[i] = H5Dcreate(loc_id, waveform_names[i], H5T_IEEE_F32LE, space_id,

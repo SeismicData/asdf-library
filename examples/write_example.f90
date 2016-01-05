@@ -36,7 +36,7 @@ program write_example
   character(len=MAX_STRING_LENGTH) :: event_name
   character(len=MAX_STRING_LENGTH) :: provenance
   character(len=MAX_STRING_LENGTH) :: quakeml
-  character(len=MAX_STRING_LENGTH) :: station_xml
+  ! character(len=MAX_STRING_LENGTH) :: station_xml
   ! TODO: check if a single station_xml is enough
 
   integer :: num_stations, num_channels_per_station
@@ -102,7 +102,7 @@ program write_example
   event_name = "event0123456789"
   provenance = "<provenance>"
   quakeml = "<quakeml>"
-  station_xml = "<station_xml>"
+  !station_xml = "<station_xml>"
 
   num_stations = 1 + myrank
   num_channels_per_station = 2
