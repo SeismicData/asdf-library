@@ -88,7 +88,7 @@ cray-hdf5-parallel/1.8.12
 boost/1.57.0
 ```
 ##### export hdf5
-export PATH=$PATH:/opt/cray/hdf5-parllel/1.8.12/gnu/48
+export PATH=$PATH:/opt/cray/hdf5-parallel/1.8.12/gnu/48
 #####
 
 ##### configuration
