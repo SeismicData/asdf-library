@@ -22,9 +22,9 @@ find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 option (TEST "Run unit tests" OFF)
 
-set(Boost_NO_SYSTEM_PATHS FALSE)
+#set(Boost_NO_SYSTEM_PATHS TRUE)
 if (Boost_NO_SYSTEM_PATHS)
-  set(BOOST_ROOT /tigress/jas11/packages/boost)
+#  set(BOOST_ROOT /sw/xk6/boost/1.57.0/cle5.2_gnu4.8.2)
   set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
   set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
 endif (Boost_NO_SYSTEM_PATHS)
@@ -53,7 +53,7 @@ add_library (asdf
              ${SRC_DIR}/parse_sf_parfile.cpp
              ${SRC_DIR}/gen_provenance_id.cpp
              ${SRC_DIR}/gen_provenance_entity.cpp
-             ${SRC_DIR}/gen_sf_parfile_provenance.cpp
+#             ${SRC_DIR}/gen_sf_parfile_provenance.cpp
              ${SRC_DIR}/gen_sf_provenance.cpp
              ${SRC_DIR}/ASDF_provenance.c
              ${SRC_DIR}/ASDF_f.c)
