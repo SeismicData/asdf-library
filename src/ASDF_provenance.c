@@ -24,19 +24,19 @@
 #include <string.h>
 
 #include "ASDF_provenance.h"
-#include "private/gen_sf_parfile_provenance.h"
+//#include "private/gen_sf_parfile_provenance.h"
 #include "private/gen_sf_provenance.h"
 
-void ASDF_generate_par_file_provenance(const char *filename,
+/*void ASDF_generate_par_file_provenance(const char *filename,
                                        const char *prov_label,
                                        const char *prov_id,
                                        char **prov) {
   *prov = generate_sf_parfile_provenance(filename, prov_label, prov_id);
-}
+}*/
 
-void ASDF_clean_par_file_provenance(char *sub_provenance) {
+/*void ASDF_clean_par_file_provenance(char *sub_provenance) {
   clean_sf_parfile_provenance(sub_provenance);
-}
+}*/
 
 void ASDF_generate_sf_provenance(const char *startTime,
                                 const char *endTime,
