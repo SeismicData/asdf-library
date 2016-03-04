@@ -103,18 +103,24 @@ int ASDF_read_full_waveform(hid_t file_id, const char *path,
 int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
                                int nsamples, float * const waveform) {
   hid_t dataset_id;
-  hid_t filespace_id;
+  hid_t filespace_id; // map data from file
+  hid_t memspace_id; // map data to buffer
 
   hsize_t start[1] = {offset};
   hsize_t count[1] = {nsamples};
-  // hsize_t block[1] = {1};
+  hsize_t offset_memspace_id[1] = {0};
 
   CHK_H5(dataset_id = H5Dopen(file_id, path, H5P_DEFAULT));
   CHK_H5(filespace_id = H5Dget_space(dataset_id));
+  CHK_H5(memspace_id = H5Screate_simple(1, count, NULL));
   CHK_H5(H5Sselect_hyperslab(filespace_id, H5S_SELECT_SET, start,
                              NULL, count, NULL));
-  H5Dread(dataset_id, H5T_IEEE_F32LE, filespace_id, filespace_id,
-          H5P_DEFAULT, waveform);
+  CHK_H5(H5Sselect_hyperslab (memspace_id, H5S_SELECT_SET, 
+		       offset_memspace_id, NULL, count, NULL));
+  CHK_H5(H5Dread(dataset_id, H5T_IEEE_F32LE, memspace_id, filespace_id,
+          H5P_DEFAULT, waveform));
+
+  CHK_H5(H5Sclose(memspace_id));
   CHK_H5(H5Sclose(filespace_id));
   CHK_H5(H5Dclose(dataset_id));
 
