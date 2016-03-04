@@ -106,14 +106,14 @@ int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
   hid_t space_id;
 
   hsize_t start[1] = {offset};
-  hsize_t count[1] = {1};
-  hsize_t block[1] = {nsamples};
+  hsize_t count[1] = {nsamples};
+  hsize_t block[1] = {1};
 
   CHK_H5(dataset_id = H5Dopen(file_id, path, H5P_DEFAULT));
   CHK_H5(space_id = H5Dget_space(dataset_id));
   CHK_H5(H5Sselect_hyperslab(space_id, H5S_SELECT_SET, start,
-                             NULL, count, block));
-  H5Dread(dataset_id, H5T_IEEE_F32LE, H5S_ALL, H5S_ALL,
+                             NULL, count, NULL));
+  H5Dread(dataset_id, H5T_IEEE_F32LE, H5S_ALL, space_id,
           H5P_DEFAULT, waveform);
   CHK_H5(H5Sclose(space_id));
   CHK_H5(H5Dclose(dataset_id));
@@ -122,9 +122,9 @@ int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
 }
 
 char *ASDF_extend_path(const char *path, const char *name) {
-  char *full_path = malloc((strlen(name) + strlen(path) + 1) * sizeof(char));
+  // length of full_path (/) => +1, ('\0') => +1
+  char *full_path = malloc((strlen(name) + strlen(path) + 2) * sizeof(char));
   sprintf(full_path, "%s/%s", path, name);
-
   return full_path;
 }
 
@@ -143,7 +143,7 @@ int ASDF_station_exists(hid_t file_id, const char *name) {
 }
 
 int ASDF_adjoint_source_exists(hid_t file_id, const char *name) {
-  return ASDF_exists_in_path(file_id, "/AuxiliaryData/AdjointSource", name);
+  return ASDF_exists_in_path(file_id, "/AuxiliaryData/AdjointSources", name);
 }
 
 int ASDF_waveform_exists(hid_t file_id, const char *station_name,
