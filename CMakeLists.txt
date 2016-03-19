@@ -27,9 +27,10 @@ if (Boost_NO_SYSTEM_PATHS)
 #  set(BOOST_ROOT /sw/xk6/boost/1.57.0/cle5.2_gnu4.8.2)
   set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
   set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
+else()
+  find_package(Boost REQUIRED COMPONENTS system)
 endif (Boost_NO_SYSTEM_PATHS)
 
-find_package(Boost REQUIRED COMPONENTS system)
 include_directories(${BOOST_INCLUDE_DIRS})
 
 ############################################################
@@ -53,7 +54,7 @@ add_library (asdf
              ${SRC_DIR}/parse_sf_parfile.cpp
              ${SRC_DIR}/gen_provenance_id.cpp
              ${SRC_DIR}/gen_provenance_entity.cpp
-#             ${SRC_DIR}/gen_sf_parfile_provenance.cpp
+#            ${SRC_DIR}/gen_sf_parfile_provenance.cpp
              ${SRC_DIR}/gen_sf_provenance.cpp
              ${SRC_DIR}/ASDF_provenance.c
              ${SRC_DIR}/ASDF_f.c)
