@@ -54,7 +54,7 @@ add_library (asdf
              ${SRC_DIR}/parse_sf_parfile.cpp
              ${SRC_DIR}/gen_provenance_id.cpp
              ${SRC_DIR}/gen_provenance_entity.cpp
-#            ${SRC_DIR}/gen_sf_parfile_provenance.cpp
+             ${SRC_DIR}/gen_sf_parfile_provenance.cpp
              ${SRC_DIR}/gen_sf_provenance.cpp
              ${SRC_DIR}/ASDF_provenance.c
              ${SRC_DIR}/ASDF_f.c)
