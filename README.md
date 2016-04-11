@@ -1,6 +1,38 @@
 
 [![Build Status](https://travis-ci.org/SeismicData/asdf-library.svg)](https://travis-ci.org/SeismicData/asdf-library)
 
+#### Instruction to install the hdf5 parallel library on mac.
+
+Remove everything hdf5 and mpi related from conda
+
+```
+$ conda uninstall hdf5 h5py mpi4py
+```
+Install mpi and parallel hdf5 somehow - on mac i strongly recommend homebrew.
+
+```
+$ brew install open-mpi
+$ brew tap homebrew/science
+$ brew install hdf5 --with-mpi
+```
+
+Then - with the pip in the conda (environement)
+Will make sure mpi4py is linked against your systems MPI
+
+```
+$ pip install mpi4py
+```
+
+Download h5py and unpack it and make sure the conda env is active
+
+```
+$ python setup.py configure --mpi
+$ python setup.py build
+$ python setup.py install
+```
+
+This will then install a parallel h5py version.
+
 #### Usage
 
 The following instructions are for in-source builds.
