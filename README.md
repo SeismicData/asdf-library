@@ -126,4 +126,8 @@ export PATH=$PATH:/opt/cray/hdf5-parallel/1.8.12/gnu/48
 ##### configuration
 
 ```
+cd asdf-library
+mkdir build
+cd build
 cmake .. -DCMAKE_Fortran_COMPILER=ftn
+```
