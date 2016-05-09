@@ -116,17 +116,18 @@ only necessary to set one of these.
 ```
 cmake/2.8.10 (or higher)
 PrgEnv-gnu/5.2.40
-cray-hdf5-parallel/1.8.12
-boost/1.57.0
+cray-hdf5-parallel
+boost/1.57.0 (or higher)
 ```
 ##### export hdf5
-export PATH=$PATH:/opt/cray/hdf5-parallel/1.8.12/gnu/48
+export PATH=$PATH:/opt/cray/hdf5-parallel/1.8.14/gnu/48
 #####
 
 ##### configuration
 
 ```
 cd asdf-library
+Uncomment line 27 in CMakeLists.txt (Delete the # symbol)
 mkdir build
 cd build
 cmake .. -DCMAKE_Fortran_COMPILER=ftn
