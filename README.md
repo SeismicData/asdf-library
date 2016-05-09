@@ -130,5 +130,5 @@ cd asdf-library
 Uncomment line 27 in CMakeLists.txt (Delete the # symbol)
 mkdir build
 cd build
-cmake .. -DCMAKE_Fortran_COMPILER=ftn
+cmake .. -DCMAKE_Fortran_COMPILER=ftn -DBoost_NO_SYSTEM_PATHS=TRUE
 ```
