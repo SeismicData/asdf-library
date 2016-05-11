@@ -120,7 +120,9 @@ cray-hdf5-parallel
 boost/1.57.0 (or higher)
 ```
 ##### export hdf5
+```
 export PATH=$PATH:/opt/cray/hdf5-parallel/1.8.14/gnu/48
+```
 #####
 
 ##### configuration
