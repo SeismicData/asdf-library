@@ -1,6 +1,11 @@
 
 [![Build Status](https://travis-ci.org/SeismicData/asdf-library.svg)](https://travis-ci.org/SeismicData/asdf-library)
 
+
+> This is **A**daptable **S**eismic **D**ata **F**ormat - if you are looking for the **A**dvanced **S**cientific **D**ata **F**ormat, go here: https://asdf.readthedocs.io/en/latest/
+
+
+
 #### Instruction to install the hdf5 parallel library on mac.
 
 Remove everything hdf5 and mpi related from conda
