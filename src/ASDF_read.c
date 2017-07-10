@@ -217,7 +217,7 @@ hid_t ASDF_open_stations_group(hid_t loc_id, const char *station_name) {
   // CHK_H5(H5Pset_all_coll_metadata_ops( accpl_id, is_collective ));
 
   // CHK_H5(group_id = H5Gopen(loc_id, station_name, accpl_id));
-  CHK_H5(group_id = H5Gopen(loc_id, station_name, H5P_DEFAULT));
+  CHK_H5(group_id = H5Gopen(loc_id, station_name));
 
   // CHK_H5(H5Pclose(accpl_id));
 
@@ -234,7 +234,7 @@ hid_t ASDF_open_waveform(hid_t loc_id, const char *waveform_name) {
   // CHK_H5(H5Pset_all_coll_metadata_ops( accpl_id, is_collective ));
 
   // CHK_H5(data_id = H5Dopen(loc_id, waveform_name, accpl_id));
-  CHK_H5(data_id = H5Dopen(loc_id, waveform_name, H5P_DEFAULT));
+  CHK_H5(data_id = H5Dopen(loc_id, waveform_name));
 
   // CHK_H5(H5Pclose(accpl_id));
 
