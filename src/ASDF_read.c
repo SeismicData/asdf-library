@@ -38,6 +38,36 @@ hid_t ASDF_open_read_only(const char *filename, MPI_Comm comm) {
    return file_id;
 }
 
+hid_t ASDF_open(const char *filename, MPI_Comm comm) {
+   hid_t plist_id, file_id;
+
+   // MPI_Info info;
+   // MPI_Info_create(&info);
+   // MPI_Info_set(info, "striping_unit", "8388608") ;
+   //   /* or whatever your GPFS block size actually is*/
+
+   CHK_H5(plist_id = H5Pcreate (H5P_FILE_ACCESS));
+   // H5Pset_driver(plist_id,H5FD_MPIO);
+
+   CHK_H5(H5Pset_fapl_mpio(plist_id, comm, MPI_INFO_NULL));
+   // CHK_H5(H5Pset_fapl_mpio(plist_id, comm, info));
+
+   CHK_H5(file_id = H5Fopen (filename, H5F_ACC_RDWR, plist_id));
+   CHK_H5(H5Pclose(plist_id));
+
+   return file_id;
+}
+
+hid_t ASDF_open_serial(const char *filename) {
+   hid_t plist_id, file_id;
+
+   CHK_H5(plist_id = H5Pcreate (H5P_FILE_ACCESS));
+   CHK_H5(file_id = H5Fopen (filename, H5F_ACC_RDWR, plist_id));
+   CHK_H5(H5Pclose(plist_id));
+
+   return file_id;
+}
+
 int ASDF_read_str_attr(hid_t file_id, const char *grp_name,
                        const char *attr_name, char **attr_value) {
     hid_t attr_id, type;
@@ -165,3 +195,83 @@ int ASDF_waveform_exists(hid_t file_id, const char *station_name,
     return station_exists;
   }
 }
+
+// BS BS
+//
+
+hid_t ASDF_open_waveforms_group(hid_t loc_id) {
+  hid_t group_id;
+  /* Open the group "/Waveforms" */
+  CHK_H5(group_id = H5Gopen(loc_id, "Waveforms", H5P_DEFAULT));
+
+  return group_id;
+}
+
+hid_t ASDF_open_stations_group(hid_t loc_id, const char *station_name) {
+  hid_t group_id, accpl_id;
+  hbool_t is_collective;
+
+  /* Open the group "/Waveforms/<station_name>" */
+  // CHK_H5(accpl_id = H5Pcreate(H5P_GROUP_ACCESS));
+  // is_collective = 1; // true;
+  // CHK_H5(H5Pset_all_coll_metadata_ops( accpl_id, is_collective ));
+
+  // CHK_H5(group_id = H5Gopen(loc_id, station_name, accpl_id));
+  CHK_H5(group_id = H5Gopen(loc_id, station_name, H5P_DEFAULT));
+
+  // CHK_H5(H5Pclose(accpl_id));
+
+  return group_id;
+}
+
+hid_t ASDF_open_waveform(hid_t loc_id, const char *waveform_name) {
+  hid_t data_id, accpl_id;
+  hbool_t is_collective;
+
+  /* Open the group "/Waveforms/<station_name>/<waveform_name>" */
+  // CHK_H5(accpl_id = H5Pcreate(H5P_GROUP_ACCESS));
+  // is_collective = 1; // true;
+  // CHK_H5(H5Pset_all_coll_metadata_ops( accpl_id, is_collective ));
+
+  // CHK_H5(data_id = H5Dopen(loc_id, waveform_name, accpl_id));
+  CHK_H5(data_id = H5Dopen(loc_id, waveform_name, H5P_DEFAULT));
+
+  // CHK_H5(H5Pclose(accpl_id));
+
+  return data_id;
+}
+
+hid_t ASDF_open_waveform_path(hid_t file_id, const char *station_name, const char *waveform_name) {
+  hid_t data_id, accpl_id;
+  hbool_t is_collective;
+  int waveform_exists;
+
+  /* Open the group "/Waveforms/<station_name>/<waveform_name>" */
+  waveform_exists = ASDF_waveform_exists(file_id, station_name, waveform_name);
+
+  if (waveform_exists > 0) {
+
+    char *path = ASDF_extend_path("Waveforms", station_name);
+    char *path2 = ASDF_extend_path(path, waveform_name);
+
+    CHK_H5(accpl_id = H5Pcreate(H5P_GROUP_ACCESS));
+    is_collective = 1; // true;
+    // CHK_H5(H5Pset_all_coll_metadata_ops( accpl_id, is_collective ));
+
+    // CHK_H5(data_id = H5Dopen(file_id, path2, accpl_id));
+    CHK_H5(data_id = H5Dopen(file_id, path2, H5P_DEFAULT));
+
+    free(path2);
+    free(path);
+    CHK_H5(H5Pclose(accpl_id));
+    
+    return data_id;
+
+  } else {
+      return waveform_exists;
+  }
+
+}
+
+
+
