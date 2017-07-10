@@ -42,6 +42,17 @@ hid_t ASDF_create_new_file(const char *filename, MPI_Comm comm) {
   return file_id;
 }
 
+hid_t ASDF_create_new_file_serial(const char *filename) {
+  hid_t plist_id, file_id;
+
+  CHK_H5(plist_id = H5Pcreate(H5P_FILE_ACCESS));
+  H5Pset_libver_bounds (plist_id, H5F_LIBVER_LATEST, H5F_LIBVER_LATEST);
+  CHK_H5(file_id = H5Fcreate(filename, H5F_ACC_TRUNC, H5P_DEFAULT, plist_id));
+  CHK_H5(H5Pclose(plist_id));
+
+  return file_id;
+}
+
 herr_t ASDF_write_string_attribute(hid_t dataset_id,
                                    const char *attr_name,
                                    const char *attr_value) {
@@ -137,6 +148,7 @@ herr_t ASDF_write_auxiliary_data(hid_t loc_id, const char *sf_constants_file, co
   CHK_H5(H5Dwrite(array_id, H5T_STD_I8LE, H5S_ALL, H5S_ALL,
         H5P_DEFAULT, sf_Parfile));
   CHK_H5(H5Dclose(array_id));
+  CHK_H5(H5Pclose(dcpl_id));
   CHK_H5(H5Sclose(space_id));
 
   CHK_H5(H5Gclose(group_id2));
@@ -164,6 +176,7 @@ herr_t ASDF_write_provenance_data(hid_t loc_id, const char *provenance_string) {
 	H5P_DEFAULT, provenance_string));
 
   CHK_H5(H5Dclose(array_id));
+  CHK_H5(H5Pclose(dcpl_id));
   CHK_H5(H5Gclose(group_id));
   CHK_H5(H5Sclose(space_id));
 
@@ -187,6 +200,7 @@ herr_t ASDF_write_quakeml(hid_t loc_id, const char *quakeml_string) {
         H5P_DEFAULT, quakeml_string));
 
   CHK_H5(H5Dclose(array_id));
+  CHK_H5(H5Pclose(dcpl_id));
   CHK_H5(H5Sclose(space_id));
 
   return 0; // Success
@@ -222,7 +236,8 @@ hid_t ASDF_create_stations_group(hid_t loc_id, const char *station_name) {
 }
 
 hid_t ASDF_define_station_xml(hid_t group_id, int StationXML_length) {
-  int data_id;
+  //int data_id;
+  hid_t data_id;
   hid_t space_id, dcpl;
 
   /* Get some space for the StationXML dataset */
@@ -246,7 +261,8 @@ hid_t ASDF_define_station_xml(hid_t group_id, int StationXML_length) {
 hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
                            long long int start_time, double sampling_rate,
                            const char *event_name, const char *waveform_name) {
-  int data_id;
+  //int data_id;
+  hid_t data_id;
   char char_sampling_rate[10];
   char char_start_time[10];
 
@@ -354,3 +370,32 @@ herr_t ASDF_write_partial_waveform(hid_t data_id, const float *waveform,
 
   return 0; // Success
 }
+
+/*
+herr_t ASDF_write_partial_waveform_collective(hid_t data_id, const float *waveform,
+                                   int offset, int nsamples) {
+  hid_t space_id, slab_id, dx_plist_id;
+
+  CHK_H5(space_id = H5Dget_space(data_id));
+
+  hsize_t start[1] = {offset};
+  hsize_t count[1] = {1};
+  hsize_t block[1] = {nsamples};
+  CHK_H5(H5Sselect_hyperslab(space_id, H5S_SELECT_SET, start,
+                             NULL, count, block));
+  CHK_H5(slab_id = H5Screate_simple(1, block, NULL));
+
+  CHK_H5(dx_plist_id = H5Pcreate(H5P_DATASET_XFER));
+  CHK_H5(H5Pset_dxpl_mpio(dx_plist_id, H5FD_MPIO_COLLECTIVE));
+
+  CHK_H5(H5Dwrite(data_id, H5T_IEEE_F32LE, slab_id, space_id,
+                  dx_plist_id, waveform));
+
+  CHK_H5(H5Pclose(dx_plist_id));
+  CHK_H5(H5Sclose(slab_id));
+  CHK_H5(H5Sclose(space_id));
+
+  return 0; // Success
+}
+*/
+

@@ -40,6 +40,15 @@ extern "C" {
 hid_t ASDF_create_new_file(const char *filename, MPI_Comm comm);
 
 /**
+ * @brief Create a new parallel HDF5 file.
+ *
+ * @param filename Name of the ASDF file to create.
+ *
+ * @return The id of the created file.
+ */
+hid_t ASDF_create_new_file_serial(const char *filename);
+
+/**
  * @brief Write a string attribute \p attr_name with value \p attr_value in
  *        \p dataset_id
  *

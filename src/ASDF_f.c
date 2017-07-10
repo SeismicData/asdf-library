@@ -52,6 +52,10 @@ void asdf_create_new_file_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
   *file_id = ASDF_create_new_file(filename, comm);
 }
 
+void asdf_create_new_file_serial_f_(char *filename, int *file_id) {
+  *file_id = ASDF_create_new_file_serial(filename);
+}
+
 void asdf_write_string_attribute_f_(hid_t *dataset_id, char *attr_name,
                                     char *attr_value, int *err) {
   *err = ASDF_write_string_attribute(*dataset_id, attr_name, attr_value);
@@ -116,6 +120,29 @@ void asdf_write_partial_waveform_f_(hid_t *data_id, float *waveform,
                                    *offset, *nsamples);
 }
 
+/*
+void asdf_write_partial_waveform_collective_f_(hid_t *data_id, float *waveform,
+                                    int *offset, int *nsamples, int *err) {
+  *err = ASDF_write_partial_waveform_collective(*data_id, waveform,
+                                   *offset, *nsamples);
+} 
+*/
+
+void asdf_open_waveforms_group_f_(hid_t *loc_id, hid_t *group_id) {
+  *group_id = ASDF_open_waveforms_group(*loc_id);
+}
+
+void asdf_open_stations_group_f_(hid_t *loc_id, char *station_name,
+                                   hid_t *group_id) {
+  *group_id = ASDF_open_stations_group(*loc_id, station_name);
+}
+
+void asdf_open_waveform_f_(hid_t *loc_id, char *waveform_name,
+                                   hid_t *data_id) {
+  *data_id = ASDF_open_waveform(*loc_id, waveform_name);
+}
+
+
 void asdf_close_group_f_(hid_t *group_id, int *err) {
   *err = ASDF_close_group(*group_id);
 }
@@ -131,6 +158,15 @@ void asdf_close_dataset_f_(hid_t *dataset_id, int *err) {
 void asdf_open_read_only_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
   MPI_Comm comm= MPI_Comm_f2c(*f_comm);
   *file_id = ASDF_open_read_only(filename, comm);
+}
+
+void asdf_open_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
+  MPI_Comm comm= MPI_Comm_f2c(*f_comm);
+  *file_id = ASDF_open(filename, comm);
+}
+
+void asdf_open_serial_f_(char *filename, int *file_id) {
+  *file_id = ASDF_open_serial(filename);
 }
 
 void asdf_read_str_attr_f_(hid_t *file_id, char *grp_name,
