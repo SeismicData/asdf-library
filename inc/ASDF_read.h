@@ -170,6 +170,22 @@ int ASDF_adjoint_source_exists(hid_t file_id, const char *name);
 int ASDF_waveform_exists(hid_t file_id, const char *station_name,
                          const char *waveform_name);
 
+/**
+ * @brief Check if a waveform \p waveform_name is present for station
+ *        \p station_name in file \p file_id
+ *
+ * @param file_id
+ * @param station_name
+ * @param waveform_name
+ *
+ * @return > 0 if present, 0 if not, < 0 in case of failure
+ */
+
+hid_t ASDF_open_waveforms_group(hid_t loc_id);
+hid_t ASDF_open_stations_group(hid_t loc_id, const char *station_name);
+hid_t ASDF_open_waveform(hid_t loc_id, const char *waveform_name);
+hid_t ASDF_open(const char *filename, MPI_Comm comm);
+
 #ifdef __cplusplus
 }
 #endif
