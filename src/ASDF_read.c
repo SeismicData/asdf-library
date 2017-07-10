@@ -202,7 +202,7 @@ int ASDF_waveform_exists(hid_t file_id, const char *station_name,
 hid_t ASDF_open_waveforms_group(hid_t loc_id) {
   hid_t group_id;
   /* Open the group "/Waveforms" */
-  CHK_H5(group_id = H5Gopen(loc_id, "Waveforms", H5P_DEFAULT));
+  CHK_H5(group_id = H5Gopen(loc_id, "Waveforms"));
 
   return group_id;
 }
@@ -234,7 +234,7 @@ hid_t ASDF_open_waveform(hid_t loc_id, const char *waveform_name) {
   // CHK_H5(H5Pset_all_coll_metadata_ops( accpl_id, is_collective ));
 
   // CHK_H5(data_id = H5Dopen(loc_id, waveform_name, accpl_id));
-  CHK_H5(data_id = H5Dopen(loc_id, waveform_name));
+  CHK_H5(data_id = H5Dopen(loc_id, waveform_name, H5P_DEFAULT));
 
   // CHK_H5(H5Pclose(accpl_id));
 
