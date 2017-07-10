@@ -182,9 +182,10 @@ int ASDF_waveform_exists(hid_t file_id, const char *station_name,
  */
 
 hid_t ASDF_open_waveforms_group(hid_t loc_id);
+hid_t ASDF_open(const char *filename, MPI_Comm comm);
 hid_t ASDF_open_stations_group(hid_t loc_id, const char *station_name);
 hid_t ASDF_open_waveform(hid_t loc_id, const char *waveform_name);
-hid_t ASDF_open(const char *filename, MPI_Comm comm);
+hid_t ASDF_open_serial(const char *filename);
 
 #ifdef __cplusplus
 }
