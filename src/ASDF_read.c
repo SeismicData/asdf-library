@@ -208,8 +208,8 @@ hid_t ASDF_open_waveforms_group(hid_t loc_id) {
 }
 
 hid_t ASDF_open_stations_group(hid_t loc_id, const char *station_name) {
-  hid_t group_id, accpl_id;
-  hbool_t is_collective;
+  hid_t group_id;
+  // hbool_t is_collective;
 
   /* Open the group "/Waveforms/<station_name>" */
   // CHK_H5(accpl_id = H5Pcreate(H5P_GROUP_ACCESS));
@@ -225,8 +225,8 @@ hid_t ASDF_open_stations_group(hid_t loc_id, const char *station_name) {
 }
 
 hid_t ASDF_open_waveform(hid_t loc_id, const char *waveform_name) {
-  hid_t data_id, accpl_id;
-  hbool_t is_collective;
+  hid_t data_id;
+  // hbool_t is_collective;
 
   /* Open the group "/Waveforms/<station_name>/<waveform_name>" */
   // CHK_H5(accpl_id = H5Pcreate(H5P_GROUP_ACCESS));
