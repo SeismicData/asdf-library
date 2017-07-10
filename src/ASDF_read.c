@@ -243,7 +243,7 @@ hid_t ASDF_open_waveform(hid_t loc_id, const char *waveform_name) {
 
 hid_t ASDF_open_waveform_path(hid_t file_id, const char *station_name, const char *waveform_name) {
   hid_t data_id, accpl_id;
-  hbool_t is_collective;
+  // hbool_t is_collective;
   int waveform_exists;
 
   /* Open the group "/Waveforms/<station_name>/<waveform_name>" */
@@ -255,7 +255,7 @@ hid_t ASDF_open_waveform_path(hid_t file_id, const char *station_name, const cha
     char *path2 = ASDF_extend_path(path, waveform_name);
 
     CHK_H5(accpl_id = H5Pcreate(H5P_GROUP_ACCESS));
-    is_collective = 1; // true;
+    // is_collective = 1; // true;
     // CHK_H5(H5Pset_all_coll_metadata_ops( accpl_id, is_collective ));
 
     // CHK_H5(data_id = H5Dopen(file_id, path2, accpl_id));
