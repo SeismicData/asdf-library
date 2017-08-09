@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define H5Gopen_vers 1
 #define H5Dopen_vers 2
 #include <hdf5.h>
 
@@ -145,7 +146,7 @@ int ASDF_read_partial_waveform(hid_t file_id, const char *path, int offset,
   CHK_H5(memspace_id = H5Screate_simple(1, count, NULL));
   CHK_H5(H5Sselect_hyperslab(filespace_id, H5S_SELECT_SET, start,
                              NULL, count, NULL));
-  CHK_H5(H5Sselect_hyperslab (memspace_id, H5S_SELECT_SET, 
+  CHK_H5(H5Sselect_hyperslab (memspace_id, H5S_SELECT_SET,
 		       offset_memspace_id, NULL, count, NULL));
   CHK_H5(H5Dread(dataset_id, H5T_IEEE_F32LE, memspace_id, filespace_id,
           H5P_DEFAULT, waveform));
@@ -264,7 +265,7 @@ hid_t ASDF_open_waveform_path(hid_t file_id, const char *station_name, const cha
     free(path2);
     free(path);
     CHK_H5(H5Pclose(accpl_id));
-    
+
     return data_id;
 
   } else {
