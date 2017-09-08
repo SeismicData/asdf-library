@@ -125,11 +125,6 @@ PrgEnv-gnu/5.2.40
 cray-hdf5-parallel
 boost/1.57.0 (or higher)
 ```
-##### export hdf5
-```
-export PATH=$PATH:/opt/cray/hdf5-parallel/1.8.14/gnu/48
-```
-#####
 
 ##### configuration
 
@@ -139,4 +134,12 @@ Uncomment line 27 in CMakeLists.txt (Delete the # symbol)
 mkdir build
 cd build
 cmake .. -DCMAKE_Fortran_COMPILER=ftn -DBoost_NO_SYSTEM_PATHS=TRUE
+```
+
+##### configuration 
+
+```
+make
+make doc
+make install DESTDIR=</path/to/toplevel/install/directory>
 ```
