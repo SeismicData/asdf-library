@@ -136,7 +136,7 @@ cd build
 cmake .. -DCMAKE_Fortran_COMPILER=ftn -DBoost_NO_SYSTEM_PATHS=TRUE
 ```
 
-##### configuration 
+##### compilation 
 
 ```
 make
