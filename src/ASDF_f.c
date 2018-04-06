@@ -214,18 +214,3 @@ void asdf_waveform_exists_f_(hid_t *file_id, char *station_name,
                              char *waveform_name, int *exists) {
   *exists = ASDF_waveform_exists(*file_id, station_name, waveform_name);
 }
-
-/**********************************************************
- *  Wrappers for ASDF_generate_provenance                 *
- **********************************************************/
-
-// TODO: It is probably irrelevant to export every function used to generate
-// provenance information. check ASDF_write_provenance_data.
-
-void asdf_generate_sf_provenance_f_(char *startTime, char *endTime, char **provenance, int *length) {
-  ASDF_generate_sf_provenance(startTime, endTime, provenance, length);
-}
-
-void asdf_clean_provenance_f_(char **provenance) {
-  ASDF_clean_provenance(provenance);
-}

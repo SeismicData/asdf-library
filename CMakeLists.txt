@@ -22,22 +22,10 @@ find_package(MPI REQUIRED)
 include_directories(${MPI_INCLUDE_PATH})
 option (TEST "Run unit tests" OFF)
 
-#set(Boost_NO_SYSTEM_PATHS TRUE)
-if (Boost_NO_SYSTEM_PATHS)
-#  set(BOOST_ROOT /sw/xk6/boost/1.57.0/cle5.2_gnu4.8.2)
-  set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
-  set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
-else()
-  find_package(Boost REQUIRED COMPONENTS system)
-endif (Boost_NO_SYSTEM_PATHS)
-
-include_directories(${BOOST_INCLUDE_DIRS})
-
 ############################################################
 ### Setup directory structure                            ###
 ############################################################
 include_directories (./inc)
-include_directories(${BOOST_INCLUDE_DIRS})
 
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)  # .so
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lib)  # .a
@@ -51,12 +39,9 @@ add_library (asdf
              ${SRC_DIR}/ASDF_init.c
              ${SRC_DIR}/ASDF_read.c
              ${SRC_DIR}/ASDF_write.c
-             ${SRC_DIR}/parse_sf_parfile.cpp
              ${SRC_DIR}/gen_provenance_id.cpp
              ${SRC_DIR}/gen_provenance_entity.cpp
-             ${SRC_DIR}/gen_sf_parfile_provenance.cpp
              ${SRC_DIR}/gen_sf_provenance.cpp
-             ${SRC_DIR}/ASDF_provenance.c
              ${SRC_DIR}/ASDF_f.c)
 
 target_link_libraries(asdf
