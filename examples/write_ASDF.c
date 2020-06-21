@@ -150,7 +150,7 @@ int main(int argc, char *argv[]) {
     free(waveforms[i]);
   }
   free(waveform_names);
-  free(waveforms);
+  free(waveforms); 
 
   /*------------------------------------*/
   H5Fclose(file_id);

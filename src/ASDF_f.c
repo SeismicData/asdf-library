@@ -61,13 +61,13 @@ void asdf_close_file_f(hid_t *file_id, int* err) {
  *  Wrappers for ASDF_write                               *
  **********************************************************/
 
-void asdf_create_new_file_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
+void asdf_create_new_file_f_(char *filename, MPI_Fint *f_comm, hid_t *file_id) {
   /* Convert MPI communicator from Fortran to C. */
   MPI_Comm comm= MPI_Comm_f2c(*f_comm);
   *file_id = ASDF_create_new_file(filename, comm);
 }
 
-void asdf_create_new_file_serial_f_(char *filename, int *file_id) {
+void asdf_create_new_file_serial_f_(char *filename, hid_t *file_id) {
   *file_id = ASDF_create_new_file_serial(filename);
 }
 
@@ -105,7 +105,7 @@ void asdf_define_station_xml_f_(hid_t *group_id, int *StationXML_length,
 void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
                           long long int *start_time, double *sampling_rate,
                           char *event_name, char *waveform_name,
-                          int *data_id) {
+                          hid_t *data_id) {
   *data_id = ASDF_define_waveform(*loc_id, *nsamples, *start_time,
                                   *sampling_rate, event_name, waveform_name);
 }
@@ -114,7 +114,7 @@ void asdf_define_waveform_f_(hid_t *loc_id, int *nsamples,
 void asdf_define_waveforms_f_(hid_t *loc_id, int *num_waveforms, int *nsamples,
                               long long int *start_time, double *sampling_rate,
                               char *event_name, char **waveform_names,
-                              int *data_id, int *err) {
+                              hid_t *data_id, int *err) {
   *err = ASDF_define_waveforms(*loc_id, *num_waveforms, *nsamples,
                                *start_time, *sampling_rate,
                                event_name, waveform_names,
@@ -168,13 +168,13 @@ void asdf_close_dataset_f_(hid_t *dataset_id, int *err) {
 
 // Wrapper without "_"
 
-void asdf_create_new_file_f(char *filename, MPI_Fint *f_comm, int *file_id) {
+void asdf_create_new_file_f(char *filename, MPI_Fint *f_comm, hid_t *file_id) {
   /* Convert MPI communicator from Fortran to C. */
   MPI_Comm comm= MPI_Comm_f2c(*f_comm);
   *file_id = ASDF_create_new_file(filename, comm);
 }
 
-void asdf_create_new_file_serial_f(char *filename, int *file_id) {
+void asdf_create_new_file_serial_f(char *filename, hid_t *file_id) {
   *file_id = ASDF_create_new_file_serial(filename);
 }
 
@@ -212,7 +212,7 @@ void asdf_define_station_xml_f(hid_t *group_id, int *StationXML_length,
 void asdf_define_waveform_f(hid_t *loc_id, int *nsamples,
                           long long int *start_time, double *sampling_rate,
                           char *event_name, char *waveform_name,
-                          int *data_id) {
+                          hid_t *data_id) {
   *data_id = ASDF_define_waveform(*loc_id, *nsamples, *start_time,
                                   *sampling_rate, event_name, waveform_name);
 }
@@ -221,7 +221,7 @@ void asdf_define_waveform_f(hid_t *loc_id, int *nsamples,
 void asdf_define_waveforms_f(hid_t *loc_id, int *num_waveforms, int *nsamples,
                               long long int *start_time, double *sampling_rate,
                               char *event_name, char **waveform_names,
-                              int *data_id, int *err) {
+                              hid_t *data_id, int *err) {
   *err = ASDF_define_waveforms(*loc_id, *num_waveforms, *nsamples,
                                *start_time, *sampling_rate,
                                event_name, waveform_names,
@@ -278,17 +278,17 @@ void asdf_close_dataset_f(hid_t *dataset_id, int *err) {
  *  Wrappers for ASDF_read                                *
  **********************************************************/
 
-void asdf_open_read_only_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
+void asdf_open_read_only_f_(char *filename, MPI_Fint *f_comm, hid_t *file_id) {
   MPI_Comm comm= MPI_Comm_f2c(*f_comm);
   *file_id = ASDF_open_read_only(filename, comm);
 }
 
-void asdf_open_f_(char *filename, MPI_Fint *f_comm, int *file_id) {
+void asdf_open_f_(char *filename, MPI_Fint *f_comm, hid_t *file_id) {
   MPI_Comm comm= MPI_Comm_f2c(*f_comm);
   *file_id = ASDF_open(filename, comm);
 }
 
-void asdf_open_serial_f_(char *filename, int *file_id) {
+void asdf_open_serial_f_(char *filename, hid_t *file_id) {
   *file_id = ASDF_open_serial(filename);
 }
 
@@ -340,17 +340,17 @@ void asdf_waveform_exists_f_(hid_t *file_id, char *station_name,
 
 // Wrappers without "_"
 
-void asdf_open_read_only_f(char *filename, MPI_Fint *f_comm, int *file_id) {
+void asdf_open_read_only_f(char *filename, MPI_Fint *f_comm, hid_t *file_id) {
   MPI_Comm comm= MPI_Comm_f2c(*f_comm);
   *file_id = ASDF_open_read_only(filename, comm);
 }
 
-void asdf_open_f(char *filename, MPI_Fint *f_comm, int *file_id) {
+void asdf_open_f(char *filename, MPI_Fint *f_comm, hid_t *file_id) {
   MPI_Comm comm= MPI_Comm_f2c(*f_comm);
   *file_id = ASDF_open(filename, comm);
 }
 
-void asdf_open_serial_f(char *filename, int *file_id) {
+void asdf_open_serial_f(char *filename, hid_t *file_id) {
   *file_id = ASDF_open_serial(filename);
 }
 

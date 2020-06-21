@@ -298,7 +298,7 @@ hid_t ASDF_define_waveform(hid_t loc_id, int nsamples,
 herr_t ASDF_define_waveforms(hid_t loc_id, int num_waveforms, int nsamples,
                             long long int start_time, double sampling_rate,
                             char *event_name, char **waveform_names,
-                            int *data_id) {
+                            hid_t *data_id) {
   int i;
   char char_sampling_rate[10];
   char char_start_time[10];

@@ -57,9 +57,10 @@ program write_example
   !-- ASDF variables
   !   These variables are used to know where further writes should be done.
   !   They have to be cleaned as soon as they become useless
-  integer :: file_id   ! HDF5 file id, also root group "/"
-  integer :: waveforms_grp  ! Group "/Waveforms/"
-  integer, dimension(:, :, :), allocatable :: data_ids
+  !   They need to be integer(kind=8) as hid_t type is long long int
+  integer(kind=8) :: file_id   ! HDF5 file id, also root group "/"
+  integer(kind=8) :: waveforms_grp  ! Group "/Waveforms/"
+  integer(kind=8), dimension(:, :, :), allocatable :: data_ids
 
   !--- MPI variables
   integer :: myrank, mysize, comm
@@ -174,7 +175,7 @@ program write_example
   ! write ASDF
   !--------------------------------------------------------
   call ASDF_initialize_hdf5_f(ier);
-  call ASDF_create_new_file_f(trim(filename), comm, file_id)
+  call ASDF_create_new_file_f(trim(filename) // C_NULL_CHAR, comm, file_id)
 
   call ASDF_write_string_attribute_f(file_id, "file_format" // C_NULL_CHAR, &
                                      "ASDF" // C_NULL_CHAR, ier)
@@ -232,6 +233,7 @@ program write_example
   enddo
 
   call ASDF_close_group_f(waveforms_grp, ier)
+  call ASDF_close_file_f(file_id, ier)
   call ASDF_finalize_hdf5_f(ier);
 
   deallocate(data_ids)

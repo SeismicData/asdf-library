@@ -38,7 +38,7 @@ program read_example
   character(len=MAX_STRING_LENGTH) :: station_name, waveform_name, path
 
   !-- ASDF variables
-  integer :: file_id   ! HDF5 file id, also root group "/"
+  integer(kind=8) :: file_id   ! HDF5 file id, also root group "/"
   integer :: station_exists, waveform_exists
   integer :: nsamples_infered
 
@@ -126,6 +126,7 @@ program read_example
   !--------------------------------------------------------
   ! Clean up
   !--------------------------------------------------------
+  call ASDF_close_file_f(file_id, ier)
   call ASDF_finalize_hdf5_f(ier);
   call MPI_Finalize(ier)
 
